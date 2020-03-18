@@ -1,5 +1,9 @@
 {
   "pages": [
+    "pages/mine/mine",
+    "pages/dor/dor",
+    "pages/cart/cart",
+    "pages/category/category",
     "pages/index/index"
   ],
   "subPackages": [],
@@ -9,6 +13,43 @@
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1db728",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/public/index.png",
+        "selectedIconPath": "static/public/index-S.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "iconPath": "static/public/category.png",
+        "selectedIconPath": "static/public/category-S.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "iconPath": "static/public/cart.png",
+        "selectedIconPath": "static/public/cart-S.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/dor/dor",
+        "iconPath": "static/public/dor.png",
+        "selectedIconPath": "static/public/dor-S.png",
+        "text": "门店/商家"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "iconPath": "static/public/man.png",
+        "selectedIconPath": "static/public/man-S.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
 }

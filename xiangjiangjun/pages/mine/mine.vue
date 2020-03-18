@@ -1,0 +1,210 @@
+<template>
+	<view>
+		<view class="header">
+			<image class="avatar" src="/static/index/listpic1.png" mode=""></image>
+			<view class="name">橙子007</view>
+			<view class="vip">会员  ></view>
+		</view>
+		<view class="orderlist">
+			<view class="title">
+				<view class="leftTitle">商品订单</view>
+				<view class="rightTitle">查看全部订单 ></view>
+			</view>
+			<view class="content">
+				<view class="item">
+					<image src="/static/mine/list1.png" class="img"></image>
+					<view class="word">待支付</view>
+				</view>
+				<view class="item">
+					<image src="/static/mine/list2.png" class="img"></image>
+					<view class="word">待支付</view>
+				</view>
+				<view class="item">
+					<image src="/static/mine/list3.png" class="img"></image>
+					<view class="word">待支付</view>
+				</view>
+				<view class="item">
+					<image src="/static/mine/list4.png" class="img"></image>
+					<view class="word">待支付</view>
+				</view>
+				<view class="item">
+					<image src="/static/mine/list5.png" class="img"></image>
+					<view class="word">待支付</view>
+				</view>
+			</view>
+		</view>
+		
+		<view class="orderlist">
+			<view class="title">
+				<view class="leftTitle">服务订单</view>
+				<view class="rightTitle">查看全部订单 ></view>
+			</view>
+			<view class="content">
+				<view class="item">
+					<image src="/static/mine/list1.png" class="img"></image>
+					<view class="word">待支付</view>
+				</view>
+				<view class="item">
+					<image src="/static/mine/list2.png" class="img"></image>
+					<view class="word">待支付</view>
+				</view>
+				<view class="item">
+					<image src="/static/mine/list3.png" class="img"></image>
+					<view class="word">待支付</view>
+				</view>
+				<view class="item">
+					<image src="/static/mine/list4.png" class="img"></image>
+					<view class="word">待支付</view>
+				</view>
+			</view>
+		</view>
+		
+		<view class="listItem">
+			<image class="img" src="/static/mine/item1.png"></image>
+			<view class="word">地址管理</view>
+			<view class="symbol">></view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style lang="scss">
+	page{
+		background-color: #f6f6f6;
+	}
+.header{
+	width: 750rpx;
+	height: 155rpx;
+	background-color: #50ce13;
+	display: flex;
+	position: relative;
+	align-items: center;
+	.avatar{
+		width: 110rpx;
+		height: 110rpx;
+		background-color: #999999;
+		border: solid 3rpx #ffffff;
+		border-radius: 50%;
+		margin-left: 20rpx;
+	}
+	.name{
+		font-family: PingFang-SC-Bold;
+		font-size: 34rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		color: #ffffff;
+		margin-left: 20rpx;
+	}
+	.vip{
+		width: 160rpx;
+		height: 56rpx;
+		background-color: #ffffff;
+		border-radius: 28rpx;
+		font-family: PingFang-SC-Bold;
+		font-size: 30rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		color: #50ce13;
+		text-align: center;
+		line-height: 56rpx;
+		position: absolute;
+		right: 20rpx;
+	}
+}
+.orderlist{
+	padding: 0 20rpx;
+	margin-bottom: 20rpx;
+	background-color: white;
+	.title{
+		display: flex;
+		height: 89rpx;
+		border-bottom: solid 1rpx #e3e3e3;
+		line-height: 89rpx;
+		justify-content: space-between;
+		.leftTitle{
+			font-family: PingFang-SC-Bold;
+			font-size: 30rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #333333;
+		}
+		.rightTitle{
+			font-family: PingFang-SC-Medium;
+			font-size: 26rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #999999;
+		}
+	}
+	.content{
+		display: flex;
+		justify-content: space-between;
+		padding-top: 22rpx;
+		padding-bottom: 40rpx;
+		.item{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			.img{
+				width: 50rpx;
+				height: 40rpx;
+			}
+			.word{
+				font-family: PingFang-SC-Medium;
+				font-size: 24rpx;
+				font-weight: normal;
+				font-stretch: normal;
+				color: #666666;
+				margin-top: 28rpx;
+			}
+		}
+	}
+}
+.listItem{
+	width: 750rpx;
+	height: 111rpx;
+	background-color: #ffffff;
+	display: flex;
+	position: relative;
+	align-items: center;
+	.img{
+		width: 31rpx;
+		height: 36rpx;
+		background-image: linear-gradient(
+			#cccccc, 
+			#cccccc), 
+		linear-gradient(0deg, 
+			#feb12a 0%, 
+			#ff8c06 100%);
+		background-blend-mode: normal, 
+			normal;
+	}
+	.word{
+		font-family: PingFang-SC-Bold;
+		font-size: 30rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		line-height: 36rpx;
+		color: #333333;
+		marign-left: 30rpx;
+	}
+	.symbol{
+		position: absolute;
+		top: 45rpx;
+		right: 30rpx;
+		color: #999999;
+	}
+}
+</style>

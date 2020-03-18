@@ -92,6 +92,7 @@
 .nav {
   width: 710rpx;
   height: 188rpx;
+  margin: 0 auto;
   margin-top: 20rpx;
   margin-bottom: 15rpx;
   padding: 0 20rpx;
@@ -252,5 +253,18 @@
       position: absolute;
       bottom: 0;
       right: 0;
+}
+.listwrap .price {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
+.listwrap .price .currentPrice {
+      color: #ff9000;
+}
+.listwrap .price .originalPrice {
+      color: #dadada;
+      margin-left: 21rpx;
+      text-decoration: line-through;
 }
 

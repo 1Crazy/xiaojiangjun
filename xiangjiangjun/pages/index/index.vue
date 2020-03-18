@@ -54,6 +54,10 @@
 					 <view class="title">{{item.title}}</view>
 					 <view class="shorttitle">{{item.shortitle}}</view>
 					 <image src="../../static/index/add.png" class="addimg"></image>
+					 <view class="price">
+						 <view class="currentPrice">￥ 1366</view>
+						 <view class="originalPrice">￥ 1848</view>
+					 </view>
 				 </view>
 			</view>
 		</view>
@@ -196,6 +200,7 @@
 	.nav{
 		width: 710rpx;
 		height: 188rpx;
+		margin: 0 auto;
 		margin-top: 20rpx;
 		margin-bottom: 15rpx;
 		padding: 0 20rpx;
@@ -342,6 +347,17 @@
 				position: absolute;
 				bottom: 0;
 				right: 0;
+			}
+		}
+		.price{
+			display: flex;
+			.currentPrice{
+				color: #ff9000;
+			}
+			.originalPrice{
+				color: #dadada;
+				margin-left: 21rpx;
+				text-decoration: line-through;
 			}
 		}
 	}
