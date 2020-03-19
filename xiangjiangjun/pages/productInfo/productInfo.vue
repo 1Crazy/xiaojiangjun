@@ -38,9 +38,11 @@
 				<view class="commentHeader">
 					<image class="avatar" :src="item.avatar"></image>
 					<view class="name">{{item.name}}</view>
-					<image class="star" src="/static/productInfo/star.png" mode=""></image>
-					<image class="star" src="/static/productInfo/star.png" mode=""></image>
-					<image class="star" src="/static/productInfo/star.png" mode=""></image>
+					<image :class="item.star>=1 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
+					<image :class="item.star>=2 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
+					<image :class="item.star>=3 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
+					<image :class="item.star>=4 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
+					<image :class="item.star>=5 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
 					<view class="date">{{item.date}}</view>
 				</view>
 				<view class="commentContent">{{item.content}}</view>
@@ -82,7 +84,6 @@
 				}],
 				current: 0,
 				tab: 1,//商品详情1，用户评价2
-				// pic:['','']
 				commentList: [
 					{
 						avatar: '../../static/index/add.png',

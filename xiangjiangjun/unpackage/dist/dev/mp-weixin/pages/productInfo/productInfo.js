@@ -206,6 +206,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
 __webpack_require__(/*! ./index.scss */ 87); //
 //
 //
@@ -278,8 +280,9 @@ __webpack_require__(/*! ./index.scss */ 87); //
 //
 //
 //
+//
+//
 var _default = { data: function data() {return { swiper: [{ img: '../../static/productInfo/banner1.png' }, { img: '../../static/productInfo/banner2.png' }], current: 0, tab: 1, //商品详情1，用户评价2
-      // pic:['','']
       commentList: [{ avatar: '../../static/index/add.png', name: '张先生', star: 2, date: '2019-12-25', content: '机油收到了，已经购买了几次了，值得信赖的商家，还是一如既往的好，和实体店购买的一样，实惠质量也非常不错！！！！', commentPic: ['../../static/index/listpic1.png', '../../static/index/listpic1.png', '../../static/index/listpic1.png'] }, { avatar: '../../static/index/add.png', name: 'x先生', star: 3, date: '2019-11-25', content: 'xxxxxxxx！！！', commentPic: [] }] };}, methods: { swiperChange: function swiperChange(e) {this.current = e.detail.current;}, //改变tab值
     changeTab: function changeTab(num) {this.tab = num;} } };exports.default = _default;
 
