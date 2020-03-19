@@ -14,6 +14,16 @@
 
 <style>
 	/*每个页面公共css */
+	button{
+		padding: 0;
+		margin: 0;
+	}
+	.hide{
+		display: none;
+	}
+	.show{
+		display: block;
+	}
 </style>
 <script>
 	/**

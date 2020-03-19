@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="itemMenu">
-			<radio class="itemRadio" value="r3" />
+			<radio class="itemRadio" color="#ff9000" value="r3" />
 			<image class="img" src="/static/index/listpic1.png"></image>
 			<view class="info">
 				<view class="infoTop">
@@ -18,7 +18,7 @@
 			<image class="delete" src='/static/public/delete.png'></image>
 		</view>
 		<view class="itemMenu">
-			<radio class="itemRadio" value="r3" />
+			<radio class="itemRadio" color="#ff9000" value="r3" />
 			<image class="img" src="/static/index/listpic1.png"></image>
 			<view class="info">
 				<view class="infoTop">
@@ -35,7 +35,7 @@
 			<image class="delete" src='/static/public/delete.png'></image>
 		</view>
 		<view class="itemMenu">
-			<radio class="itemRadio" value="r3" />
+			<radio class="itemRadio" color="#ff9000" value="r3" />
 			<image class="img" src="/static/index/listpic1.png"></image>
 			<view class="info">
 				<view class="infoTop">
@@ -52,7 +52,7 @@
 			<image class="delete" src='/static/public/delete.png'></image>
 		</view>
 		<view class="itemMenu">
-			<radio class="itemRadio" value="r3" />
+			<radio class="itemRadio" color="#ff9000" value="r3" />
 			<image class="img" src="/static/index/listpic1.png"></image>
 			<view class="info">
 				<view class="infoTop">
@@ -69,7 +69,7 @@
 			<image class="delete" src='/static/public/delete.png'></image>
 		</view>
 		<view class="itemMenu">
-			<radio class="itemRadio" value="r3" />
+			<radio class="itemRadio" color="#ff9000" value="r3" />
 			<image class="img" src="/static/index/listpic1.png"></image>
 			<view class="info">
 				<view class="infoTop">
@@ -88,7 +88,7 @@
 		<view style="height: 98rpx;"></view>
 		<view class="bottom">
 			<label class="radio">
-				<radio class="itemRadio" value="r2" />全选</label>
+				<radio class="itemRadio" color="#ff9000" value="r2" />全选</label>
 			<view class="center">
 				<view class="alltotall">合计：</view>
 				<view class="price">￥732</view>

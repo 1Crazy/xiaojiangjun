@@ -48,7 +48,7 @@
 		</view>
 		<!-- 列表详情 -->
 		<view class="bggreay">
-			<view class="listwrap"  v-for="(item ,index) in listwrap" :key="index">
+			<view class="listwrap"  v-for="(item ,index) in listwrap" :key="index" @click="gotoProductInfo(item)">
 				 <image class="img" :src='item.img'></image>
 				 <view class="rightbox">
 					 <view class="title">{{item.title}}</view>
@@ -132,6 +132,11 @@
 		methods: {
 			change(e) {
 				this.current = e.detail.current;
+			},
+			gotoProductInfo(info){
+				uni.navigateTo({
+					url: `/pages/productInfo/productInfo?info=${info}`
+				})
 			}
 		}
 	}

@@ -17,19 +17,19 @@
 				</view>
 				<view class="item">
 					<image src="/static/mine/list2.png" class="img"></image>
-					<view class="word">待支付</view>
+					<view class="word">待发货</view>
 				</view>
 				<view class="item">
 					<image src="/static/mine/list3.png" class="img"></image>
-					<view class="word">待支付</view>
+					<view class="word">待收货</view>
 				</view>
 				<view class="item">
 					<image src="/static/mine/list4.png" class="img"></image>
-					<view class="word">待支付</view>
+					<view class="word">已完成</view>
 				</view>
 				<view class="item">
 					<image src="/static/mine/list5.png" class="img"></image>
-					<view class="word">待支付</view>
+					<view class="word">退款售后</view>
 				</view>
 			</view>
 		</view>
@@ -45,16 +45,16 @@
 					<view class="word">待支付</view>
 				</view>
 				<view class="item">
-					<image src="/static/mine/list2.png" class="img"></image>
-					<view class="word">待支付</view>
-				</view>
-				<view class="item">
-					<image src="/static/mine/list3.png" class="img"></image>
-					<view class="word">待支付</view>
+					<image src="/static/mine/list6.png" class="img"></image>
+					<view class="word">待消费</view>
 				</view>
 				<view class="item">
 					<image src="/static/mine/list4.png" class="img"></image>
-					<view class="word">待支付</view>
+					<view class="word">已完成</view>
+				</view>
+				<view class="item">
+					<image src="/static/mine/list5.png" class="img"></image>
+					<view class="word">退款售后</view>
 				</view>
 			</view>
 		</view>
@@ -62,7 +62,17 @@
 		<view class="listItem">
 			<image class="img" src="/static/mine/item1.png"></image>
 			<view class="word">地址管理</view>
-			<view class="symbol">></view>
+			<image src='/static/public/arrow.png' class="symbol"></image>
+		</view>
+		<view class="listItem">
+			<image class="img" src="/static/mine/item2.png"></image>
+			<view class="word">体验者</view>
+			<image src='/static/public/arrow.png' class="symbol"></image>
+		</view>
+		<view class="listItem">
+			<image class="img" src="/static/mine/item3.png"></image>
+			<view class="word">优惠券</view>
+			<image src='/static/public/arrow.png' class="symbol"></image>
 		</view>
 	</view>
 </template>
@@ -151,8 +161,9 @@
 	.content{
 		display: flex;
 		justify-content: space-between;
-		padding-top: 22rpx;
+		padding-top: 30rpx;
 		padding-bottom: 40rpx;
+		align-items: center;
 		.item{
 			display: flex;
 			flex-direction: column;
@@ -179,17 +190,12 @@
 	display: flex;
 	position: relative;
 	align-items: center;
+	padding: 0 30rpx;
+	box-sizing: border-box;
 	.img{
 		width: 31rpx;
 		height: 36rpx;
-		background-image: linear-gradient(
-			#cccccc, 
-			#cccccc), 
-		linear-gradient(0deg, 
-			#feb12a 0%, 
-			#ff8c06 100%);
-		background-blend-mode: normal, 
-			normal;
+		margin-right: 30rpx;
 	}
 	.word{
 		font-family: PingFang-SC-Bold;
@@ -205,6 +211,8 @@
 		top: 45rpx;
 		right: 30rpx;
 		color: #999999;
+		width: 15rpx;
+		height: 27rpx;
 	}
 }
 </style>

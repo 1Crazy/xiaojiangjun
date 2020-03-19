@@ -1,16 +1,17 @@
 {
   "pages": [
+    "pages/productInfo/productInfo",
+    "pages/index/index",
     "pages/mine/mine",
     "pages/dor/dor",
     "pages/cart/cart",
-    "pages/category/category",
-    "pages/index/index"
+    "pages/category/category"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#F8F8F8"
   },
   "tabBar": {
