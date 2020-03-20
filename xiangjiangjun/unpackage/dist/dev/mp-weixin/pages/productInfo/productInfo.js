@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 81));
 
 
 
@@ -208,83 +208,277 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-__webpack_require__(/*! ./index.scss */ 30); //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default = { data: function data() {return { swiper: [{ img: '../../static/productInfo/banner1.png' }, { img: '../../static/productInfo/banner2.png' }], current: 0, tab: 1, //商品详情1，用户评价2
-      commentList: [{ avatar: '../../static/index/add.png', name: '张先生', star: 2, date: '2019-12-25', content: '机油收到了，已经购买了几次了，值得信赖的商家，还是一如既往的好，和实体店购买的一样，实惠质量也非常不错！！！！', commentPic: ['../../static/index/listpic1.png', '../../static/index/listpic1.png', '../../static/index/listpic1.png'] }, { avatar: '../../static/index/add.png', name: 'x先生', star: 3, date: '2019-11-25', content: 'xxxxxxxx！！！', commentPic: [] }] };}, methods: { swiperChange: function swiperChange(e) {this.current = e.detail.current;}, //改变tab值
-    changeTab: function changeTab(num) {this.tab = num;} } };exports.default = _default;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _app2 = _interopRequireDefault(__webpack_require__(/*! ../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js */ 92));
+var _QSSharePoster = __webpack_require__(/*! ../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/QS-SharePoster.js */ 93);
+
+
+
+__webpack_require__(/*! ./index.scss */ 30);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
+{
+  data: function data() {
+    return {
+      swiper: [{
+        img: '../../static/productInfo/banner1.png' },
+      {
+        img: '../../static/productInfo/banner2.png' }],
+
+      current: 0,
+      tab: 1, //商品详情1，用户评价2
+      commentList: [
+      {
+        avatar: '../../static/index/add.png',
+        name: '张先生',
+        star: 2,
+        date: '2019-12-25',
+        content: '机油收到了，已经购买了几次了，值得信赖的商家，还是一如既往的好，和实体店购买的一样，实惠质量也非常不错！！！！',
+        commentPic: ['../../static/index/listpic1.png', '../../static/index/listpic1.png', '../../static/index/listpic1.png'] },
+
+      {
+        avatar: '../../static/index/add.png',
+        name: 'x先生',
+        star: 3,
+        date: '2019-11-25',
+        content: 'xxxxxxxx！！！',
+        commentPic: [] }],
+
+
+      /**
+                            * 海报绘制相关变量
+                            */
+      poster: {},
+      qrShow: false,
+      canvasId: 'default_PosterCanvasId'
+      //
+    };
+  },
+  methods: {
+    swiperChange: function swiperChange(e) {
+      this.current = e.detail.current;
+    },
+    //改变tab值
+    changeTab: function changeTab(num) {
+      this.tab = num;
+    },
+    /**
+        * 绘制海报
+        */
+    shareFc: function () {var _shareFc = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this = this;var d;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;
+
+                console.log('准备生成:' + new Date());_context.next = 4;return (
+                  (0, _QSSharePoster.getSharePoster)({
+                    _this: this, //若在组件中使用 必传
+                    type: 'testShareType',
+                    formData: {},
+
+
+
+                    posterCanvasId: this.canvasId, //canvasId
+                    delayTimeScale: 20, //延时系数
+                    background: {
+                      // width: 1080,
+                      // height: 1920,
+                      width: 1000,
+                      height: 1600,
+                      backgroundColor: 'white' },
+
+                    drawArray: function drawArray(_ref)
+
+
+
+                    {var bgObj = _ref.bgObj,type = _ref.type,bgScale = _ref.bgScale;
+                      var dx = bgObj.width * 0.3;
+                      var fontSize = bgObj.width * 0.045;
+                      var lineHeight = bgObj.height * 0.04;
+                      //可直接return数组，也可以return一个promise对象, 但最终resolve一个数组, 这样就可以方便实现后台可控绘制海报
+                      return new Promise(function (rs, rj) {
+                        rs([
+                        {
+                          type: 'image',
+                          url: '/static/productInfo/banner1.png',
+                          alpha: 1,
+                          dx: 30,
+                          dy: 30,
+                          infoCallBack: function infoCallBack(imageInfo) {
+                            var scale = bgObj.width * 0.2 / imageInfo.height;
+                            return {
+                              dWidth: 690, // 因为设置了圆形图片 所以要乘以2
+                              dHeight: 794 };
+
+                          } },
+
+                        {
+                          type: 'image',
+                          url: '/static/productInfo/banner2.png',
+                          alpha: 1,
+                          dx: 30,
+                          dy: 1020,
+                          infoCallBack: function infoCallBack(imageInfo) {
+                            var scale = bgObj.width * 0.2 / imageInfo.height;
+                            return {
+                              dWidth: 160, // 因为设置了圆形图片 所以要乘以2
+                              dHeight: 160 };
+
+                          } },
+
+                        {
+                          type: 'text',
+                          fontStyle: 'normal',
+                          text: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
+                          size: 30,
+                          color: 'black',
+                          alpha: 1,
+                          textAlign: 'left',
+                          textBaseline: 'middle',
+                          fontFamily: 'PingFang-SC-Medium',
+                          infoCallBack: function infoCallBack(textLength) {
+                            _app2.default.log('index页面的text的infocallback ，textlength:' + textLength);
+                            return {
+                              dx: 30,
+                              dy: 894 };
+
+                          },
+                          lineFeed: { //换行设置
+                            maxWidth: 411,
+                            lineHeight: 40,
+                            lineNum: -1,
+                            dx: -1 },
+
+                          serialNum: 0,
+                          id: 'tag1' //自定义标识
+                        },
+                        {
+                          type: 'text',
+                          fontStyle: 'normal',
+                          text: '￥366',
+                          size: 36,
+                          color: '#ff9000',
+                          alpha: 1,
+                          textAlign: 'left',
+                          textBaseline: 'middle',
+                          fontFamily: 'PingFang-SC-Medium',
+                          infoCallBack: function infoCallBack(textLength) {
+                            _app2.default.log('index页面的text的infocallback ，textlength:' + textLength);
+                            return {
+                              dx: 611,
+                              dy: 920 };
+
+                          },
+                          serialNum: 0,
+                          id: 'tag2' //自定义标识
+                        },
+                        {
+                          type: 'text',
+                          fontStyle: 'normal',
+                          text: '小将军',
+                          size: 28,
+                          color: '#333333',
+                          alpha: 1,
+                          textAlign: 'left',
+                          textBaseline: 'middle',
+                          fontFamily: 'PingFang-SC-Medium',
+                          infoCallBack: function infoCallBack(textLength) {
+                            return {
+                              dx: 210,
+                              dy: 1080 };
+
+                          },
+                          serialNum: 0,
+                          id: 'tag3' //自定义标识
+                        },
+                        {
+                          type: 'text',
+                          fontStyle: 'normal',
+                          text: '长按识别图中二维码',
+                          size: 28,
+                          color: '#333333',
+                          alpha: 1,
+                          textAlign: 'left',
+                          textBaseline: 'middle',
+                          fontFamily: 'PingFang-SC-Medium',
+                          infoCallBack: function infoCallBack(textLength) {
+                            return {
+                              dx: 210,
+                              dy: 1140 };
+
+                          },
+                          serialNum: 0,
+                          id: 'tag4' //自定义标识
+                        }]);
+
+                      });
+                    },
+                    setCanvasWH: function setCanvasWH(_ref2)
+
+
+
+                    {var bgObj = _ref2.bgObj,type = _ref2.type,bgScale = _ref2.bgScale; // 为动态设置画布宽高的方法，
+                      _this.poster = bgObj;
+                    } }));case 4:d = _context.sent;
+
+                console.log('海报生成成功, 时间:' + new Date() + '， 临时路径: ' + d.poster.tempFilePath);
+                this.poster.finalPath = d.poster.tempFilePath;
+                this.qrShow = true;_context.next = 15;break;case 10:_context.prev = 10;_context.t0 = _context["catch"](0);
+
+                _app2.default.hideLoading();
+                _app2.default.showToast(JSON.stringify(_context.t0));
+                console.log(JSON.stringify(_context.t0));case 15:case "end":return _context.stop();}}}, _callee, this, [[0, 10]]);}));function shareFc() {return _shareFc.apply(this, arguments);}return shareFc;}(),
+
+
+    saveImage: function saveImage() {
+
+      uni.saveImageToPhotosAlbum({
+        filePath: this.poster.finalPath,
+        success: function success(res) {
+          _app2.default.showToast('保存成功');
+        } });
+
+
+
+
+
+    },
+    share: function share() {
+
+
+
+
+
+      _app2.default.showToast('分享了');
+
+    },
+    hideQr: function hideQr() {
+      this.qrShow = false;
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
