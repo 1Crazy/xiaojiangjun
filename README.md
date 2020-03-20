@@ -2,8 +2,12 @@
 小将军-小程序UI
 
 # git 基本命令
+###### 切记 提交前先拉取项目
 克隆仓库
 >git clone https://github.com/1Crazy/xiaojiangjun.git
+
+拉取远程仓库
+>git pull origin dev
 
 查看仓库状态
 >git status
@@ -20,8 +24,6 @@
 推送至远程仓库(不要推送至**master分支**，创建自己的分支名,并推送)
 >git push origin 远程分支名
 
-拉取远程仓库
->git pull origin dev
 
 # 接口设置路径
 >/public/utils
