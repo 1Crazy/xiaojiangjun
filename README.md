@@ -20,6 +20,9 @@
 推送至远程仓库(不要推送至**master分支**，创建自己的分支名,并推送)
 >git push origin 远程分支名
 
+拉取远程仓库
+>git pull origin dev
+
 # 接口设置路径
 >/public/utils
 
