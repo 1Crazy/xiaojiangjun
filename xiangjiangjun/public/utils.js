@@ -1,8 +1,6 @@
 const localData = require('./data')
-// const data = require
-const dev = 'http://test.msjb2b.com/zhaoshijiang'
-// const dev = 'http://4i5hre.natappfree.cc'
-const prodev = 'https://zsj.msjb2b.com/zhaoshijiang'
+const dev = 'http://xiaojiangjun.cduxj.com/app/ewei_shopv2_api.php?i=2&r=' // 修改接口请求地址
+const prodev = ''
 const local = 'local'
 const formatTime = date => {
   const year = date.getFullYear()
@@ -32,10 +30,10 @@ const Accumulate = (start, end, num) => {
   return arr
 }
 const getKey = (key) => {
-  return wx.getStorageSync(key)
+  return uni.getStorageSync(key)
 }
 const setKey = (key, data) => {
-  return wx.setStorageSync(key, data)
+  return uni.setStorageSync(key, data)
 }
 /**
  * 时间格式化
@@ -72,18 +70,18 @@ const Request = (url, data, method = 'GET', title = '加载中', baseUrl = dev ,
   }else{
     src = `${baseUrl}${url}`
   }
-  if (wx.getStorageSync('userInfo').token) {
-    data.token = wx.getStorageSync('userInfo').token
+  if (uni.getStorageSync('userInfo').token) {
+    data.token = uni.getStorageSync('userInfo').token
   }
   data.timetemp = new Date().valueOf()
   data.clientType = 'shijiangCloud'
   data.sign = ''
-  wx.showLoading({
+  uni.showLoading({
     title,
     mask: true
   })
   return new Promise((resolve, reject) => {
-    wx.request({
+    uni.request({
       url: src,
       data,
       method,
@@ -96,7 +94,7 @@ const Request = (url, data, method = 'GET', title = '加载中', baseUrl = dev ,
         reject(res)
       },
       complete: function (res) {
-        wx.hideLoading()
+        uni.hideLoading()
       }
     })
   })
@@ -106,7 +104,7 @@ const Request = (url, data, method = 'GET', title = '加载中', baseUrl = dev ,
  */
 const DeleteModal = (title = "提示", content = '', f) => {
   return (
-    wx.showModal({
+    uni.showModal({
       title,
       content,
       success: function (sm) {
@@ -127,7 +125,7 @@ const DeleteModal = (title = "提示", content = '', f) => {
 const Totast = (title='请稍等', icon = 'none', duration = 1000) => {
   if (title == '请稍等') return false
   return new Promise((resolve, reject) => {
-    wx.showToast({
+    uni.showToast({
       title,
       icon,
       duration,
