@@ -332,4 +332,128 @@ page {
     margin: 0;
     padding: 0;
 }
+/**
+	 * 海报绘制css
+	 */
+.hideCanvasView {
+  position: relative;
+}
+.hideCanvas {
+  position: fixed;
+  top: -99999rpx;
+  left: -99999rpx;
+  z-index: -99999;
+}
+.flex_row_c_c {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.modalView {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  outline: 0;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  -webkit-perspective: 2500rpx;
+          perspective: 2500rpx;
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+  pointer-events: none;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  z-index: 999;
+}
+.modalView.show {
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  pointer-events: auto;
+}
+.flex_column {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.backgroundColor-white {
+  background-color: white;
+}
+.border_radius_10px {
+  border-radius: 10px;
+}
+.padding1vh {
+  padding: 1vh;
+}
+.posterImage {
+  /* width: 60vw; */
+  width: 690rpx;
+  height: 794rpx;
+}
+.flex_row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+          flex-direction: row;
+}
+.marginTop2vh {
+  margin-top: 2vh;
+  width: 750rpx;
+  height: 132rpx;
+  background-color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid #e3e3e3;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+}
+.canvas-btn {
+  width: 200rpx;
+  height: 61rpx;
+  background-image: -webkit-linear-gradient(left, #feb12a 0%, #ff8c06 100%), -webkit-linear-gradient(#f6f6f6, #f6f6f6);
+  background-image: linear-gradient(90deg, #feb12a 0%, #ff8c06 100%), linear-gradient(#f6f6f6, #f6f6f6);
+  background-blend-mode: normal,  normal;
+  border-radius: 30rpx;
+  position: fixed;
+  bottom: 202rpx;
+  right: 30rpx;
+  line-height: 61rpx;
+  color: white;
+  z-index: 214748364;
+  font-size: 28rpx;
+}
+.canvasImage {
+  width: 100rpx;
+  height: 101rpx;
+  margin-right: 20rpx;
+}
 

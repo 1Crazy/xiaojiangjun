@@ -1,5 +1,11 @@
 <template>
 	<view>
+		
+<!-- 		<button type="primary" @tap="shareFc()">生成海报</button> -->
+		<view class="hideCanvasView">
+			<canvas class="hideCanvas" canvas-id="default_PosterCanvasId" :style="{width: (poster.width||0) + 'px', height: (poster.height||0) + 'px'}"></canvas>
+		</view>
+		<!-- 内容 -->
 		<view class="swiperWrap">
 			<swiper :current="current" @change="swiperChange" class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
 				<swiper-item  v-for="(item ,index) in swiper" :key="index">
@@ -58,7 +64,7 @@
 				<image src="../../static/public/xiangqing_huishouye.png" ></image>
 				<view>首页</view>
 			</view>
-			<view class="wrap center">
+			<view class="wrap center" @tap="shareFc()" >
 				<image src="../../static/public/xiagnqiang_fenxiang.png"></image>
 				<view>分享</view>
 			</view>
@@ -69,10 +75,38 @@
 			<button class="addCart">加入购物车</button>
 			<button class="buy">立刻购买</button>
 		</view>
+		
+		
+		
+		<!-- 海报 -->
+		<view class="flex_row_c_c modalView" :class="qrShow?'show':''" @tap="hideQr()">
+			<view class="flex_column" style="width: 750rpx;height: 852rpx;position: fixed;bottom: 132rpx;left: 0;">
+				<view class="backgroundColor-white padding1vh border_radius_10px" style="padding: 30rpx;">
+					<image :src="poster.finalPath || ''" class="posterImage"></image>
+					<!-- <view style="height: 268rpx;width: 750rpx;background-color: white;"></view> -->
+				</view>
+				<view class="flex_row marginTop2vh">
+					<view @tap.prevent.stop="share()" style="display: flex;align-items: center;">
+						<image src="/static/productInfo/fenxiang_weixin.png" class="canvasImage"></image>
+						<view>微信好友</view>
+					</view>
+					<view @tap.prevent.stop="saveImage()" style="display: flex;align-items: center;">
+						<image src="/static/productInfo/fenxiang_pengyouquan.png" class="canvasImage"></image>
+						<view>朋友圈</view>
+					</view>
+				</view>
+			</view>
+			<button class="canvas-btn">保存图片</button>
+		</view>
 	</view>
 </template>
 
 <script>
+	import _app from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js';
+	import {
+		getSharePoster
+	} from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/QS-SharePoster.js';
+	
 	import './index.scss'
 	export default {
 		data() {
@@ -101,7 +135,14 @@
 						content: 'xxxxxxxx！！！',
 						commentPic: []
 					},
-				]
+				],
+				/**
+				 * 海报绘制相关变量
+				 */
+				poster: {},
+				qrShow: false,
+				canvasId: 'default_PosterCanvasId',
+				//
 			}
 		},
 		methods: {
@@ -111,7 +152,198 @@
 			//改变tab值
 			changeTab(num){
 				this.tab=num
-			}
+			},
+			/**
+			 * 绘制海报
+			 */
+			async shareFc() {
+					try {
+						console.log('准备生成:' + new Date())
+						const d = await getSharePoster({
+							_this: this, //若在组件中使用 必传
+							type: 'testShareType',
+							formData: {
+								//访问接口获取背景图携带自定义数据
+			
+							},
+							posterCanvasId: this.canvasId,	//canvasId
+							delayTimeScale: 20, //延时系数
+							background: {
+								// width: 1080,
+								// height: 1920,
+								width: 1000,
+								height: 1600,
+								backgroundColor: 'white'
+							},
+							drawArray: ({
+								bgObj,
+								type,
+								bgScale
+							}) => {
+								const dx = bgObj.width * 0.3;
+								const fontSize = bgObj.width * 0.045;
+								const lineHeight = bgObj.height * 0.04;
+								//可直接return数组，也可以return一个promise对象, 但最终resolve一个数组, 这样就可以方便实现后台可控绘制海报
+								return new Promise((rs, rj) => {
+									rs([
+										{
+											type: 'image',
+											url: '/static/productInfo/banner1.png',
+											alpha: 1,
+											dx: 30,
+											dy: 30,
+											infoCallBack(imageInfo) {
+												let scale = bgObj.width * 0.2 / imageInfo.height;
+												return {
+													dWidth: 690, // 因为设置了圆形图片 所以要乘以2
+													dHeight: 794,
+												}
+											}
+										},
+										{
+											type: 'image',
+											url: '/static/productInfo/banner2.png',
+											alpha: 1,
+											dx: 30,
+											dy: 1020,
+											infoCallBack(imageInfo) {
+												let scale = bgObj.width * 0.2 / imageInfo.height;
+												return {
+													dWidth: 160, // 因为设置了圆形图片 所以要乘以2
+													dHeight: 160,
+												}
+											}
+										},
+										{
+											type: 'text',
+											fontStyle: 'normal',
+											text: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
+											size: 30,
+											color: 'black',
+											alpha: 1,
+											textAlign: 'left',
+											textBaseline: 'middle',
+											fontFamily: 'PingFang-SC-Medium',
+											infoCallBack(textLength) {
+												_app.log('index页面的text的infocallback ，textlength:' + textLength);
+												return {
+													dx: 30,
+													dy: 894,
+												}
+											},
+											lineFeed: { //换行设置
+												maxWidth: 411,
+												lineHeight: 40,
+												lineNum: -1,
+												dx: -1
+											},
+											serialNum: 0,
+											id: 'tag1'	//自定义标识
+										},
+										{
+											type: 'text',
+											fontStyle: 'normal',
+											text: '￥366',
+											size: 36,
+											color: '#ff9000',
+											alpha: 1,
+											textAlign: 'left',
+											textBaseline: 'middle',
+											fontFamily: 'PingFang-SC-Medium',
+											infoCallBack(textLength) {
+												_app.log('index页面的text的infocallback ，textlength:' + textLength);
+												return {
+													dx: 611,
+													dy: 920,
+												}
+											},
+											serialNum: 0,
+											id: 'tag2'	//自定义标识
+										},
+										{
+											type: 'text',
+											fontStyle: 'normal',
+											text: '小将军',
+											size: 28,
+											color: '#333333',
+											alpha: 1,
+											textAlign: 'left',
+											textBaseline: 'middle',
+											fontFamily: 'PingFang-SC-Medium',
+											infoCallBack(textLength) {
+												return {
+													dx: 210,
+													dy: 1080,
+												}
+											},
+											serialNum: 0,
+											id: 'tag3'	//自定义标识
+										},
+										{
+											type: 'text',
+											fontStyle: 'normal',
+											text: '长按识别图中二维码',
+											size: 28,
+											color: '#333333',
+											alpha: 1,
+											textAlign: 'left',
+											textBaseline: 'middle',
+											fontFamily: 'PingFang-SC-Medium',
+											infoCallBack(textLength) {
+												return {
+													dx: 210,
+													dy: 1140,
+												}
+											},
+											serialNum: 0,
+											id: 'tag4'	//自定义标识
+										},
+									]);
+								})
+							},
+							setCanvasWH: ({
+								bgObj,
+								type,
+								bgScale
+							}) => { // 为动态设置画布宽高的方法，
+								this.poster = bgObj;
+							}
+						});
+						console.log('海报生成成功, 时间:' + new Date() + '， 临时路径: ' + d.poster.tempFilePath)
+						this.poster.finalPath = d.poster.tempFilePath;
+						this.qrShow = true;
+					} catch (e) {
+						_app.hideLoading();
+						_app.showToast(JSON.stringify(e));
+						console.log(JSON.stringify(e));
+					}
+				},
+				saveImage() {
+					// #ifndef H5
+					uni.saveImageToPhotosAlbum({
+						filePath: this.poster.finalPath,
+						success(res) {
+							_app.showToast('保存成功');
+						}
+					})
+					// #endif
+					// #ifdef H5
+					_app.showToast('保存了');
+					// #endif
+				},
+				share() {
+					// #ifdef APP-PLUS
+					_app.getShare(false, false, 2, '', '', '', this.poster.finalPath, false, false);
+					// #endif
+			
+					// #ifndef APP-PLUS
+					_app.showToast('分享了');
+					// #endif
+				},
+				hideQr() {
+					this.qrShow = false;
+				}
+				
 		}
 	}
 </script>
@@ -322,4 +554,109 @@ page{
 		padding: 0;
 	}
 }
+
+	
+	/**
+	 * 海报绘制css
+	 */
+	.hideCanvasView {
+		position: relative;
+	}
+	
+	.hideCanvas {
+		position: fixed;
+		top: -99999upx;
+		left: -99999upx;
+		z-index: -99999;
+	}
+	
+	.flex_row_c_c {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.modalView {
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		opacity: 0;
+		outline: 0;
+		transform: scale(1.2);
+		perspective: 2500upx;
+		background: rgba(0, 0, 0, 0.6);
+		transition: all .3s ease-in-out;
+		pointer-events: none;
+		backface-visibility: hidden;
+		z-index: 999;
+	}
+	
+	.modalView.show {
+		opacity: 1;
+		transform: scale(1);
+		pointer-events: auto;
+	}
+	
+	.flex_column {
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.backgroundColor-white {
+		background-color: white;
+	}
+	
+	.border_radius_10px {
+		border-radius: 10px;
+	}
+	
+	.padding1vh {
+		padding: 1vh;
+	}
+	
+	.posterImage {
+		/* width: 60vw; */
+		width: 690rpx;
+		height: 794rpx;
+	}
+	
+	.flex_row {
+		display: flex;
+		flex-direction: row;
+	}
+	
+	.marginTop2vh {
+		margin-top: 2vh;
+		width: 750rpx;
+		height: 132rpx;
+		background-color: white;display: flex;align-items: center;position: fixed;bottom: 0;border-top: 1px solid #e3e3e3;justify-content: space-around;
+	}
+	.canvas-btn{
+		width: 200rpx;
+		height: 61rpx;
+		background-image: linear-gradient(90deg, 
+			#feb12a 0%, 
+			#ff8c06 100%), 
+		linear-gradient(
+			#f6f6f6, 
+			#f6f6f6);
+		background-blend-mode: normal, 
+			normal;
+		border-radius: 30rpx;
+		position: fixed;
+		bottom: 202rpx;
+		right: 30rpx;
+		line-height: 61rpx;
+		color: white;
+		z-index: 214748364;
+		font-size: 28rpx;
+	}
+	.canvasImage{
+		width: 100rpx;height: 101rpx;margin-right: 20rpx;
+	}
 </style>
