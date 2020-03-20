@@ -8525,7 +8525,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/productInfo/productInfo": { "navigationBarTitleText": "商品详情", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/index/index": { "navigationBarTitleText": "首页", "usingComponents": { "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" }, "usingAutoImportComponents": { "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pages/mine/mine": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#50ce13", "navigationBarTextStyle": "white", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/dor/dor": { "navigationBarTitleText": "门店/商家", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/cart/cart": { "navigationBarTitleText": "购物车", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/category/category": { "navigationBarTitleText": "分类", "usingComponents": { "category": "/components/qiyue-category/qiyue-category" }, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页" }, "pages/productInfo/productInfo": { "navigationBarTitleText": "商品详情" }, "pages/mine/mine": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#50ce13", "navigationBarTextStyle": "white" }, "pages/dor/dor": { "navigationBarTitleText": "门店/商家" }, "pages/cart/cart": { "navigationBarTitleText": "购物车" }, "pages/category/category": { "navigationBarTitleText": "分类" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
@@ -9620,7 +9620,15 @@ function normalizeComponent (
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */
 /*!**************************************************************************!*\
   !*** E:/project/xiaojiangjun/xiangjiangjun/pages/productInfo/index.scss ***!
   \**************************************************************************/
