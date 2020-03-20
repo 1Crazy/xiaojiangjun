@@ -1,4 +1,3 @@
-const localData = require('./data')
 const dev = 'http://xiaojiangjun.cduxj.com/app/ewei_shopv2_api.php?i=2&r=' // 修改接口请求地址
 const prodev = ''
 const local = 'local'
@@ -73,9 +72,9 @@ const Request = (url, data, method = 'GET', title = '加载中', baseUrl = dev ,
   if (uni.getStorageSync('userInfo').token) {
     data.token = uni.getStorageSync('userInfo').token
   }
-  data.timetemp = new Date().valueOf()
-  data.clientType = 'shijiangCloud'
-  data.sign = ''
+  // data.timetemp = new Date().valueOf()
+  // data.clientType = 'shijiangCloud'
+  // data.sign = ''
   uni.showLoading({
     title,
     mask: true

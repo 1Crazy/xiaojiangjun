@@ -28,3 +28,19 @@
 2. sass插件
 3. ES6插件
 4. uni-app编译插件
+
+# 接口请求示例
+```
+/**
+*
+* url 为接口后缀
+* 
+**/
+Request(url, data, method = 'GET', title = '加载中', baseUrl = dev , dataType = 'json')
+.then((res)=>{
+    // 成功方法
+})
+.catch((res)=>{
+    // 失败方法
+})
+```
