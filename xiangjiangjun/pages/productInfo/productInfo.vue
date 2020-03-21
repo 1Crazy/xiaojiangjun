@@ -153,6 +153,7 @@
 	} from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/QS-SharePoster.js';
 	import {uniPopup} from '../../components/uni/uni-popup/uni-popup.vue'
 	import './index.scss'
+	import { Request } from '../../public/utils.js'
 	
 	export default {
 		components: {uniPopup},
@@ -193,7 +194,8 @@
 				//
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			this.getGoodDetail(e.info);
 		},
 		methods: {
 			swiperChange (e) {
@@ -202,6 +204,14 @@
 			//改变tab值
 			changeTab(num){
 				this.tab=num
+			},
+			getGoodDetail(id){
+				Request(
+					'goods.get_detail',
+					{
+						id:id
+					}
+				)
 			},
 			//物流说明模态框
 			LogisticsInfoModel(bool){
