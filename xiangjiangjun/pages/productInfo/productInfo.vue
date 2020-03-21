@@ -86,17 +86,17 @@
 					<!-- <view style="height: 268rpx;width: 750rpx;background-color: white;"></view> -->
 				</view>
 				<view class="flex_row marginTop2vh">
-					<view @tap.prevent.stop="share()" style="display: flex;align-items: center;">
+					<button open-type="share" @tap.prevent.stop="share()" style="display: flex;align-items: center;background: white;">
 						<image src="/static/productInfo/fenxiang_weixin.png" class="canvasImage"></image>
 						<view>微信好友</view>
-					</view>
+					</button>
 					<view @tap.prevent.stop="saveImage()" style="display: flex;align-items: center;">
 						<image src="/static/productInfo/fenxiang_pengyouquan.png" class="canvasImage"></image>
 						<view>朋友圈</view>
+						<button class="canvas-btn">保存图片</button>
 					</view>
 				</view>
 			</view>
-			<button class="canvas-btn">保存图片</button>
 		</view>
 	</view>
 </template>
@@ -335,7 +335,7 @@
 					// #ifdef APP-PLUS
 					_app.getShare(false, false, 2, '', '', '', this.poster.finalPath, false, false);
 					// #endif
-			
+					
 					// #ifndef APP-PLUS
 					_app.showToast('分享了');
 					// #endif
