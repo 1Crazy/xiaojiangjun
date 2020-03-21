@@ -64,6 +64,9 @@ function getCurrentTime() {
 const payUrl = dev
 const Request = (url, data, method = 'GET', title = '加载中', baseUrl = dev , dataType = 'json') => {
   let src = ''
+  if(!data){
+	  data = {}
+  }
   if (baseUrl == local) {
     src = localData.local(url)
   }else{

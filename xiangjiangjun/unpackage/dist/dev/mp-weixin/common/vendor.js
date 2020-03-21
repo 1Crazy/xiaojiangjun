@@ -754,7 +754,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -7083,7 +7083,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -7104,14 +7104,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -7187,7 +7187,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -7611,9 +7611,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!********************************************************!*\
-  !*** E:/project/xiaojiangjun/xiangjiangjun/pages.json ***!
-  \********************************************************/
+/*!******************************************************************!*\
+  !*** D:/HBuilderX/project/xiaojiangjun/xiangjiangjun/pages.json ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8518,20 +8518,20 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 
 /***/ }),
 /* 7 */
-/*!*************************************************************************!*\
-  !*** E:/project/xiaojiangjun/xiangjiangjun/pages.json?{"type":"style"} ***!
-  \*************************************************************************/
+/*!***********************************************************************************!*\
+  !*** D:/HBuilderX/project/xiaojiangjun/xiangjiangjun/pages.json?{"type":"style"} ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "首页", "usingComponents": { "uni-swiper-dot": "/components/uni/uni-swiper-dot/uni-swiper-dot" }, "usingAutoImportComponents": {} }, "pages/productInfo/productInfo": { "navigationBarTitleText": "商品详情", "usingComponents": { "uni-popup": "/components/uni/uni-popup/uni-popup" }, "usingAutoImportComponents": {} }, "pages/mine/mine": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#50ce13", "navigationBarTextStyle": "white", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/dor/dor": { "navigationBarTitleText": "门店/商家", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/cart/cart": { "navigationBarTitleText": "购物车", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/category/category": { "navigationBarTitleText": "分类", "usingComponents": { "category": "/components/qiyue-category/qiyue-category" }, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/productInfo/productInfo": { "navigationBarTitleText": "商品详情" }, "pages/index/index": { "navigationBarTitleText": "首页" }, "pages/mine/mine": { "navigationBarTitleText": "我的", "navigationBarBackgroundColor": "#50ce13", "navigationBarTextStyle": "white" }, "pages/dor/dor": { "navigationBarTitleText": "门店/商家" }, "pages/cart/cart": { "navigationBarTitleText": "购物车" }, "pages/category/category": { "navigationBarTitleText": "分类" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 /* 8 */
-/*!************************************************************************!*\
-  !*** E:/project/xiaojiangjun/xiangjiangjun/pages.json?{"type":"stat"} ***!
-  \************************************************************************/
+/*!**********************************************************************************!*\
+  !*** D:/HBuilderX/project/xiaojiangjun/xiangjiangjun/pages.json?{"type":"stat"} ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9615,9 +9615,9 @@ function normalizeComponent (
 
 /***/ }),
 /* 16 */
-/*!************************************************************!*\
-  !*** E:/project/xiaojiangjun/xiangjiangjun/store/index.js ***!
-  \************************************************************/
+/*!**********************************************************************!*\
+  !*** D:/HBuilderX/project/xiaojiangjun/xiangjiangjun/store/index.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9666,26 +9666,18 @@ store;exports.default = _default;
 /* 20 */,
 /* 21 */,
 /* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */
+/* 23 */
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 32);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 24);
 
 
 /***/ }),
-/* 32 */
+/* 24 */
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -9716,7 +9708,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 33);
+module.exports = __webpack_require__(/*! ./runtime */ 25);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -9732,7 +9724,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 33 */
+/* 25 */
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -10463,10 +10455,10 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 34 */
-/*!**************************************************************************************************!*\
-  !*** E:/project/xiaojiangjun/xiangjiangjun/js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js ***!
-  \**************************************************************************************************/
+/* 26 */
+/*!************************************************************************************************************!*\
+  !*** D:/HBuilderX/project/xiaojiangjun/xiangjiangjun/js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11032,16 +11024,16 @@ module.exports = _app;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 35 */
-/*!*************************************************************************************************************!*\
-  !*** E:/project/xiaojiangjun/xiangjiangjun/js_sdk/QuShe-SharerPoster/util/QS-SharePoster/QS-SharePoster.js ***!
-  \*************************************************************************************************************/
+/* 27 */
+/*!***********************************************************************************************************************!*\
+  !*** D:/HBuilderX/project/xiaojiangjun/xiangjiangjun/js_sdk/QuShe-SharerPoster/util/QS-SharePoster/QS-SharePoster.js ***!
+  \***********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 31));var _app2 = _interopRequireDefault(__webpack_require__(/*! ./app.js */ 34));
-var _QRCodeAlg = _interopRequireDefault(__webpack_require__(/*! ./QRCodeAlg.js */ 36));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
+/* WEBPACK VAR INJECTION */(function(uni) {var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 23));var _app2 = _interopRequireDefault(__webpack_require__(/*! ./app.js */ 26));
+var _QRCodeAlg = _interopRequireDefault(__webpack_require__(/*! ./QRCodeAlg.js */ 28));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
 var ShreUserPosterBackgroundKey = 'ShrePosterBackground_'; // 背景图片缓存名称前缀
 var idKey = 'QSSHAREPOSTER_IDKEY'; //drawArray自动生成的idkey
 var isMp = false;
@@ -12330,10 +12322,10 @@ module.exports = {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 36 */
-/*!********************************************************************************************************!*\
-  !*** E:/project/xiaojiangjun/xiangjiangjun/js_sdk/QuShe-SharerPoster/util/QS-SharePoster/QRCodeAlg.js ***!
-  \********************************************************************************************************/
+/* 28 */
+/*!******************************************************************************************************************!*\
+  !*** D:/HBuilderX/project/xiaojiangjun/xiangjiangjun/js_sdk/QuShe-SharerPoster/util/QS-SharePoster/QRCodeAlg.js ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13348,14 +13340,208 @@ QRBitBuffer.prototype = {
   } };
 
 /***/ }),
-/* 37 */
-/*!**************************************************************************!*\
-  !*** E:/project/xiaojiangjun/xiangjiangjun/pages/productInfo/index.scss ***!
-  \**************************************************************************/
+/* 29 */
+/*!************************************************************************************!*\
+  !*** D:/HBuilderX/project/xiaojiangjun/xiangjiangjun/pages/productInfo/index.scss ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */
+/*!***********************************************************************!*\
+  !*** D:/HBuilderX/project/xiaojiangjun/xiangjiangjun/public/utils.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {var dev = 'http://xiaojiangjun.cduxj.com/app/ewei_shopv2_api.php?i=2&r='; // 修改接口请求地址
+var prodev = '';
+var local = 'local';
+var formatTime = function formatTime(date) {
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':');
+};
+var formatNumber = function formatNumber(n) {
+  n = n.toString();
+  return n[1] ? n : '0' + n;
+};
+module.exports = {
+  formatTime: formatTime
+
+  /**
+                          * 数组累加
+                          * 传入 3,5,1 返回 [3,4,5]
+                          */ };
+var Accumulate = function Accumulate(start, end, num) {
+  var arr = [];
+  for (var i = start; i <= end; i += num) {
+    arr.push(i);
+  }
+  return arr;
+};
+var getKey = function getKey(key) {
+  return uni.getStorageSync(key);
+};
+var setKey = function setKey(key, data) {
+  return uni.setStorageSync(key, data);
+};
+/**
+    * 时间格式化
+    */
+var FormateTime = function FormateTime(date, dataType) {
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+  if (dataType == '-') {
+    return "".concat(year, "-").concat(month, "-").concat(day);
+  }
+};
+function getCurrentTime() {
+  var keep = '';
+  var date = new Date();
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  m = m < 10 ? '0' + m : m;
+  var d = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  var h = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+  var f = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+  var s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+  keep = y + '-' + m + '-' + d + ' ' + h + '：' + f + '：' + s;
+  return keep; // 20160614134947
+}
+var payUrl = dev;
+var Request = function Request(url, data) {var method = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'GET';var title = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '加载中';var baseUrl = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : dev;var dataType = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 'json';
+  var src = '';
+  if (!data) {
+    data = {};
+  }
+  if (baseUrl == local) {
+    src = localData.local(url);
+  } else {
+    src = "".concat(baseUrl).concat(url);
+  }
+  if (uni.getStorageSync('userInfo').token) {
+    data.token = uni.getStorageSync('userInfo').token;
+  }
+  // data.timetemp = new Date().valueOf()
+  // data.clientType = 'shijiangCloud'
+  // data.sign = ''
+  uni.showLoading({
+    title: title,
+    mask: true });
+
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      url: src,
+      data: data,
+      method: method,
+      dataType: dataType,
+      responseType: 'text',
+      success: function success(res) {
+        resolve(res);
+      },
+      fail: function fail(res) {
+        reject(res);
+      },
+      complete: function complete(res) {
+        uni.hideLoading();
+      } });
+
+  });
+};
+/**
+    * delete model
+    */
+var DeleteModal = function DeleteModal() {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "提示";var content = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';var f = arguments.length > 2 ? arguments[2] : undefined;
+  return (
+    uni.showModal({
+      title: title,
+      content: content,
+      success: function success(sm) {
+        if (sm.confirm) {
+          f();
+        } else
+        if (sm.cancel) {
+          console.log('用户点击取消');
+        }
+      } }));
+
+
+};
+
+/**
+    * totast
+    */
+var Totast = function Totast() {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '请稍等';var icon = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'none';var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1000;
+  if (title == '请稍等') return false;
+  return new Promise(function (resolve, reject) {
+    uni.showToast({
+      title: title,
+      icon: icon,
+      duration: duration });
+
+    setTimeout(function () {
+      resolve('foo');
+    }, duration);
+    // reject()
+  });
+};
+/**
+    * 验证
+    */
+var VerifyPhoneNumber = function VerifyPhoneNumber(str) {return /^1\d{10}$/.test(str);};
+var VerifyIdentityCard = function VerifyIdentityCard(str) {return /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(str);};
+var VerifyMoney = function VerifyMoney(str) {return /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(str);};
+var VerifyPositive = function VerifyPositive(str) {return /^[0-9]+$/.test(str);};
+/**
+                                                                                   * 数组查重
+                                                                                   */
+var CheckRepeat = function CheckRepeat(ary) {
+  var s = ary.join(",") + ",";
+  for (var i = 0; i < ary.length; i++) {
+    if (s.replace(ary[i] + ",", "").indexOf(ary[i] + ",") > -1) {
+      return true;
+      break;
+    }
+  }
+  return false;
+};
+module.exports = {
+  Request: Request,
+  FormateTime: FormateTime,
+  VerifyPhoneNumber: VerifyPhoneNumber,
+  VerifyIdentityCard: VerifyIdentityCard,
+  Accumulate: Accumulate,
+  VerifyMoney: VerifyMoney,
+  CheckRepeat: CheckRepeat,
+  VerifyPositive: VerifyPositive,
+  DeleteModal: DeleteModal,
+  Totast: Totast,
+  getKey: getKey,
+  setKey: setKey,
+  getCurrentTime: getCurrentTime,
+  payUrl: payUrl };
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 ]]);

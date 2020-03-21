@@ -66,7 +66,7 @@
 
 <script>
 	import uniSwiperDot from "@/components/uni/uni-swiper-dot/uni-swiper-dot.vue"
-	
+	import { Request } from "../../public/utils.js"
 	export default {
 		components: {
 			uniSwiperDot,
@@ -132,7 +132,9 @@
 			
 		},
 		onShow() {
-			
+			Request(
+			'index.test'			
+			) 
 		},
 		methods: {
 			change(e) {
