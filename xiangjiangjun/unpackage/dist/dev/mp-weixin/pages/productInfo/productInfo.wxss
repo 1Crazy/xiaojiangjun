@@ -376,7 +376,7 @@ page {
     background-blend-mode: normal,  normal;
     border-radius: 0rpx 39rpx 39rpx 0rpx;
 }
-.footer button {
+.footer .btn {
     font-family: PingFang-SC-Medium;
     font-size: 30rpx;
     font-weight: normal;

@@ -60,7 +60,7 @@
 		<view style="height: 100rpx;"></view>
 		<!-- 底部 -->
 		<view class="footer">
-			<view class="wrap">
+			<view class="wrap" @tap="gotoIndex()">
 				<image :src="imgSrc+'public/xiangqing_huishouye.png'" ></image>
 				<view>首页</view>
 			</view>
@@ -68,12 +68,12 @@
 				<image :src="imgSrc+'public/xiagnqiang_fenxiang.png'"></image>
 				<view>分享</view>
 			</view>
-			<view class="wrap" style="margin-right: 44rpx;">
+			<button open-type="contact" class="wrap" style="margin-right: 44rpx;height:80rpx;">
 				<image :src="imgSrc+'public/xiangqing_kefu.png'"></image>
-				<view>客服</view>
-			</view>
-			<button class="addCart">加入购物车</button>
-			<button class="buy">立刻购买</button>
+				<view style="margin-top: 24rpx;">客服</view>
+			</button>
+			<button class="btn addCart">加入购物车</button>
+			<button class="btn buy">立刻购买</button>
 		</view>
 		<!-- 物流说明弹框 -->
 		<uni-popup ref="popup" type="bottom">
@@ -178,6 +178,11 @@
 			//物流说明模态框
 			LogisticsInfoModel(bool){
 				bool ? this.$refs.popup.open() : this.$refs.popup.close()
+			},
+			gotoIndex(){
+				uni.reLaunch({
+					url: '/pages/index/index'
+				})
 			},
 			/**
 			 * 绘制海报
@@ -568,7 +573,7 @@ page{
 			normal;
 		border-radius: 0rpx 39rpx 39rpx 0rpx;
 	}
-	button{
+	.btn{
 		font-family: PingFang-SC-Medium;
 		font-size: 30rpx;
 		font-weight: normal;

@@ -314,6 +314,11 @@ __webpack_require__(/*! ./index.scss */ 37);function _interopRequireDefault(obj)
     LogisticsInfoModel: function LogisticsInfoModel(bool) {
       bool ? this.$refs.popup.open() : this.$refs.popup.close();
     },
+    gotoIndex: function gotoIndex() {
+      uni.reLaunch({
+        url: '/pages/index/index' });
+
+    },
     /**
         * 绘制海报
         */
