@@ -210,13 +210,15 @@ var _utils = __webpack_require__(/*! ../../public/utils.js */ 38);var uniSwiperD
     return {
       imgSrc: this.$store.state.imgSrc,
       title: '首页',
-      info: [{
-        img: '../../static/index/banner.png' },
-      {
-        img: '../../static/index/banner.png' },
-      {
-        img: '../../static/index/banner.png' }],
-
+      info: [
+        // 	{
+        // 	img: '../../static/index/banner.png'
+        // }, {
+        // 	img: '../../static/index/banner.png'
+        // }, {
+        // 	img: '../../static/index/banner.png'
+        // },
+      ],
       current: 0,
       mode: 'round',
       //nav
@@ -264,12 +266,28 @@ var _utils = __webpack_require__(/*! ../../public/utils.js */ 38);var uniSwiperD
 
   },
   onLoad: function onLoad() {
+    var that = this;
+    wx.getLocation({
+      type: 'gcj02 ',
+      success: function success(res) {
+        that.longitude = res.longitude;
+        that.latitude = res.latitude;
+      } });
 
   },
   onShow: function onShow() {
+    var that = this;
     (0, _utils.Request)(
-    'index.test');
-
+    'index.get_data').
+    then(function (res) {
+      console.log(res);
+      that.info = res.data.data.info;
+      that.listwrap = res.data.data.goods;
+      // 成功方法
+    }).
+    catch(function (res) {
+      // 失败方法
+    });
   },
   methods: {
     change: function change(e) {

@@ -15,7 +15,7 @@
 		    <swiper autoplay class="swiper-box" @change="change">
 		        <swiper-item v-for="(item ,index) in info" :key="index">
 		            <view class="swiper-item">
-		                <image class="img" :src='item.img'></image>
+		                <image class="img" :src='item'></image>
 		            </view>
 		        </swiper-item>
 		    </swiper>
@@ -49,14 +49,14 @@
 		<!-- 列表详情 -->
 		<view class="bggreay">
 			<view class="listwrap"  v-for="(item ,index) in listwrap" :key="index" @click="gotoProductInfo(item)">
-				 <image class="img" :src='item.img'></image>
+				 <image class="img" :src='item.thumb'></image>
 				 <view class="rightbox">
 					 <view class="title">{{item.title}}</view>
-					 <view class="shorttitle">{{item.shortitle}}</view>
+					 <view class="shorttitle">{{item.shorttitle}}</view>
 					 <image :src="imgSrc+'index/add.png'" class="addimg"></image>
 					 <view class="price">
-						 <view class="currentPrice">￥ 1366</view>
-						 <view class="originalPrice">￥ 1848</view>
+						 <view class="currentPrice">￥ {{item.marketprice}}</view>
+						 <view class="originalPrice">￥ {{item.productprice}}</view>
 					 </view>
 				 </view>
 			</view>
@@ -75,13 +75,15 @@
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				title: '首页',
-				info: [{
-					img: '../../static/index/banner.png'
-				}, {
-					img: '../../static/index/banner.png'
-				}, {
-					img: '../../static/index/banner.png'
-				}],
+				info: [
+				// 	{
+				// 	img: '../../static/index/banner.png'
+				// }, {
+				// 	img: '../../static/index/banner.png'
+				// }, {
+				// 	img: '../../static/index/banner.png'
+				// },
+				],
 				current: 0,
 				mode: 'round',
 				//nav
@@ -129,12 +131,28 @@
 			}
 		},
 		onLoad() {
-			
+			const that = this;
+			wx.getLocation({
+				type: 'gcj02 ',
+				success (res) {
+					that.longitude = res.longitude
+					that.latitude = res.latitude
+				}
+			})
 		},
 		onShow() {
+			const that = this;
 			Request(
-			'index.test'			
-			) 
+				'index.get_data'			
+			).then((res)=>{
+				console.log(res)
+				that.info = res.data.data.info
+				that.listwrap = res.data.data.goods
+				// 成功方法
+			})
+			.catch((res)=>{
+				// 失败方法
+			}) 
 		},
 		methods: {
 			change(e) {

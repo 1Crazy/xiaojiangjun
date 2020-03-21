@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/productInfo/productInfo",
     "pages/index/index",
+    "pages/productInfo/productInfo",
     "pages/mine/mine",
     "pages/dor/dor",
     "pages/cart/cart",
@@ -52,6 +52,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }
