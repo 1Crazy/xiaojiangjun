@@ -58,3 +58,68 @@
 			}
 		}
 	}
+
+// 物流说明弹出层
+.logisticsInfoModelContent{
+	width: 750rpx;
+	// height: 722rpx;
+	background-color: #ffffff;
+	border-radius: 20rpx 20rpx 0rpx 0rpx;
+	position: relative;
+	.closeImg{
+		position: absolute;
+		width: 50rpx;
+		height: 50rpx;
+		right: 20rpx;
+		top: 21rpx;
+	}
+	.h-title{
+		padding: 50rpx 0;
+		text-align: center;
+		font-size: 34rpx;
+		font-family: PingFang-SC-Bold;
+		font-weight: normal;
+		font-stretch: normal;
+		color: #000000;
+	}
+	.step{
+		width: 700rpx;
+		background-color: #f8f8f8;
+		border-radius: 10rpx;
+		margin: 0 auto;
+		border: solid 1rpx #e3e3e3;
+		display: flex;
+		align-items: center;
+		padding: 28rpx 29rpx 28rpx 14rpx;
+		box-sizing: border-box;
+		margin-bottom: 21rpx;
+		.num{
+			width: 40rpx;
+			height: 41rpx;
+			background-image: linear-gradient(90deg, 
+				#6fde39 0%, 
+				#46c806 100%), 
+			linear-gradient(
+				#f8f8f8, 
+				#f8f8f8);
+			background-blend-mode: normal, 
+				normal;
+			border-radius: 50%;
+			font-family: PingFang-SC-Medium;
+			font-size: 30rpx;
+			color: white;
+			line-height: 41rpx;
+			text-align: center;
+		}
+		.model-content{
+			width: 580rpx;
+			font-family: PingFang-SC-Medium;
+			font-size: 30rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			letter-spacing: 0rpx;
+			color: #333333;
+			margin-left: 30rpx;
+		}
+	}
+}

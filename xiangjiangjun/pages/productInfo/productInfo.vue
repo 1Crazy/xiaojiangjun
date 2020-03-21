@@ -25,15 +25,15 @@
 				<view class="count">销量：1999</view>
 			</view>
 		</view>
-		<view class="nav">
+		<view class="nav" @tap="LogisticsInfoModel(true)">
 			<view>物流说明</view>
 			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
 		<!-- 详情 -->
 		<view class="info">
 			<view class="navwrap">
-				<view :class="tab == 1 ? 'active': ''" @click="changeTab(1)">商品详情</view>
-				<view :class="tab == 2 ? 'active': ''" @click="changeTab(2)">用户评价</view>
+				<view :class="tab == 1 ? 'active': ''" @tap="changeTab(1)">商品详情</view>
+				<view :class="tab == 2 ? 'active': ''" @tap="changeTab(2)">用户评价</view>
 			</view>
 			<view :class="tab == 1 ? 'productInfo': 'hide'">
 				<view class="article">抗氧化性能最好，即使用周期最长，减少了废旧机油排放。 fuel-burn系数低，即油门反应高，节省了燃油消耗环保低碳。</view>
@@ -75,8 +75,25 @@
 			<button class="addCart">加入购物车</button>
 			<button class="buy">立刻购买</button>
 		</view>
-		
-		
+		<!-- 物流说明弹框 -->
+		<uni-popup ref="popup" type="bottom">
+			<view class="logisticsInfoModelContent">
+				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="LogisticsInfoModel(false)"></image>
+				<view class="h-title">物流说明</view>
+				<view class="step">
+					<view class="num">1</view>
+					<view class="model-content">付款后一般24小时内发货，付款后一般24小时内发货付款后一般24小时内发货付款后一般24小时内发货</view>
+				</view>
+				<view class="step">
+					<view class="num">2</view>
+					<view class="model-content">付款后一般24小时内发货，付款后一般24小时内发货付款后一般24小时内发货付款后一般24小时内发货</view>
+				</view>
+				<view class="step">
+					<view class="num">3</view>
+					<view class="model-content">付款后一般24小时内发货，付款后一般24小时内发货付款后一般24小时内发货付款后一般24小时内发货付款后一般24小时内发货，付款后一般24小时内发货付款。</view>
+				</view>
+			</view>
+		</uni-popup>
 		
 		<!-- 海报 -->
 		<view class="flex_row_c_c modalView" :class="qrShow?'show':''" @tap="hideQr()">
@@ -106,9 +123,11 @@
 	import {
 		getSharePoster
 	} from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/QS-SharePoster.js';
-	
+	import {uniPopup} from '../../components/uni/uni-popup/uni-popup.vue'
 	import './index.scss'
+	
 	export default {
+		components: {uniPopup},
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
@@ -155,6 +174,10 @@
 			//改变tab值
 			changeTab(num){
 				this.tab=num
+			},
+			//物流说明模态框
+			LogisticsInfoModel(bool){
+				bool ? this.$refs.popup.open() : this.$refs.popup.close()
 			},
 			/**
 			 * 绘制海报
