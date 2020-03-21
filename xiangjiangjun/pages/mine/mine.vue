@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="header">
-			<image class="avatar" src="/static/index/listpic1.png" mode=""></image>
+			<image class="avatar" :src="imgSrc+'index/listpic1.png'" mode=""></image>
 			<view class="name">橙子007</view>
 			<view class="vip">会员  ></view>
 		</view>
@@ -12,23 +12,23 @@
 			</view>
 			<view class="content">
 				<view class="item">
-					<image src="/static/mine/list1.png" class="img"></image>
+					<image :src="imgSrc+'mine/list1.png'" class="img"></image>
 					<view class="word">待支付</view>
 				</view>
 				<view class="item">
-					<image src="/static/mine/list2.png" class="img"></image>
+					<image :src="imgSrc+'mine/list2.png'" class="img"></image>
 					<view class="word">待发货</view>
 				</view>
 				<view class="item">
-					<image src="/static/mine/list3.png" class="img"></image>
+					<image :src="imgSrc+'mine/list3.png'" class="img"></image>
 					<view class="word">待收货</view>
 				</view>
 				<view class="item">
-					<image src="/static/mine/list4.png" class="img"></image>
+					<image :src="imgSrc+'mine/list4.png'" class="img"></image>
 					<view class="word">已完成</view>
 				</view>
 				<view class="item">
-					<image src="/static/mine/list5.png" class="img"></image>
+					<image :src="imgSrc+'mine/list5.png'" class="img"></image>
 					<view class="word">退款售后</view>
 				</view>
 			</view>
@@ -41,38 +41,38 @@
 			</view>
 			<view class="content">
 				<view class="item">
-					<image src="/static/mine/list1.png" class="img"></image>
+					<image :src="imgSrc+'mine/list1.png'" class="img"></image>
 					<view class="word">待支付</view>
 				</view>
 				<view class="item">
-					<image src="/static/mine/list6.png" class="img"></image>
+					<image :src="imgSrc+'mine/list6.png'" class="img"></image>
 					<view class="word">待消费</view>
 				</view>
 				<view class="item">
-					<image src="/static/mine/list4.png" class="img"></image>
+					<image :src="imgSrc+'mine/list4.png'" class="img"></image>
 					<view class="word">已完成</view>
 				</view>
 				<view class="item">
-					<image src="/static/mine/list5.png" class="img"></image>
+					<image :src="imgSrc+'mine/list5.png'" class="img"></image>
 					<view class="word">退款售后</view>
 				</view>
 			</view>
 		</view>
 		
 		<view class="listItem">
-			<image class="img" src="/static/mine/item1.png"></image>
+			<image class="img" :src="imgSrc+'mine/item1.png'"></image>
 			<view class="word">地址管理</view>
-			<image src='/static/public/arrow.png' class="symbol"></image>
+			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
 		<view class="listItem">
-			<image class="img" src="/static/mine/item2.png"></image>
+			<image class="img" :src="imgSrc+'mine/item2.png'"></image>
 			<view class="word">体验者</view>
-			<image src='/static/public/arrow.png' class="symbol"></image>
+			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
 		<view class="listItem">
-			<image class="img" src="/static/mine/item3.png"></image>
+			<image class="img" :src="imgSrc+'mine/item3.png'"></image>
 			<view class="word">优惠券</view>
-			<image src='/static/public/arrow.png' class="symbol"></image>
+			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
 	</view>
 </template>
@@ -81,8 +81,11 @@
 	export default {
 		data() {
 			return {
-				
+				imgSrc: this.$store.state.imgSrc,
 			}
+		},
+		onLoad() {
+			 
 		},
 		methods: {
 			

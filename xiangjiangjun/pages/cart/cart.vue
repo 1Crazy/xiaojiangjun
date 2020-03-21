@@ -2,7 +2,7 @@
 	<view>
 		<view class="itemMenu">
 			<radio class="itemRadio" color="#ff9000" value="r3" />
-			<image class="img" src="/static/index/listpic1.png"></image>
+			<image class="img" :src="imgSrc+'index/listpic1.png'"></image>
 			<view class="info">
 				<view class="infoTop">
 					<view class="title">YBM/意奔玛空调滤清YMB3140007空...</view>
@@ -15,11 +15,11 @@
 				<input class="num" type="text" value="1" />
 				<view class="add">+</view>
 			</view>
-			<image class="delete" src='/static/public/delete.png'></image>
+			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
 		</view>
 		<view class="itemMenu">
 			<radio class="itemRadio" color="#ff9000" value="r3" />
-			<image class="img" src="/static/index/listpic1.png"></image>
+			<image class="img" :src="imgSrc+'index/listpic1.png'"></image>
 			<view class="info">
 				<view class="infoTop">
 					<view class="title">YBM/意奔玛空调滤清YMB3140007空...</view>
@@ -32,11 +32,11 @@
 				<input class="num" type="text" value="1" />
 				<view class="add">+</view>
 			</view>
-			<image class="delete" src='/static/public/delete.png'></image>
+			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
 		</view>
 		<view class="itemMenu">
 			<radio class="itemRadio" color="#ff9000" value="r3" />
-			<image class="img" src="/static/index/listpic1.png"></image>
+			<image class="img" :src="imgSrc+'index/listpic1.png'"></image>
 			<view class="info">
 				<view class="infoTop">
 					<view class="title">YBM/意奔玛空调滤清YMB3140007空...</view>
@@ -49,11 +49,11 @@
 				<input class="num" type="text" value="1" />
 				<view class="add">+</view>
 			</view>
-			<image class="delete" src='/static/public/delete.png'></image>
+			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
 		</view>
 		<view class="itemMenu">
 			<radio class="itemRadio" color="#ff9000" value="r3" />
-			<image class="img" src="/static/index/listpic1.png"></image>
+			<image class="img" :src="imgSrc+'index/listpic1.png'"></image>
 			<view class="info">
 				<view class="infoTop">
 					<view class="title">YBM/意奔玛空调滤清YMB3140007空...</view>
@@ -66,11 +66,11 @@
 				<input class="num" type="text" value="1" />
 				<view class="add">+</view>
 			</view>
-			<image class="delete" src='/static/public/delete.png'></image>
+			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
 		</view>
 		<view class="itemMenu">
 			<radio class="itemRadio" color="#ff9000" value="r3" />
-			<image class="img" src="/static/index/listpic1.png"></image>
+			<image class="img" :src="imgSrc+'index/listpic1.png'"></image>
 			<view class="info">
 				<view class="infoTop">
 					<view class="title">YBM/意奔玛空调滤清YMB3140007空...</view>
@@ -83,7 +83,7 @@
 				<input class="num" type="text" value="1" />
 				<view class="add">+</view>
 			</view>
-			<image class="delete" src='/static/public/delete.png'></image>
+			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
 		</view>
 		<view style="height: 98rpx;"></view>
 		<view class="bottom">
@@ -102,8 +102,11 @@
 	export default {
 		data() {
 			return {
-
+				imgSrc: this.$store.state.imgSrc,
 			}
+		},
+		onLoad() {
+			
 		},
 		methods: {
 

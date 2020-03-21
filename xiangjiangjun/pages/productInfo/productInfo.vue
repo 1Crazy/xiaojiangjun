@@ -27,7 +27,7 @@
 		</view>
 		<view class="nav">
 			<view>物流说明</view>
-			<image src="../../static/public/arrow.png" class="symbol"></image>
+			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
 		<!-- 详情 -->
 		<view class="info">
@@ -37,18 +37,18 @@
 			</view>
 			<view :class="tab == 1 ? 'productInfo': 'hide'">
 				<view class="article">抗氧化性能最好，即使用周期最长，减少了废旧机油排放。 fuel-burn系数低，即油门反应高，节省了燃油消耗环保低碳。</view>
-				<image class="img1" src="../../static/index/picnav3.png" style="margin-top: 40rpx;margin-bottom: 93rpx;"></image>
-				<image class="img2" src="../../static/index/picnav3.png"></image>
+				<image class="img1" :src="imgSrc+'index/picnav3.png'" style="margin-top: 40rpx;margin-bottom: 93rpx;"></image>
+				<image class="img2" :src="imgSrc+'index/picnav3.png'"></image>
 			</view>
 			<view :class="tab == 2 ? 'comment': 'hide'"  v-for="(item ,index) in commentList" :key="index">
 				<view class="commentHeader">
 					<image class="avatar" :src="item.avatar"></image>
 					<view class="name">{{item.name}}</view>
-					<image :class="item.star>=1 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
-					<image :class="item.star>=2 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
-					<image :class="item.star>=3 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
-					<image :class="item.star>=4 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
-					<image :class="item.star>=5 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
+					<image :class="item.star>=1 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image :class="item.star>=2 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image :class="item.star>=3 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image :class="item.star>=4 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image :class="item.star>=5 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
 					<view class="date">{{item.date}}</view>
 				</view>
 				<view class="commentContent">{{item.content}}</view>
@@ -61,15 +61,15 @@
 		<!-- 底部 -->
 		<view class="footer">
 			<view class="wrap">
-				<image src="../../static/public/xiangqing_huishouye.png" ></image>
+				<image :src="imgSrc+'public/xiangqing_huishouye.png'" ></image>
 				<view>首页</view>
 			</view>
 			<view class="wrap center" @tap="shareFc()" >
-				<image src="../../static/public/xiagnqiang_fenxiang.png"></image>
+				<image :src="imgSrc+'public/xiagnqiang_fenxiang.png'"></image>
 				<view>分享</view>
 			</view>
 			<view class="wrap" style="margin-right: 44rpx;">
-				<image src="../../static/public/xiangqing_kefu.png"></image>
+				<image :src="imgSrc+'public/xiangqing_kefu.png'"></image>
 				<view>客服</view>
 			</view>
 			<button class="addCart">加入购物车</button>
@@ -87,11 +87,11 @@
 				</view>
 				<view class="flex_row marginTop2vh">
 					<button open-type="share" @tap.prevent.stop="share()" style="display: flex;align-items: center;background: white;">
-						<image src="/static/productInfo/fenxiang_weixin.png" class="canvasImage"></image>
+						<image :src="imgSrc+'productInfo/fenxiang_weixin.png'" class="canvasImage"></image>
 						<view>微信好友</view>
 					</button>
 					<view @tap.prevent.stop="saveImage()" style="display: flex;align-items: center;">
-						<image src="/static/productInfo/fenxiang_pengyouquan.png" class="canvasImage"></image>
+						<image :src="imgSrc+'productInfo/fenxiang_pengyouquan.png'" class="canvasImage"></image>
 						<view>朋友圈</view>
 						<button class="canvas-btn">保存图片</button>
 					</view>
@@ -111,6 +111,7 @@
 	export default {
 		data() {
 			return {
+				imgSrc: this.$store.state.imgSrc,
 				swiper: [{
 					img: '../../static/productInfo/banner1.png'
 				}, {
@@ -144,6 +145,8 @@
 				canvasId: 'default_PosterCanvasId',
 				//
 			}
+		},
+		onLoad() {
 		},
 		methods: {
 			swiperChange (e) {

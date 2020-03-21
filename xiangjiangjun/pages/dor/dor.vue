@@ -3,7 +3,7 @@
 		<view class="headerWrap">
 			<view class="header">
 				<input class="ipt" type="text" value="" placeholder="搜索您要找的门店名称" />
-				<image src="/static/public/fdj1.png" class="img"></image>
+				<image :src="imgSrc+'public/fdj1.png'" class="img"></image>
 			</view>
 		</view>
 		<view class="nav">
@@ -12,7 +12,7 @@
 		</view>
 		<view class="content">
 			<view class="itemView">
-				<image src="/static/index/listpic1.png" class="img"></image>
+				<image :src="imgSrc+'index/listpic1.png'" class="img"></image>
 				<view class="rightBox">
 					<view class="title">高新区路安汽车服务部</view>
 					<view class="center">
@@ -22,12 +22,12 @@
 					</view>
 					<view class="distance">1.5km</view>
 				</view>
-				<image class="threedot" src="/static/public/threeDot.png"></image>
+				<image class="threedot" :src="imgSrc+'public/threeDot.png'"></image>
 			</view>
 		</view>
 		<view class="content">
 			<view class="itemView">
-				<image src="/static/index/listpic1.png" class="img"></image>
+				<image :src="imgSrc+'index/listpic1.png'" class="img"></image>
 				<view class="rightBox">
 					<view class="title">高新区路安汽车服务部</view>
 					<view class="center">
@@ -37,12 +37,12 @@
 					</view>
 					<view class="distance">1.5km</view>
 				</view>
-				<image class="threedot" src="/static/public/threeDot.png"></image>
+				<image class="threedot" :src="imgSrc+'public/threeDot.png'"></image>
 			</view>
 		</view>
 		<view class="content">
 			<view class="itemView">
-				<image src="/static/index/listpic1.png" class="img"></image>
+				<image :src="imgSrc+'index/listpic1.png'" class="img"></image>
 				<view class="rightBox">
 					<view class="title">高新区路安汽车服务部</view>
 					<view class="center">
@@ -52,7 +52,7 @@
 					</view>
 					<view class="distance">1.5km</view>
 				</view>
-				<image class="threedot" src="/static/public/threeDot.png"></image>
+				<image class="threedot" :src="imgSrc+'public/threeDot.png'"></image>
 			</view>
 		</view>
 	</view>
@@ -62,8 +62,10 @@
 	export default {
 		data() {
 			return {
-				
+				imgSrc: this.$store.state.imgSrc,
 			}
+		},
+		onLoad() {
 		},
 		methods: {
 			

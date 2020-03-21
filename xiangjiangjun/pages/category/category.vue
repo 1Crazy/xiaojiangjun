@@ -29,10 +29,13 @@
 	            },
 	            data() {
 	                return {
+						imgSrc: this.$store.state.imgSrc,
 	                    categoryList:[],
 	                    subCategoryList:[]
 	                }
 	            },
+				onLoad() {
+				},
 	            methods: {
 	                categoryMainClick(category){
 	                    this.subCategoryList = category.subCategoryList;

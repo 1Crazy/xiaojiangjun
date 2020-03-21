@@ -2,11 +2,11 @@
 	<view>
 		<view class="header">
 			<view class="left">
-				<image class="address" src="../../static/public/adress1.png"></image>
+				<image class="address" :src="imgSrc+'public/adress1.png'"></image>
 				<view>成都 ></view>
 			</view>
 			<view class="right">
-				<image class="fdj" src="../../static/public/fdj1.png"></image>
+				<image class="fdj" :src="imgSrc+'public/fdj1.png'"></image>
 				<input class="ipt" type="text" placeholder="输入关键字搜索内容">
 			</view>
 		</view>
@@ -36,15 +36,15 @@
 		</view>
 		<!-- 图片 -->
 		<view class="picnav">
-			<image class="img img1" src="../../static/index/picnav1.png"></image>
-			<image class="img img2" src="../../static/index/picnav2.png"></image>
-			<image class="img img3" src="../../static/index/picnav3.png"></image>
-			<image class="img img4" src="../../static/index/picnav4.png"></image>
+			<image class="img img1" :src="imgSrc+'index/picnav1.png'"></image>
+			<image class="img img2" :src="imgSrc+'index/picnav2.png'"></image>
+			<image class="img img3" :src="imgSrc+'index/picnav3.png'"></image>
+			<image class="img img4" :src="imgSrc+'index/picnav4.png'"></image>
 		</view>
 		<!-- 商品列表 -->
 		<view class='nav-word'>
 			<view class="word">商品列表    </view>
-			<image class="img" src='../../static/public/arrow.png'></image>
+			<image class="img" :src="imgSrc+'public/arrow.png'"></image>
 		</view>
 		<!-- 列表详情 -->
 		<view class="bggreay">
@@ -53,7 +53,7 @@
 				 <view class="rightbox">
 					 <view class="title">{{item.title}}</view>
 					 <view class="shorttitle">{{item.shortitle}}</view>
-					 <image src="../../static/index/add.png" class="addimg"></image>
+					 <image :src="imgSrc+'index/add.png'" class="addimg"></image>
 					 <view class="price">
 						 <view class="currentPrice">￥ 1366</view>
 						 <view class="originalPrice">￥ 1848</view>
@@ -65,13 +65,15 @@
 </template>
 
 <script>
-	import uniSwiperDot from "@/components/uni-swiper-dot/uni-swiper-dot.vue"
+	import uniSwiperDot from "@/components/uni/uni-swiper-dot/uni-swiper-dot.vue"
+	
 	export default {
 		components: {
 			uniSwiperDot,
 		},
 		data() {
 			return {
+				imgSrc: this.$store.state.imgSrc,
 				title: '首页',
 				info: [{
 					img: '../../static/index/banner.png'
@@ -127,7 +129,10 @@
 			}
 		},
 		onLoad() {
-
+			
+		},
+		onShow() {
+			
 		},
 		methods: {
 			change(e) {
