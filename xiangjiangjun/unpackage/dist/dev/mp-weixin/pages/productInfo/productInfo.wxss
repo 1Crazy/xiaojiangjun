@@ -86,7 +86,8 @@
   width: 750rpx;
   background-color: #ffffff;
   border-radius: 20rpx 20rpx 0rpx 0rpx;
-  position: relative; }
+  position: relative;
+  padding-bottom: 29rpx; }
 .logisticsInfoModelContent .closeImg {
     position: absolute;
     width: 50rpx;

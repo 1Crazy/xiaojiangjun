@@ -2,7 +2,7 @@
 	export default {
 		// globalData: {
 		//    imgSrc: '/static' 
-		// },
+		// },ss
 		onLaunch: function() {
 			console.log('App Launch')
 		},
