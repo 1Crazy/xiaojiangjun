@@ -7615,10 +7615,9 @@ module.exports = g;
   !*** D:/HBuilderX/project/xiaojiangjun/xiangjiangjun/pages.json ***!
   \******************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
+throw new Error("Module build failed (from ./node_modules/@dcloudio/webpack-uni-pages-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'D:\\HBuilderX\\project\\xiaojiangjun\\xiangjiangjun\\manifest.json'\n    at Object.fs.openSync (fs.js:646:18)\n    at Object.fs.readFileSync (fs.js:551:33)\n    at Object.module.exports (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@dcloudio\\webpack-uni-pages-loader\\lib\\index-new.js:46:45)\n    at Object.module.exports (D:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@dcloudio\\webpack-uni-pages-loader\\lib\\index.js:45:35)");
 
 /***/ }),
 /* 5 */
