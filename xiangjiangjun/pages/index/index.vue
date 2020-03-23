@@ -2,8 +2,8 @@
 	<view>
 		<view class="header">
 			<view class="left">
-				<image class="address" :src="imgSrc+'public/adress1.png'"></image>
-				<view>成都 ></view>
+				<image class="img" :src="imgSrc+'public/adress1.png'"></image>
+				<view class="address">成都 ></view>
 			</view>
 			<view class="right">
 				<image class="fdj" :src="imgSrc+'public/fdj1.png'"></image>
@@ -177,15 +177,18 @@
 		padding: 20rpx;
 		.left{
 			display: flex;
-			.address{
+			align-items: center;
+			.img{
 				width:40rpx;
 				height: 40rpx;
+				margin-right: 13rpx;
+			}
+			.address{
 				font-family: PingFang-SC-Medium;
 				font-size: 36rpx;
 				font-weight: normal;
 				font-stretch: normal;
 				color: #333333;
-				margin-right: 13rpx;
 			}
 		}
 		.right{
