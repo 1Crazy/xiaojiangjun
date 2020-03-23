@@ -354,6 +354,7 @@
 		.img{
 			width: 200rpx;
 			height: 200rpx;
+			border: 1px solid #e3e3e3;
 		}
 		.rightbox{
 			width: 482rpx;

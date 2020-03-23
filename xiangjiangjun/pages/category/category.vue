@@ -16,6 +16,7 @@
 			rightImgWidth='120rpx'
 			rightImgHeight="120rpx"
 			rightImgBorderRadius="50%"
+			borderStyle='1px solid #e3e3e3'
 		>
 		</category>
 	</view>
