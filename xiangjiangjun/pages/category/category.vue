@@ -23,6 +23,8 @@
 
 <script>
 	import category from "../../components/qiyue-category/qiyue-category.vue"
+	import { Request } from "../../public/utils.js"
+	import _app from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js';
 	        export default {
 	            components:{
 	                category
@@ -36,23 +38,45 @@
 	            },
 				onLoad() {
 				},
+				onShow() {
+					
+				},
 	            methods: {
 	                categoryMainClick(category){
 	                    this.subCategoryList = category.subCategoryList;
+						if(!this.subCategoryList){
+							this.subCategoryList = []
+							_app.showToast('该分类占无商品')
+						}
 	                },
 	                categorySubClick(category){
 	                    console.log(category);
 	                }
 	            },
 	            mounted() {
-	                for(var i=0;i<5;i++){
-	                    var subList = [];
-	                    for(var j=0;j<20;j++){
-	                        subList.push({"name":"分类"+i+":商品"+j,"logo":"http://placehold.it/50x50"})
-	                    }
-	                    this.categoryList.push({"name":"分类"+i,"subCategoryList":subList})
-	                }
-	                this.subCategoryList = this.categoryList[0].subCategoryList;
+					const that = this;
+					Request(
+						'goods.get_bycategory'
+					)
+					.then((res)=>{
+						console.log(res)
+						
+						// for(var i=0;i<5;i++){
+						//     var subList = [];
+						//     for(var j=0;j<20;j++){
+						//         subList.push({"name":"分类"+i+":商品"+j,"logo":"http://placehold.it/50x50"})
+						//     }
+						//     this.categoryList.push({"name":"分类"+i,"subCategoryList":subList})
+						// }
+						// this.subCategoryList = this.categoryList[0].subCategoryList;
+						
+						that.categoryList = res.data.categoryList
+						that.subCategoryList = that.categoryList[0].subCategoryList;
+						// 成功方法
+					})
+					.catch((res)=>{
+						// 失败方法
+					})
 	            }
 	        }
 </script>

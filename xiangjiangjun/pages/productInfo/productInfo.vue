@@ -183,7 +183,13 @@
 					{
 						id:id
 					}
-				)
+				).then((res)=>{
+					console.log(res)
+					// 成功方法
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
 			},
 			//物流说明模态框
 			LogisticsInfoModel(bool){
