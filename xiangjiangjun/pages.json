@@ -1,6 +1,11 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+		    "path" : "pages/category/category",
+		    "style" : {
+				"navigationBarTitleText": "分类"
+			}
+		},{
 		    "path" : "pages/productInfo/productInfo",
 		    "style" : {
 				"navigationBarTitleText": "商品详情"
@@ -32,11 +37,6 @@
 		    "path" : "pages/cart/cart",
 		    "style" : {
 				"navigationBarTitleText": "购物车"
-			}
-		},{
-		    "path" : "pages/category/category",
-		    "style" : {
-				"navigationBarTitleText": "分类"
 			}
 		}
     ],

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="header">
-			<input class="ipt" type="text" value="" placeholder="请输入你想要搜索的内容" />
+			<input class="ipt" type="text" value="" @input="find" placeholder="请输入你想要搜索的内容" />
 			<image src="/static/public/fdj1.png" class="img"></image>
 		</view>
 		<category
@@ -40,7 +40,7 @@
 				onLoad() {
 				},
 				onShow() {
-					
+					this.getData();
 				},
 	            methods: {
 	                categoryMainClick(category){
@@ -52,32 +52,35 @@
 	                },
 	                categorySubClick(category){
 	                    console.log(category);
-	                }
+	                },
+					getData(findkey = ''){
+						const that = this;
+						Request(
+							'goods.get_bycategory',
+							{
+								findkey:findkey
+							}
+						)
+						.then((res)=>{
+							console.log(res.data.categoryList)
+							that.categoryList = res.data.categoryList
+							if(findkey==''){
+								that.subCategoryList = that.categoryList[0].subCategoryList;
+							}
+							// that.$forceUpdate();
+							// 成功方法
+						})
+						.catch((res)=>{
+							// 失败方法
+						})
+					},
+					find(e){
+						console.log(e.detail.value);
+						this.getData(e.detail.value);
+					}
 	            },
 	            mounted() {
-					const that = this;
-					Request(
-						'goods.get_bycategory'
-					)
-					.then((res)=>{
-						console.log(res)
-						
-						// for(var i=0;i<5;i++){
-						//     var subList = [];
-						//     for(var j=0;j<20;j++){
-						//         subList.push({"name":"分类"+i+":商品"+j,"logo":"http://placehold.it/50x50"})
-						//     }
-						//     this.categoryList.push({"name":"分类"+i,"subCategoryList":subList})
-						// }
-						// this.subCategoryList = this.categoryList[0].subCategoryList;
-						
-						that.categoryList = res.data.categoryList
-						that.subCategoryList = that.categoryList[0].subCategoryList;
-						// 成功方法
-					})
-					.catch((res)=>{
-						// 失败方法
-					})
+					
 	            }
 	        }
 </script>
