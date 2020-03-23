@@ -2,9 +2,9 @@
 	<view>
 		<view class="header">
 			<view class="h-title">收货方式</view>
-			<uni-list>
-			    <uni-list-item title="标题文字" thumb=""></uni-list-item>
-			</uni-list>
+			<<!-- uni-list>
+			    <uni-list-item title="标题文字" thumb="22"></uni-list-item>
+			</uni-list> -->
 		</view>
 		
 	</view>
