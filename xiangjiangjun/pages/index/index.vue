@@ -206,7 +206,7 @@
 				font-stretch: normal;
 				line-height: 56rpx;
 				color: #999999;
-				padding-right: 30rpx 78rpx;
+				padding-right: 30rpx;
 				padding-left: 78rpx;
 				box-sizing: border-box;
 			}
