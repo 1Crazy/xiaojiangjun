@@ -38,6 +38,10 @@
 			}
 		},
 		props: {
+			update: {
+				type: Boolean,
+				default: false
+			},
 			//主分类激活索引
 			defaultActive: {
 				type: Number,

@@ -61,15 +61,15 @@
         "setting" : {
             "urlCheck" : false,
             "es6" : true,
-            "postcss" : true,
+            "postcss" : false,
             "minified" : true
         },
         "usingComponents" : true,
-		"permission": {
-		    "scope.userLocation": {
-		      "desc": "小程序将获取您的用户信息"
-		    }
-		}
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "小程序将获取您的用户信息"
+            }
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true

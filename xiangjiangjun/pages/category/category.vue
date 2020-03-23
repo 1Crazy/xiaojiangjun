@@ -4,21 +4,25 @@
 			<input class="ipt" type="text" value="" @input="find" placeholder="请输入你想要搜索的内容" />
 			<image src="/static/public/fdj1.png" class="img"></image>
 		</view>
-		<category
-			activeBackgroundColor='#1db728'
-			activeTextColor='white' 
-			:categoryList="categoryList" 
-			:subCategoryList="subCategoryList"
-			@categoryMainClick="categoryMainClick"
-			@categorySubClick="categorySubClick"
-			rightBackgroundColor='white'
-			rightFontSize='26rpx'
-			rightImgWidth='120rpx'
-			rightImgHeight="120rpx"
-			rightImgBorderRadius="50%"
-			borderStyle='1px solid #e3e3e3'
-		>
-		</category>
+		<!-- <view v-if="update"> -->
+			<category
+				activeBackgroundColor='#1db728'
+				activeTextColor='white' 
+				:categoryList="categoryList" 
+				:subCategoryList="subCategoryList"
+				@categoryMainClick="categoryMainClick"
+				@categorySubClick="categorySubClick"
+				rightBackgroundColor='white'
+				rightFontSize='26rpx'
+				rightImgWidth='120rpx'
+				rightImgHeight="120rpx"
+				rightImgBorderRadius="50%"
+				:defaultActive='activeIndex'
+				borderStyle='1px solid #e3e3e3'
+			>
+			</category>
+		<!-- </view> -->
+		
 	</view>
 </template>
 
@@ -33,8 +37,10 @@
 	            data() {
 	                return {
 						imgSrc: this.$store.state.imgSrc,
-	                    categoryList:[],
-	                    subCategoryList:[]
+	                    categoryList:[],// 主分类数据
+	                    subCategoryList:[], // 子分类数据
+						update: false,
+						activeIndex: 0
 	                }
 	            },
 				onLoad() {
@@ -43,13 +49,16 @@
 					this.getData();
 				},
 	            methods: {
+					// 子分类左边点击事件
 	                categoryMainClick(category){
+						console.log(category,'category')
 	                    this.subCategoryList = category.subCategoryList;
 						if(!this.subCategoryList){
 							this.subCategoryList = []
 							_app.showToast('该分类占无商品')
 						}
 	                },
+					// 子分类右边点击事件
 	                categorySubClick(category){
 	                    console.log(category);
 	                },
@@ -62,12 +71,20 @@
 							}
 						)
 						.then((res)=>{
-							console.log(res.data.categoryList)
+							console.log(that)
+							// console.log(res.data.categoryList)
 							that.categoryList = res.data.categoryList
+							
 							if(findkey==''){
 								that.subCategoryList = that.categoryList[0].subCategoryList;
 							}
-							// that.$forceUpdate();
+							// that.activeIndex = 2
+							// that.categoryMainClick(that.categoryList)
+							// this.$forceUpdate()
+							// that.$forceUpdate()
+							// this.update=false;
+							// this.update=true;
+							
 							// 成功方法
 						})
 						.catch((res)=>{
