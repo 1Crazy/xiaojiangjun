@@ -11,46 +11,14 @@
 			<view class="tit2">距离</view>
 		</view>
 		<view class="content">
-			<view class="itemView">
-				<image :src="imgSrc+'index/listpic1.png'" class="img"></image>
+			<view class="itemView" v-for="(item ,index) in liststores" :key="index">
+				<image :src="item.logo" class="img"></image>
 				<view class="rightBox">
-					<view class="title">高新区路安汽车服务部</view>
+					<view class="title">{{item.storename}}</view>
 					<view class="center">
-						<view>机油</view>
-						<view>轮胎</view>
-						<view>轮胎</view>
+						<view v-for="(item ,index) in item.store_services" :key="index">{{item.service_name}}</view>
 					</view>
-					<view class="distance">1.5km</view>
-				</view>
-				<image class="threedot" :src="imgSrc+'public/threeDot.png'"></image>
-			</view>
-		</view>
-		<view class="content">
-			<view class="itemView">
-				<image :src="imgSrc+'index/listpic1.png'" class="img"></image>
-				<view class="rightBox">
-					<view class="title">高新区路安汽车服务部</view>
-					<view class="center">
-						<view>机油</view>
-						<view>轮胎</view>
-						<view>轮胎</view>
-					</view>
-					<view class="distance">1.5km</view>
-				</view>
-				<image class="threedot" :src="imgSrc+'public/threeDot.png'"></image>
-			</view>
-		</view>
-		<view class="content">
-			<view class="itemView">
-				<image :src="imgSrc+'index/listpic1.png'" class="img"></image>
-				<view class="rightBox">
-					<view class="title">高新区路安汽车服务部</view>
-					<view class="center">
-						<view>机油</view>
-						<view>轮胎</view>
-						<view>轮胎</view>
-					</view>
-					<view class="distance">1.5km</view>
+					<view class="distance">{{item.distance}}km</view>
 				</view>
 				<image class="threedot" :src="imgSrc+'public/threeDot.png'"></image>
 			</view>
@@ -59,16 +27,49 @@
 </template>
 
 <script>
+	import { Request } from '../../public/utils.js'
 	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				liststores:[],
+				longitude:'',
+				latitude:''
 			}
 		},
 		onLoad() {
+			this.getLocation();
+			
 		},
 		methods: {
-			
+			getLocation(){
+				const that = this;
+				wx.getLocation({
+					type: 'gcj02 ',
+					success (res) {
+						that.longitude = res.longitude
+						that.latitude = res.latitude
+						that.getStores();
+					}
+				})
+			},
+			getStores(){
+				const that = this;
+				Request(
+					'store.get_stores',
+					{
+						lng:that.longitude,
+						lat:that.latitude
+					}
+				).then((res)=>{
+					console.log(res)
+					this.liststores = res.data.list
+					// 成功方法
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			}
 		}
 	}
 </script>
