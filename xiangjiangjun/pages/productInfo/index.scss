@@ -248,7 +248,7 @@
 				align-items: center;
 				.symbol{
 					width: 69rpx;
-					height: 61rpx;
+					border-radius: 0;
 					text-align: center;
 					line-height: 61rpx;
 					color: #cccccc;
@@ -268,10 +268,11 @@
 		}
 	}
 	.c-bottom-bottom{
-		height: 206rpx;
 		.btn-wrap{
 			display: flex;
 			flex-wrap: wrap;
+			max-height: 390rpx;
+			overflow: hidden;
 			.c-b-title{
 				font-family: PingFang-SC-Medium;
 				font-size: 28rpx;
@@ -280,7 +281,8 @@
 				color: #999999;
 			}
 			.btn{
-				width: 200rpx;
+				// width: 200rpx;
+				padding: 0 45rpx;
 				height: 70rpx;
 				border-radius: 35rpx;
 				border: solid 1rpx #e3e3e3;

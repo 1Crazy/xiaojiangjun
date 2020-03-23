@@ -11,7 +11,7 @@
 			</view>
 		</view>
 		<!-- 轮播 -->
-		<uni-swiper-dot :info="info" :current="current" field="content" :mode="mode" Color="#fff" selectedBackgroundColor="#ffffff">
+		<uni-swiper-dot :info="info" :current="current" field="content" :mode="mode" selectedBackgroundColor="#ffffff">
 		    <swiper autoplay class="swiper-box" @change="change">
 		        <swiper-item v-for="(item ,index) in info" :key="index">
 		            <view class="swiper-item">
@@ -89,25 +89,25 @@
 				//nav
 				nav:[
 					{
-						img: '../../static/index/nav1.png',
+						img: `${this.$store.state.imgSrc}/index/nav1.png`,
 						word: '快修快保'
 					},
 					{
-						img: '../../static/index/nav2.png',
+						img:`${this.$store.state.imgSrc}/index/nav2.png`,
 						word: '汽车美容'
 					},
 					{
-						img: '../../static/index/nav3.png',
+						img: `${this.$store.state.imgSrc}/index/nav3.png`,
 						word: '道路救援'
 					}
 				],
 				tyq:[
 					{
-						img: '../../static/index/tyq2.png',
+						img: `${this.$store.state.imgSrc}/index/tyq2.png`,
 						word: '保险客户体验区'
 					},
 					{
-						img: '../../static/index/tyq1.png',
+						img: `${this.$store.state.imgSrc}/index/tyq1.png`,
 						word: '更多体验'
 					},
 				],

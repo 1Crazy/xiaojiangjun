@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-		imgSrc: '../../static/',
+		// imgSrc: '../../static/',
+		imgSrc: 'http://xiaojiangjun.cduxj.com/attachment/images/',
 		// hasLogin: false,
 		// userInfo: {},
 	},

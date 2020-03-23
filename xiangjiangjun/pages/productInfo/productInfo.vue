@@ -71,7 +71,7 @@
 				<view style="margin-top: 24rpx;">客服</view>
 			</button>
 			<button class="btn addCart" @tap="addCartModel(true)">加入购物车</button>
-			<button class="btn buy">立刻购买</button>
+			<button class="btn buy" @tap="addCartModel(true)">立刻购买</button>
 		</view>
 		<!-- 物流说明弹框 -->
 		<uni-popup ref="popup" type="bottom">
@@ -113,9 +113,9 @@
 					<view class="c-bottom">
 						<view class="c-b-word">购买数量</view>
 						<view class="r-wrap">
-							<view class="symbol">-</view>
-							<input class="ipt" type="text" value="1" />
-							<view class="symbol">+</view>
+							<button class="symbol" @tap="delNum()">-</button>
+							<input class="ipt" type="text" v-model="productNum" />
+							<button class="symbol" @tap="addNum()">+</button>
 						</view>
 					</view>
 					<view class="c-bottom-bottom">
@@ -125,7 +125,7 @@
 						</view>
 					</view>
 				</view>
-				<button class="submitBtn">提交</button>
+				<button class="submitBtn" @tap="submitBtn()">提交</button>
 			</view>
 		</uni-popup>
 		<!-- 海报 -->
@@ -166,23 +166,23 @@
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				swiper: [{
-					img: '../../static/productInfo/banner1.png'
+					img: `${this.$store.state.imgSrc}productInfo/banner1.png`
 				}, {
-					img: '../../static/productInfo/banner2.png'
+					img: `${this.$store.state.imgSrc}productInfo/banner2.png`
 				}],
 				current: 0,
 				tab: 1,//商品详情1，用户评价2
 				commentList: [
 					{
-						avatar: '../../static/index/add.png',
+						avatar: `${this.$store.state.imgSrc}index/add.png`,
 						name: '张先生',
 						star: 2,
 						date: '2019-12-25',
 						content: '机油收到了，已经购买了几次了，值得信赖的商家，还是一如既往的好，和实体店购买的一样，实惠质量也非常不错！！！！',
-						commentPic: ['../../static/index/listpic1.png','../../static/index/listpic1.png','../../static/index/listpic1.png']
+						commentPic: [`${this.$store.state.imgSrc}index/listpic1.png`,`${this.$store.state.imgSrc}index/listpic1.png`,`${this.$store.state.imgSrc}index/listpic1.png`]
 					},
 					{
-						avatar: '../../static/index/add.png',
+						avatar: `${this.$store.state.imgSrc}index/add.png`,
 						name: 'x先生',
 						star: 3,
 						date: '2019-11-25',
@@ -195,11 +195,11 @@
 				 */
 				specificationList: [
 					'我是规格1',
-					'我是规格2',
+					'我是规格',
 					'我是规格3',
 					'我是规格4',
-					'我是规格5'
 				],
+				productNum: 1,
 				specificationIndex: null,
 				/**
 				 * 海报绘制相关变量
@@ -252,6 +252,23 @@
 			// 改变当前规格参数值
 			changeActiveBtn(index){
 				this.specificationIndex = index
+			},
+			delNum(){
+				if (this.productNum > 1) {
+					this.productNum--
+				}
+			},
+			addNum(){
+				if (this.productNum < 200) {
+					this.productNum++
+				}
+			},
+			// 提交
+			submitBtn(){
+				this.$refs.addCartPopup.close()
+				uni.navigateTo({
+					url: '/pages/isSureOrder/isSureOrder'
+				})
 			},
 			/**
 			 * 绘制海报
