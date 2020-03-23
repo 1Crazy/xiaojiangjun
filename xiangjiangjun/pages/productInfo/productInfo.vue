@@ -72,7 +72,7 @@
 				<image :src="imgSrc+'public/xiangqing_kefu.png'"></image>
 				<view style="margin-top: 24rpx;">客服</view>
 			</button>
-			<button class="btn addCart">加入购物车</button>
+			<button class="btn addCart" @tap="addCartModel(true)">加入购物车</button>
 			<button class="btn buy">立刻购买</button>
 		</view>
 		<!-- 物流说明弹框 -->
@@ -94,7 +94,35 @@
 				</view>
 			</view>
 		</uni-popup>
-		
+		<!-- 加入购物车商品规格选择模态框 -->
+		<uni-popup ref="addCartPopup" type="bottom">
+			<view class="productSpecificationsModelContent">
+				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="addCartModel(false)"></image>
+				<view class="headerModelContent">
+					<image class="img" :src="imgSrc+'productInfo/banner1.png'"></image>
+					<view class="rightBox">
+						<view class="r-title">马驰宝汽车机油正品全合成5W-40德国进口奔驰宝马奥迪大众本田4L</view>
+						<view class="r-info">净含量：4L</view>
+						<view class="r-num">库存：5999件</view>
+					</view>
+				</view>
+				<view class="centerModelContent">
+					<view class="c-header">
+						<view class="price">￥488</view>
+						<view class="hy-price">会员价:￥420</view>
+						<view class="num">销量：1999</view>
+					</view>
+					<view class="c-bottom">
+						<view class="c-b-word">购买数量</view>
+						<view class="r-wrap">
+							<view class="symbol">-</view>
+							<input class="ipt" type="text" value="1" />
+							<view class="symbol">+</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</uni-popup>
 		<!-- 海报 -->
 		<view class="flex_row_c_c modalView" :class="qrShow?'show':''" @tap="hideQr()">
 			<view class="flex_column" style="width: 750rpx;height: 852rpx;position: fixed;bottom: 132rpx;left: 0;">
@@ -195,6 +223,11 @@
 			LogisticsInfoModel(bool){
 				bool ? this.$refs.popup.open() : this.$refs.popup.close()
 			},
+			// 商品加入购物车弹出模态框
+			addCartModel(bool){
+				bool ? this.$refs.addCartPopup.open() : this.$refs.addCartPopup.close()
+			},
+			//返回首页
 			gotoIndex(){
 				uni.reLaunch({
 					url: '/pages/index/index'
