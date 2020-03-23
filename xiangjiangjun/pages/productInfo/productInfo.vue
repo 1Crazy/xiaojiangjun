@@ -1,7 +1,5 @@
 <template>
 	<view>
-		
-<!-- 		<button type="primary" @tap="shareFc()">生成海报</button> -->
 		<view class="hideCanvasView">
 			<canvas class="hideCanvas" canvas-id="default_PosterCanvasId" :style="{width: (poster.width||0) + 'px', height: (poster.height||0) + 'px'}"></canvas>
 		</view>
@@ -120,7 +118,14 @@
 							<view class="symbol">+</view>
 						</view>
 					</view>
+					<view class="c-bottom-bottom">
+						<view class="c-b-title">选择规格：</view>
+						<view class="btn-wrap">
+							<button type="default" :class="specificationIndex==index ? 'active-btn btn ' : 'btn'" v-for="(item ,index) in specificationList" :key="index" @tap="changeActiveBtn(index)">{{item}}</button>				
+						</view>
+					</view>
 				</view>
+				<button class="submitBtn">提交</button>
 			</view>
 		</uni-popup>
 		<!-- 海报 -->
@@ -186,6 +191,17 @@
 					},
 				],
 				/**
+				 * 选择规格数据
+				 */
+				specificationList: [
+					'我是规格1',
+					'我是规格2',
+					'我是规格3',
+					'我是规格4',
+					'我是规格5'
+				],
+				specificationIndex: null,
+				/**
 				 * 海报绘制相关变量
 				 */
 				poster: {},
@@ -226,6 +242,10 @@
 				uni.reLaunch({
 					url: '/pages/index/index'
 				})
+			},
+			// 改变当前规格参数值
+			changeActiveBtn(index){
+				this.specificationIndex = index
 			},
 			/**
 			 * 绘制海报
