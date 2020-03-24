@@ -34,7 +34,7 @@
 			},
 			num: {
 				type: Number,
-				default: false
+				default: null
 			}
 		},
 		data() {

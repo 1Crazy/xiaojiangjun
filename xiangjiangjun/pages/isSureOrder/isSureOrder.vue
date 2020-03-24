@@ -3,7 +3,7 @@
 		<view class="header">
 			<view class="h-title">收货方式</view>
 			<uni-list>
-			    <uni-list-item title="到店自提" :thumb="imgSrc+'public/shop-icon.png'"></uni-list-item>
+			    <uni-list-item title="到店自提" :thumb="imgSrc+'public/shop-icon.png'" @click="gotoDorPages"></uni-list-item>
 			</uni-list>
 			<view class="storeName" v-if="isStoreName">成都市高新区环球店</view>
 			<uni-list>
@@ -12,7 +12,7 @@
 			<uni-list v-if="!isAdress">
 				<uni-list-item title="添加收货地址"></uni-list-item>
 			</uni-list>
-			<view class="address-info" v-if="isAdress">
+			<view class="address-info" v-if="isAdress" @tap="gotoAddressManagement">
 				<view class="top">
 					<view class="name">柚子007</view>
 					<view class="phone">13540738352</view>
@@ -103,6 +103,18 @@
 					this.productNum++
 				}
 			},
+			// 门店页跳转
+			gotoDorPages(){
+				uni.navigateTo({
+					url: '/pages/chooiseStoreName/chooiseStoreName'
+				})
+			},
+			// 地址页面跳转
+			gotoAddressManagement(){
+				uni.navigateTo({
+					url: '/pages/addressManagement/addressManagement'
+				})
+			}
 		}
 	}
 </script>
