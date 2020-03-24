@@ -1,6 +1,11 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+		    "path" : "pages/chooiseStoreName/chooiseStoreName",
+		    "style" : {
+				"navigationBarTitleText": "附近门店"
+			}
+		},{
 		    "path" : "pages/isSureOrder/isSureOrder",
 		    "style" : {
 		    	"navigationBarTitleText": "确认订单"

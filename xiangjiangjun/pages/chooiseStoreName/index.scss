@@ -1,0 +1,90 @@
+page{
+	background-color: #FFFFFF;
+}
+.headerWrap{
+	background-color: white;
+	padding: 20rpx;
+	.header{
+		background-color: #f8f8f8;
+		position: relative;
+		width: 710rpx;
+		border-radius: 40rpx;
+		height: 80rpx;
+		.ipt{
+			width: 710rpx;
+			height: 80rpx;
+			background-color: #f2f2f2;
+			border-radius: 40rpx;
+			border: solid 1rpx #e3e3e3;
+			line-height: 80rpx;
+			font-family: PingFang-SC-Regular;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #999999;
+			padding-left: 101rpx;
+			padding-right: 29rpx;
+			box-sizing: border-box;
+			margin: 0 auto;
+		}
+		.img{
+			position: absolute;
+			width: 40rpx;
+			height: 33rpx;
+			left:29rpx;
+			top: 23rpx;
+		}
+	}
+}
+//列表
+.listWrap{
+	width: 690rpx;
+	height: 169rpx;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #e3e3e3;
+	justify-content: space-between;
+	.distance{
+		font-family: PingFang-SC-Medium;
+		font-size: 30rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		color: #474747;
+	}
+	.storeName{
+		font-family: PingFang-SC-Bold;
+		font-size: 30rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		color: #333333;
+	}
+	.btn{
+		width: 160rpx;
+		height: 60rpx;
+		background-image: linear-gradient(90deg, 
+			#6fde39 0%, 
+			#46c806 100%);
+		border-radius: 30rpx;
+		font-family: PingFang-SC-Medium;
+		font-size: 30rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		line-height: 60rpx;
+		color: #ffffff;
+	}
+}
+.lookMore{
+	width: 300rpx;
+	height: 70rpx;
+	background-color: #e3e3e3;
+	border-radius: 35rpx;
+	margin: 0 auto;
+	margin-top: 86rpx;
+	font-family: PingFang-SC-Medium;
+	font-size: 28rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 70rpx;
+	color: #333333;
+}
