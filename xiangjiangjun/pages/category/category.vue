@@ -76,8 +76,6 @@
 								this.subCategoryList = this.categoryList[0].subCategoryList;
 							}else{
 								res.data.categoryList.map((curr,index)=>{
-									console.log(curr.id,'curr')
-									console.log(this.activeIndex,'this.activeIndex')
 									if (curr.id == this.activeIndex){
 										this.subCategoryList = this.categoryList[index].subCategoryList
 									}

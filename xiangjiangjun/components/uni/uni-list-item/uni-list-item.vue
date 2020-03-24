@@ -2,7 +2,7 @@
 	<!-- #ifdef APP-NVUE -->
 	<cell>
 		<!-- #endif -->
-		<view :class="disabled ? 'uni-list-item--disabled' : ''" :hover-class="disabled || showSwitch ? '' : 'uni-list-item--hover'"
+		<view :class="disabled ? 'uni-list-item--disabled' : ''" :hover-class="disabled || showSwitch || notHighLight ? '' : 'uni-list-item--hover'"
 		 class="uni-list-item" @click="onClick">
 			<view class="uni-list-item__container" :class="{'uni-list-item--first':isFirstChild}">
 				<view v-if="thumb" class="uni-list-item__icon">
@@ -72,6 +72,10 @@
 			disabled: {
 				// 是否禁用
 				type: [Boolean, String],
+				default: false
+			},
+			notHighLight: {
+				type: Boolean,
 				default: false
 			},
 			showArrow: {
