@@ -40,11 +40,11 @@
 	                    categoryList:[],// 主分类数据
 	                    subCategoryList:[], // 子分类数据
 						update: false,
-						activeIndex: 0
+						activeIndex: null
 	                }
 	            },
 				onLoad() {
-					this.getData();
+					this.getData('',true);
 				},
 				onShow() {
 					
@@ -63,7 +63,7 @@
 	                categorySubClick(category){
 	                    console.log(category);
 	                },
-					getData(findkey = ''){
+					getData(findkey = '',bool){
 						Request(
 							'goods.get_bycategory',
 							{
@@ -72,10 +72,12 @@
 						)
 						.then((res)=>{
 							this.categoryList = res.data.categoryList
-							if(findkey==''){
+							if(bool){
 								this.subCategoryList = this.categoryList[0].subCategoryList;
 							}else{
 								res.data.categoryList.map((curr,index)=>{
+									console.log(curr.id,'curr')
+									console.log(this.activeIndex,'this.activeIndex')
 									if (curr.id == this.activeIndex){
 										this.subCategoryList = this.categoryList[index].subCategoryList
 									}
