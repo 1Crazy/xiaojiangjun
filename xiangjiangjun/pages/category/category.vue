@@ -44,14 +44,15 @@
 	                }
 	            },
 				onLoad() {
+					this.getData();
 				},
 				onShow() {
-					this.getData();
+					
 				},
 	            methods: {
 					// 子分类左边点击事件
 	                categoryMainClick(category){
-						console.log(category,'category')
+						this.activeIndex=category.id
 	                    this.subCategoryList = category.subCategoryList;
 						if(!this.subCategoryList){
 							this.subCategoryList = []
@@ -63,7 +64,6 @@
 	                    console.log(category);
 	                },
 					getData(findkey = ''){
-						const that = this;
 						Request(
 							'goods.get_bycategory',
 							{
@@ -71,28 +71,22 @@
 							}
 						)
 						.then((res)=>{
-							console.log(that)
-							// console.log(res.data.categoryList)
-							that.categoryList = res.data.categoryList
-							
+							this.categoryList = res.data.categoryList
 							if(findkey==''){
-								that.subCategoryList = that.categoryList[0].subCategoryList;
+								this.subCategoryList = this.categoryList[0].subCategoryList;
+							}else{
+								res.data.categoryList.map((curr,index)=>{
+									if (curr.id == this.activeIndex){
+										this.subCategoryList = this.categoryList[index].subCategoryList
+									}
+								})
 							}
-							// that.activeIndex = 2
-							// that.categoryMainClick(that.categoryList)
-							// this.$forceUpdate()
-							// that.$forceUpdate()
-							// this.update=false;
-							// this.update=true;
-							
-							// 成功方法
 						})
 						.catch((res)=>{
 							// 失败方法
 						})
 					},
 					find(e){
-						console.log(e.detail.value);
 						this.getData(e.detail.value);
 					}
 	            },
