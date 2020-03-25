@@ -12,9 +12,9 @@
 				<view class="shortitle">{{item.shorttitle}}</view>
 			</view>
 			<view class="wrap">
-				<view class="del">-</view>
+				<view class="del" @tap="delNum(index)">-</view>
 				<input class="num" type="text" v-model="item.total"  />
-				<view class="add">+</view>
+				<view class="add" @tap="addNum(index)">+</view>
 			</view>
 			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
 		</view>
@@ -58,6 +58,30 @@
 				.catch((res)=>{
 					// 失败方法
 				})
+			},
+			upGoodsNum(id,num){
+				Request(
+					'member.cart.update',
+					{
+						id:id,
+						total:num
+					}
+				).then((res)=>{
+					console.log(res)
+					// 成功方法
+					this.getData()
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			delNum(id){
+				this.upGoodsNum(this.lists.list[id]['id'],parseInt(this.lists.list[id]['total'])-1)
+			},
+			addNum(id){
+				console.log(id)
+				console.log(this.lists.list[id]['id'])
+				this.upGoodsNum(this.lists.list[id]['id'],parseInt(this.lists.list[id]['total'])+1)
 			}
 		}
 	}
