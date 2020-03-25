@@ -75,8 +75,8 @@ const Request = (url, data, method = 'GET', title = '加载中', baseUrl = dev ,
   if (uni.getStorageSync('userInfo').token) {
     data.token = uni.getStorageSync('userInfo').token
   }
-  // data.timetemp = new Date().valueOf()
-  // data.clientType = 'shijiangCloud'
+  data.timestamp = new Date().valueOf()
+  data.openid = 'sns_wa_o2iWn5Dqvh1NHnN_bjPpi8pKphWs' // test
   // data.sign = ''
   uni.showLoading({
     title,
