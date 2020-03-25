@@ -10,7 +10,11 @@
 		</view>
 		<view class="iptWrap">
 			<view class="name">所在地区</view>
-			<input class="ipt" type="text" value="" placeholder="填写所在地区"/>
+			<picker class="ipt" mode="multiSelector" @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="multiIndex" :range="multiArray">
+				<view class="picker">
+				  {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}}
+				</view>
+			</picker>
 			<image class="img" :src="imgSrc+'public/arrow.png'" mode=""></image>
 		</view>
 		<view class="iptWrap">
@@ -22,11 +26,22 @@
 </template>
 
 <script>
-	export default {
+
+export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				multiArray: [['北京', '成都'], ['青羊区', '金牛区', '武侯区'], ['1', '2']],
+				multiIndex: [0, 0, 0],
 			};
+		},
+		methods: {
+			bindMultiPickerChange(e) {
+			  this.multiIndex= e.detail.value
+		  },
+		  bindMultiPickerColumnChange(e) {
+		      
+		    },
 		}
 	}
 </script>
