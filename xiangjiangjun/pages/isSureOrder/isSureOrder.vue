@@ -134,12 +134,7 @@
 			},
 			getData(){
 				Request(
-					'order.create',
-					{
-						openid:'sns_wa_o2iWn5Dqvh1NHnN_bjPpi8pKphWs',
-						id:this.id,
-						total:this.num
-					}
+					'order.create'
 				).then((res)=>{
 					console.log(res)
 					// 成功方法

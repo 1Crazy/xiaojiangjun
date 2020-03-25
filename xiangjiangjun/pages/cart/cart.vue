@@ -1,115 +1,88 @@
 <template>
 	<view>
-		<view class="itemMenu">
+		<view class="itemMenu" v-for="(item ,index) in lists.list" :key="index">
+			
 			<radio class="itemRadio" color="#ff9000" value="r3" />
-			<image class="img" :src="imgSrc+'index/listpic1.png'"></image>
+			<image class="img" :src="item.thumb"></image>
 			<view class="info">
 				<view class="infoTop">
-					<view class="title">YBM/意奔玛空调滤清YMB3140007空...</view>
-					<view class="price">￥366</view>
+					<view class="title">{{item.title}}</view>
+					<view class="price">￥{{item.marketprice}}</view>
 				</view>
-				<view class="shortitle">我是短标题</view>
+				<view class="shortitle">{{item.shorttitle}}</view>
 			</view>
 			<view class="wrap">
-				<view class="del">-</view>
-				<input class="num" type="text" value="1" />
-				<view class="add">+</view>
+				<view class="del" @tap="delNum(index)">-</view>
+				<input class="num" type="text" v-model="item.total"  />
+				<view class="add" @tap="addNum(index)">+</view>
 			</view>
 			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
 		</view>
-		<view class="itemMenu">
-			<radio class="itemRadio" color="#ff9000" value="r3" />
-			<image class="img" :src="imgSrc+'index/listpic1.png'"></image>
-			<view class="info">
-				<view class="infoTop">
-					<view class="title">YBM/意奔玛空调滤清YMB3140007空...</view>
-					<view class="price">￥366</view>
-				</view>
-				<view class="shortitle">我是短标题</view>
-			</view>
-			<view class="wrap">
-				<view class="del">-</view>
-				<input class="num" type="text" value="1" />
-				<view class="add">+</view>
-			</view>
-			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
-		</view>
-		<view class="itemMenu">
-			<radio class="itemRadio" color="#ff9000" value="r3" />
-			<image class="img" :src="imgSrc+'index/listpic1.png'"></image>
-			<view class="info">
-				<view class="infoTop">
-					<view class="title">YBM/意奔玛空调滤清YMB3140007空...</view>
-					<view class="price">￥366</view>
-				</view>
-				<view class="shortitle">我是短标题</view>
-			</view>
-			<view class="wrap">
-				<view class="del">-</view>
-				<input class="num" type="text" value="1" />
-				<view class="add">+</view>
-			</view>
-			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
-		</view>
-		<view class="itemMenu">
-			<radio class="itemRadio" color="#ff9000" value="r3" />
-			<image class="img" :src="imgSrc+'index/listpic1.png'"></image>
-			<view class="info">
-				<view class="infoTop">
-					<view class="title">YBM/意奔玛空调滤清YMB3140007空...</view>
-					<view class="price">￥366</view>
-				</view>
-				<view class="shortitle">我是短标题</view>
-			</view>
-			<view class="wrap">
-				<view class="del">-</view>
-				<input class="num" type="text" value="1" />
-				<view class="add">+</view>
-			</view>
-			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
-		</view>
-		<view class="itemMenu">
-			<radio class="itemRadio" color="#ff9000" value="r3" />
-			<image class="img" :src="imgSrc+'index/listpic1.png'"></image>
-			<view class="info">
-				<view class="infoTop">
-					<view class="title">YBM/意奔玛空调滤清YMB3140007空...</view>
-					<view class="price">￥366</view>
-				</view>
-				<view class="shortitle">我是短标题</view>
-			</view>
-			<view class="wrap">
-				<view class="del">-</view>
-				<input class="num" type="text" value="1" />
-				<view class="add">+</view>
-			</view>
-			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
-		</view>
+		
 		<view style="height: 98rpx;"></view>
 		<view class="bottom">
 			<label class="radio">
 				<radio class="itemRadio" color="#ff9000" value="r2" />全选</label>
 			<view class="center">
 				<view class="alltotall">合计：</view>
-				<view class="price">￥732</view>
+				<view class="price">￥{{lists.totalprice}}</view>
 			</view>
-			<button class="btn">结算(2)</button>
+			<button class="btn">结算({{lists.total}})</button>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { Request } from '../../public/utils.js'
 	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				lists:[]
 			}
 		},
 		onLoad() {
+			this.getData()
+		},onShow() {
 			
 		},
 		methods: {
-
+			getData(){
+				Request(
+					'member.cart.get_cart'
+				).then((res)=>{
+					console.log(res)
+					// 成功方法
+					this.lists = res.data
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			upGoodsNum(id,num){
+				Request(
+					'member.cart.update',
+					{
+						id:id,
+						total:num
+					}
+				).then((res)=>{
+					console.log(res)
+					// 成功方法
+					this.getData()
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			delNum(id){
+				this.upGoodsNum(this.lists.list[id]['id'],parseInt(this.lists.list[id]['total'])-1)
+			},
+			addNum(id){
+				console.log(id)
+				console.log(this.lists.list[id]['id'])
+				this.upGoodsNum(this.lists.list[id]['id'],parseInt(this.lists.list[id]['total'])+1)
+			}
 		}
 	}
 </script>

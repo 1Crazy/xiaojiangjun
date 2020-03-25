@@ -95,18 +95,18 @@
 			<view class="productSpecificationsModelContent">
 				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="addCartModel(false)"></image>
 				<view class="headerModelContent">
-					<image class="img" :src="imgSrc+'productInfo/banner1.png'"></image>
+					<image class="img" :src="goods.thumb"></image>
 					<view class="rightBox">
-						<view class="r-title">马驰宝汽车机油正品全合成5W-40德国进口奔驰宝马奥迪大众本田4L</view>
-						<view class="r-info">净含量：4L</view>
-						<view class="r-num">库存：5999件</view>
+						<view class="r-title">{{goods.title}}</view>
+						<view class="r-info">净含量：{{goods.weight}}克</view>
+						<view class="r-num">库存：{{goods.total}}{{goods.unit}}</view>
 					</view>
 				</view>
 				<view class="centerModelContent">
 					<view class="c-header">
-						<view class="price">￥488</view>
-						<view class="hy-price">会员价:￥420</view>
-						<view class="num">销量：1999</view>
+						<view class="price">￥{{goods.marketprice}}</view>
+						<!-- <view class="hy-price">会员价:￥420</view> -->
+						<view class="num">销量：{{goods.sales}}</view>
 					</view>
 					<view class="c-bottom">
 						<view class="c-b-word">购买数量</view>

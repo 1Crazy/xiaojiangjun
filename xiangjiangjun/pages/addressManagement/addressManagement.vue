@@ -47,10 +47,7 @@
 			getData(){
 				const that = this;
 				Request(
-					'member.address.get_list',
-					{
-						openid:'sns_wa_o2iWn5Dqvh1NHnN_bjPpi8pKphWs'
-					}
+					'member.address.get_list'
 				).then((res)=>{
 					console.log(res)
 					// 成功方法
