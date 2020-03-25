@@ -13,8 +13,8 @@
 			<view class="num">{{current+1}}/{{swiper.length}}</view>
 		</view>
 		<view class="content">
-			<view class="title">马驰宝汽车机油正品全合成5W-40德国进口奔驰宝马奥迪大众本田4L</view>
-			<view class="description">全合成机油</view>
+			<view class="title">{{goods.title}}</view>
+			<view class="description">{{goods.shorttitle}}</view>
 			<view class="bottom">
 				<view class="price">
 					<view class="currentPrice">￥488</view>
@@ -207,11 +207,13 @@
 				poster: {},
 				qrShow: false,
 				canvasId: 'default_PosterCanvasId',
+				goods: []
 				//
 			}
 		},
 		onLoad(e) {
 			this.getGoodDetail(e.info);
+			this.id = e.info;
 		},
 		methods: {
 			swiperChange (e) {
@@ -228,7 +230,8 @@
 						id:id
 					}
 				).then((res)=>{
-					console.log(res)
+					// console.log(res.data.goods)
+					this.goods = res.data.goods
 					// 成功方法
 				})
 				.catch((res)=>{
@@ -266,8 +269,9 @@
 			// 提交
 			submitBtn(){
 				this.$refs.addCartPopup.close()
+				const info =  this.id;
 				uni.navigateTo({
-					url: '/pages/isSureOrder/isSureOrder'
+					url: '/pages/isSureOrder/isSureOrder?id='+info+'&num='+this.productNum
 				})
 			},
 			/**

@@ -2,7 +2,7 @@
 	<view>
 		<view class="headerWrap">
 			<view class="header">
-				<input class="ipt" type="text" value="" placeholder="搜索您要找的门店名称" />
+				<input class="ipt" type="text" value="" @input="find" placeholder="搜索您要找的门店名称" />
 				<image :src="imgSrc+'public/fdj1.png'" class="img"></image>
 			</view>
 		</view>
@@ -53,13 +53,14 @@
 					}
 				})
 			},
-			getStores(){
+			getStores(findkey=''){
 				const that = this;
 				Request(
 					'store.get_stores',
 					{
 						lng:that.longitude,
-						lat:that.latitude
+						lat:that.latitude,
+						findkey:findkey
 					}
 				).then((res)=>{
 					console.log(res)
@@ -69,6 +70,9 @@
 				.catch((res)=>{
 					// 失败方法
 				})
+			},
+			find(e){
+				this.getStores(e.detail.value)
 			}
 		}
 	}

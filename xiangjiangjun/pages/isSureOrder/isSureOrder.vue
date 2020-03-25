@@ -77,6 +77,7 @@
 	import uniListItem from "@/components/uni/uni-list-item/uni-list-item.vue"
 	import productTitle from '@/components/productTitle/productTitle.vue'
 	import './index.scss'
+	import { Request } from '../../public/utils.js'
 	
 	export default {
 		components: {
@@ -91,6 +92,15 @@
 				isAdress: true, // 控制快递地址
 				productNum: 1,
 			};
+		},
+		onLoad(e) {
+			console.log(e)
+			this.id = e.id;
+			this.num = e.num;
+			this.getData();
+		},
+		onShow() {
+			
 		},
 		methods:{
 			delNum(){
@@ -113,6 +123,23 @@
 			gotoAddressManagement(){
 				uni.navigateTo({
 					url: '/pages/addressManagement/addressManagement'
+				})
+			},
+			getData(){
+				Request(
+					'order.create',
+					{
+						openid:'sns_wa_o2iWn5Dqvh1NHnN_bjPpi8pKphWs',
+						id:this.id,
+						total:this.num
+					}
+				).then((res)=>{
+					console.log(res)
+					// 成功方法
+					
+				})
+				.catch((res)=>{
+					// 失败方法
 				})
 			}
 		}
