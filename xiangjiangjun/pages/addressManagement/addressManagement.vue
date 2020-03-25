@@ -1,47 +1,11 @@
 <template>
 	<view>
 		<view class="addrssListWrap">
-			<view class="addressList">
+			<view class="addressList" v-for="(item ,index) in lists" :key="index">
 				<view class="top">
 					<view>
-						<view class="name">王雨涵 135****8350</view>
-						<view class="address">四川省 成都市 成华区 圣灯路xx号</view>
-					</view>
-					<image class="img" :src="imgSrc+'public/dizhi_xiugai.png'" @tap="gotoAddOrUpdateAddress()"></image>
-				</view>
-				<view class="bottom">
-					<label class="radio">
-						<radio value="x" /><text class="defaultAddress" style="margin-left: 18rpx;">默认地址</text>
-					</label>
-					<view class="del">
-						<view>删除</view>
-						<image class="img" :src="imgSrc+'public/delete.png'"></image>
-					</view>
-				</view>
-			</view>
-			<view class="addressList">
-				<view class="top">
-					<view>
-						<view class="name">王雨涵 135****8350</view>
-						<view class="address">四川省 成都市 成华区 圣灯路xx号</view>
-					</view>
-					<image class="img" :src="imgSrc+'public/dizhi_xiugai.png'" @tap="gotoAddOrUpdateAddress()"></image>
-				</view>
-				<view class="bottom">
-					<label class="radio">
-						<radio value="x" /><text class="defaultAddress" style="margin-left: 18rpx;">默认地址</text>
-					</label>
-					<view class="del">
-						<view>删除</view>
-						<image class="img" :src="imgSrc+'public/delete.png'"></image>
-					</view>
-				</view>
-			</view>
-			<view class="addressList">
-				<view class="top">
-					<view>
-						<view class="name">王雨涵 135****8350</view>
-						<view class="address">四川省 成都市 成华区 圣灯路xx号</view>
+						<view class="name">{{item.realname}} {{item.mobile}}</view>
+						<view class="address">{{item.province}} {{item.city}} {{item.area}} {{item.address}}</view>
 					</view>
 					<image class="img" :src="imgSrc+'public/dizhi_xiugai.png'" @tap="gotoAddOrUpdateAddress()"></image>
 				</view>
@@ -64,14 +28,38 @@
 
 <script>
 	import './index.scss'
+	import { Request } from '../../public/utils.js'
 	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				lists:[]
 			};
+		},
+		onLoad() {
+			this.getData();
+		},
+		onShow() {
+			
 		},
 		methods: {
 			// 
+			getData(){
+				const that = this;
+				Request(
+					'member.address.get_list',
+					{
+						openid:'sns_wa_o2iWn5Dqvh1NHnN_bjPpi8pKphWs'
+					}
+				).then((res)=>{
+					console.log(res)
+					// 成功方法
+					this.lists = res.data.list
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
 			gotoAddOrUpdateAddress() {
 				uni.navigateTo({
 					url: '/pages/addOrUpdateAddress/addOrUpdateAddress'
