@@ -7,7 +7,7 @@
 						<view class="name">王雨涵 135****8350</view>
 						<view class="address">四川省 成都市 成华区 圣灯路xx号</view>
 					</view>
-					<image class="img" :src="imgSrc+'public/delete.png'"></image>
+					<image class="img" :src="imgSrc+'public/dizhi_xiugai.png'" @tap="gotoAddOrUpdateAddress()"></image>
 				</view>
 				<view class="bottom">
 					<label class="radio">
@@ -25,7 +25,7 @@
 						<view class="name">王雨涵 135****8350</view>
 						<view class="address">四川省 成都市 成华区 圣灯路xx号</view>
 					</view>
-					<image class="img" :src="imgSrc+'public/delete.png'"></image>
+					<image class="img" :src="imgSrc+'public/dizhi_xiugai.png'" @tap="gotoAddOrUpdateAddress()"></image>
 				</view>
 				<view class="bottom">
 					<label class="radio">
@@ -43,7 +43,7 @@
 						<view class="name">王雨涵 135****8350</view>
 						<view class="address">四川省 成都市 成华区 圣灯路xx号</view>
 					</view>
-					<image class="img" :src="imgSrc+'public/delete.png'"></image>
+					<image class="img" :src="imgSrc+'public/dizhi_xiugai.png'" @tap="gotoAddOrUpdateAddress()"></image>
 				</view>
 				<view class="bottom">
 					<label class="radio">
@@ -57,7 +57,7 @@
 			</view>
 		</view>
 		<view class="btnWrap">
-			<button class="addAdressBtn">+ 添加地址</button>
+			<button class="addAdressBtn" @tap="gotoAddOrUpdateAddress()">+ 添加地址</button>
 		</view>
 	</view>
 </template>
@@ -69,6 +69,14 @@
 			return {
 				imgSrc: this.$store.state.imgSrc,
 			};
+		},
+		methods: {
+			// 
+			gotoAddOrUpdateAddress() {
+				uni.navigateTo({
+					url: '/pages/addOrUpdateAddress/addOrUpdateAddress'
+				})
+			}
 		}
 	}
 </script>
