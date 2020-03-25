@@ -48,7 +48,7 @@
 		</view>
 		<!-- 列表详情 -->
 		<view class="bggreay">
-			<view class="listwrap"  v-for="(item ,index) in listwrap" :key="index" @click="gotoProductInfo(item.id)">
+			<view class="listwrap"  v-for="(item ,index) in listwrap" :key="index" @tap="gotoProductInfo(item.id)">
 				 <image class="img" :src='item.thumb'></image>
 				 <view class="rightbox">
 					 <view class="title">{{item.title}}</view>

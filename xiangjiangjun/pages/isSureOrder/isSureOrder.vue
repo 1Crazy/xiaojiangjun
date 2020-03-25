@@ -67,7 +67,7 @@
 				<view class="txt1">合计</view>
 				<view class="txt2">￥960.4</view>
 			</view>
-			<button type="default" class="btn">立即支付</button>
+			<button type="default" class="btn" @tap="pay">立即支付</button>
 		</view>
 	</view>
 </template>
@@ -123,6 +123,13 @@
 			gotoAddressManagement(){
 				uni.navigateTo({
 					url: '/pages/addressManagement/addressManagement'
+				})
+			},
+			// 支付
+			pay() {
+				// 支付成功后页面跳转
+				uni.navigateTo({
+					url: '/pages/paySuccess/paySuccess'
 				})
 			},
 			getData(){
