@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="headerModelContent">
+		<view class="headerModelContent" :style="'border:'+ borderBottomStyle">
 			<image class="img" :src="img"></image>
 			<view class="rightBox">
 				<view class="r-title">{{title}}</view>
@@ -35,6 +35,10 @@
 			num: {
 				type: Number,
 				default: null
+			},
+			borderBottomStyle: {
+				type: String,
+				default: '1px solid #e3e3e3'
 			}
 		},
 		data() {
@@ -49,7 +53,7 @@
 	.headerModelContent{
 		display: flex;
 		padding-bottom: 32rpx;
-		border-bottom: 1px solid #e3e3e3;
+		// border-bottom: ;
 		position: relative;
 		.img{
 			width: 200rpx;
