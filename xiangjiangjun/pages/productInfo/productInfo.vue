@@ -6,21 +6,21 @@
 		<!-- 内容 -->
 		<view class="swiperWrap">
 			<swiper :current="current" @change="swiperChange" class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-				<swiper-item  v-for="(item ,index) in swiper" :key="index">
-					<image class='img' :src="item.img" mode=""></image>
+				<swiper-item  v-for="(item ,index) in goods.thumbs" :key="index">
+					<image class='img' :src="item" mode=""></image>
 				</swiper-item>
 			</swiper>
-			<view class="num">{{current+1}}/{{swiper.length}}</view>
+			<view class="num">{{current+1}}/{{goods.thumbs.length}}</view>
 		</view>
 		<view class="content">
 			<view class="title">{{goods.title}}</view>
 			<view class="description">{{goods.shorttitle}}</view>
 			<view class="bottom">
 				<view class="price">
-					<view class="currentPrice">￥488</view>
-					<view class="originalPrice">￥608</view>
+					<view class="currentPrice">￥{{goods.marketprice}}</view>
+					<view class="originalPrice">￥{{goods.productprice}}</view>
 				</view>
-				<view class="count">销量：1999</view>
+				<view class="count">销量：{{goods.sales}}</view>
 			</view>
 		</view>
 		<view class="nav" @tap="LogisticsInfoModel(true)">
@@ -34,9 +34,7 @@
 				<view :class="tab == 2 ? 'active': ''" @tap="changeTab(2)">用户评价</view>
 			</view>
 			<view :class="tab == 1 ? 'productInfo': 'hide'">
-				<view class="article">抗氧化性能最好，即使用周期最长，减少了废旧机油排放。 fuel-burn系数低，即油门反应高，节省了燃油消耗环保低碳。</view>
-				<image class="img1" :src="imgSrc+'index/picnav3.png'" style="margin-top: 40rpx;margin-bottom: 93rpx;"></image>
-				<image class="img2" :src="imgSrc+'index/picnav3.png'"></image>
+				<view v-html = "goods.content"></view>
 			</view>
 			<view :class="tab == 2 ? 'comment': 'hide'"  v-for="(item ,index) in commentList" :key="index">
 				<view class="commentHeader">
@@ -207,7 +205,8 @@
 				poster: {},
 				qrShow: false,
 				canvasId: 'default_PosterCanvasId',
-				goods: []
+				goods: [],
+				goodscontent: ""
 				//
 			}
 		},
