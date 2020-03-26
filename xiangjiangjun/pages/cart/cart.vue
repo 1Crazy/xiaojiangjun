@@ -16,7 +16,7 @@
 				<input class="num" type="text" v-model="item.total" :id="index" @confirm="choose" />
 				<view class="add" @tap="addNum(index)">+</view>
 			</view>
-			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
+			<image class="delete" :src="imgSrc+'public/delete.png'" @tap="delNum(index,true)"></image>
 		</view>
 		
 		<view style="height: 98rpx;"></view>
@@ -91,15 +91,21 @@
 					// 失败方法
 				})
 			},
-			delNum(id){
-				if(parseInt(this.lists.list[id]['total'])-1==0){
+			delNum(id,remove=false){
+				if(remove){
+					// console.log('点击删除');
 					const ids = [];
 					ids.push(this.lists.list[id]['id'])
 					this.delGoods(ids)
 				}else{
-					this.upGoodsNum(this.lists.list[id]['id'],parseInt(this.lists.list[id]['total'])-1)
+					if(parseInt(this.lists.list[id]['total'])-1==0){
+						const ids = [];
+						ids.push(this.lists.list[id]['id'])
+						this.delGoods(ids)
+					}else{
+						this.upGoodsNum(this.lists.list[id]['id'],parseInt(this.lists.list[id]['total'])-1)
+					}
 				}
-				
 			},
 			addNum(id){
 				// console.log(id)
