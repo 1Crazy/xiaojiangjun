@@ -97,7 +97,7 @@
 				uni.navigateTo({
 					url: `/pages/productInfo/productInfo?info=${info}`
 				})
-			}
+			},
 		}
 	}
 </script>

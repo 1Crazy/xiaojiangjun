@@ -1,11 +1,13 @@
 <template>
 	<view>
-		<view class="headerModelContent" :style="'border:'+ borderBottomStyle">
+		<view class="headerModelContent" :style="'border-bottom:'+ borderBottomStyle">
 			<image class="img" :src="img"></image>
 			<view class="rightBox">
-				<view class="r-title">{{title}}</view>
-				<view class="r-info">{{details}}</view>
-				<view class="r-num">{{stock}}</view>
+				<view class="r-title"  v-if="title">{{title}}</view>
+				<view class="r-shortTitle" v-if="shortTitle">{{shortTitle}}</view>
+				<view class="r-info" v-if="details">{{details}}</view>
+				<view class="r-price" v-if="price">￥{{price}}</view>
+				<view class="r-num"  v-if="stock" >{{stock}}</view>
 				<view class="num" v-if="num">X{{num}}</view>
 			</view>
 		</view>
@@ -18,19 +20,19 @@
 		props: {
 			img: {
 				type: String,
-				default: false,
+				default: null,
 			},
 			title: {
 				type: String,
-				default: false
+				default: null
 			},
 			details: {
 				type: String,
-				default: false
+				default: null
 			},
 			stock: {
 				type: String,
-				default: false
+				default: null
 			},
 			num: {
 				type: Number,
@@ -39,6 +41,14 @@
 			borderBottomStyle: {
 				type: String,
 				default: '1px solid #e3e3e3'
+			},
+			shortTitle: {
+				type: String,
+				default: null
+			},
+			price: {
+				type: String,
+				default: null
 			}
 		},
 		data() {
@@ -71,6 +81,13 @@
 				color: #333333;
 				line-height: 29rpx;
 			}
+			.r-shortTitle{
+				font-family: PingFang-SC-Medium;
+				font-size: 28rpx;
+				font-weight: normal;
+				font-stretch: normal;
+				color: #888888;
+			}
 			.r-info{
 				font-family: PingFang-SC-Medium;
 				font-size: 24rpx;
@@ -86,6 +103,15 @@
 				font-weight: normal;
 				font-stretch: normal;
 				color: #999999;
+			}
+			.r-price{
+				position: absolute;
+				bottom: 32rpx;
+				font-family: PingFang-SC-Medium;
+				font-size: 30rpx;
+				font-weight: normal;
+				font-stretch: normal;
+				color: #333333;
 			}
 			.num{
 				position: absolute;

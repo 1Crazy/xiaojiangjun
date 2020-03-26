@@ -8,26 +8,26 @@
 		<view class="orderlist">
 			<view class="title">
 				<view class="leftTitle">商品订单</view>
-				<view class="rightTitle">查看全部订单 ></view>
+				<view class="rightTitle" @tap="gotoAllOrder()">查看全部订单 ></view>
 			</view>
 			<view class="content">
-				<view class="item">
+				<view class="item" @tap="gotoAllOrder(1)">
 					<image :src="imgSrc+'mine/list1.png'" class="img"></image>
 					<view class="word">待支付</view>
 				</view>
-				<view class="item">
+				<view class="item" @tap="gotoAllOrder(2)">
 					<image :src="imgSrc+'mine/list2.png'" class="img"></image>
 					<view class="word">待发货</view>
 				</view>
-				<view class="item">
+				<view class="item" @tap="gotoAllOrder(3)">
 					<image :src="imgSrc+'mine/list3.png'" class="img"></image>
 					<view class="word">待收货</view>
 				</view>
-				<view class="item">
+				<view class="item" @tap="gotoAllOrder(4)">
 					<image :src="imgSrc+'mine/list4.png'" class="img"></image>
 					<view class="word">已完成</view>
 				</view>
-				<view class="item">
+				<view class="item" @tap="gotoAllOrder(5)">
 					<image :src="imgSrc+'mine/list5.png'" class="img"></image>
 					<view class="word">退款售后</view>
 				</view>
@@ -37,7 +37,7 @@
 		<view class="orderlist">
 			<view class="title">
 				<view class="leftTitle">服务订单</view>
-				<view class="rightTitle">查看全部订单 ></view>
+				<view class="rightTitle" @tap="gotoAllOrder()">查看全部订单 ></view>
 			</view>
 			<view class="content">
 				<view class="item">
@@ -59,7 +59,7 @@
 			</view>
 		</view>
 		
-		<view class="listItem">
+		<view class="listItem" @tap="gotoAddressManagement">
 			<image class="img" :src="imgSrc+'mine/item1.png'"></image>
 			<view class="word">地址管理</view>
 			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
@@ -88,7 +88,16 @@
 			 
 		},
 		methods: {
-			
+			gotoAddressManagement(){
+				uni.navigateTo({
+					url: '/pages/addressManagement/addressManagement'
+				})
+			},
+			gotoAllOrder(num){
+				uni.navigateTo({
+					url: '/pages/allOrder/allOrder'
+				})
+			}
 		}
 	}
 </script>

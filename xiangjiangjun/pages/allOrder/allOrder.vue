@@ -1,0 +1,301 @@
+<template>
+	<view>
+		<view class="navWrap">
+			<view @tap="changeTab(1)" :class="navIndex == 1 ? 'itemWrap active': ''">
+				<view class="word">待支付</view>
+				<view class="line"></view>
+			</view>
+			<view @tap="changeTab(2)" :class="navIndex == 2 ? 'itemWrap active': ''">
+				<view class="word">待发货</view>
+				<view class="line"></view>
+			</view>
+			<view @tap="changeTab(3)" :class="navIndex == 3 ? 'itemWrap active': ''">
+				<view class="word">待收货</view>
+				<view class="line"></view>
+			</view>
+			<view @tap="changeTab(4)" :class="navIndex == 4 ? 'itemWrap active': ''">
+				<view class="word">已完成</view>
+				<view class="line"></view>
+			</view>
+			<view @tap="changeTab(5)" :class="navIndex == 5 ? 'itemWrap active': ''">
+				<view class="word">售后退款</view>
+				<view class="line"></view>
+			</view>
+		</view>
+		<view class="c-info">
+			<product-title
+				:img="imgSrc+'productInfo/banner1.png'"
+				title="马驰宝汽车机油正品全合成5W-40德国进口奔驰宝马奥迪大众本田4L"
+				shortTitle='马驰宝汽'
+				price='1366'
+				num=1
+				:borderBottomStyle='none'
+			></product-title>
+			<view class="totalPrice">
+				<text class="txt1">共2件商品</text>
+				<text class="txt2">合计：</text>
+				<text class="txt3">￥466</text>
+			</view>
+		</view>
+		<view class="noDataBg" v-if="list.length==0">
+			<image class="noDataImg" :src="imgSrc+'public/img_kongbaiye.png'" mode="" />
+			<view class="word">暂还没有订单哦~</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	import productTitle from '@/components/productTitle/productTitle.vue'
+	export default {
+		components: {
+			productTitle
+		},
+		data() {
+			return {
+				imgSrc: this.$store.state.imgSrc,
+				navIndex: 1,
+				list: [1]
+			};
+		},
+		methods: {
+			changeTab(index){
+				this.navIndex = index
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	page{
+		background: #f2f2f2;
+	}
+	.navWrap{
+		width: 750rpx;
+		height: 80rpx;
+		background-color: #ffffff;
+		border-top: solid 1rpx #e3e3e3;
+		border-bottom: solid 1rpx #e3e3e3;
+		font-family: PingFang-SC-Medium;
+		font-size: 28rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		color: #666666;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		.itemWrap{
+			height: 80rpx;
+			line-height: 80rpx;
+		}
+		.active{
+			position: relative;
+			.line{
+				width: 50%;
+				height: 5rpx;
+				background-color: #1db728;
+				position: absolute;
+				bottom: 0;
+				left: 25%;
+			}
+		}
+	}
+	.noDataBg{
+		position: fixed;
+		top: 262rpx;
+		left: 133rpx;
+		.noDataImg{
+			margin: 0 auto;
+			width: 483rpx;
+			height: 303rpx;
+		}
+		.word{
+			font-family: PingFang-SC-Medium;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			line-height: 70rpx;
+			letter-spacing: 0rpx;
+			color: #999999;
+			text-align: center;
+			margin-top: 60rpx;
+		}
+	}
+	.c-info{
+	padding: 30rpx 20rpx;
+	padding-bottom: 0;
+	background-color: white;
+	.c-bottom{
+		margin-top: 40rpx;
+		// height: 166rpx;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		.r-wrap-c{
+			font-family: PingFang-SC-Medium;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #333333;
+		}
+		.c-b-word{
+			font-family: PingFang-SC-Medium;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #999999;
+		}
+		.r-wrap{
+			height: 61rpx;
+			border-radius: 4rpx;
+			display: flex;
+			align-items: center;
+			.symbol{
+				width: 69rpx;
+				border-radius: 0;
+				text-align: center;
+				line-height: 61rpx;
+				color: #cccccc;
+				font-size: 38rpx;
+				border: 1px solid #cccccc;
+			}
+			.ipt{
+				width: 80rpx;
+				line-height: 61rpx;
+				height: 61rpx;
+				font-size: 36rpx;
+				border-top: 1px solid #cccccc;
+				border-bottom: 1px solid #cccccc;
+				text-align: center;
+			}
+		}
+	}
+	.totalPrice{
+		text-align: right;
+		padding: 40rpx 0;
+		border-bottom: 1px solid #e3e3e3;
+		.txt1{
+			font-family: PingFang-SC-Medium;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #999999;
+			margin-right: 40rpx;
+			line-height: 29rpx;
+		}
+		.txt2{
+			font-family: PingFang-SC-Medium;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #333333;
+			line-height: 29rpx;
+		}
+		.txt3{
+			font-family: PingFang-SC-Medium;
+			font-size: 28rpx;
+			font-weight: normal;
+			letter-spacing: 0rpx;
+			color: #ff9000;
+			line-height: 29rpx;
+		}
+	}
+	.integral{
+		display: flex;
+		justify-content: space-between;
+		padding-top: 40rpx;
+		.leftWord{
+			font-family: PingFang-SC-Medium;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #333333;
+		}
+		.radio{
+			
+		}
+	}
+	.y-h-q{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 40rpx 0;
+		.txt1{
+			font-family: PingFang-SC-Medium;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #333333;
+		}
+		.txt2{
+			font-family: PingFang-SC-Medium;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #999999;
+		}
+		.txt3{
+			font-family: PingFang-SC-Medium;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #ff9000;
+		}
+		image{
+			width: 12rpx;
+			height: 20rpx;
+			margin-left:38rpx;
+		}
+	}
+}
+.b-footer{
+	width: 750rpx;
+	height: 98rpx;
+	background-color: #ffffff;
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	padding-left: 30rpx;
+	padding-right: 10rpx;
+	.txtWrap{
+		display: flex;
+		align-items: center;
+	}
+	.txt1{
+		font-family: PingFang-SC-Medium;
+		font-size: 28rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		color: #333333;
+	}
+	.txt2{
+		font-family: PingFang-SC-Medium;
+		font-size: 42rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		color: #ff9000;
+		margin-left: 20rpx;
+	}
+	.btn{
+		width: 300rpx;
+		height: 79rpx;
+		background-image: linear-gradient(90deg, 
+			#6fde39 0%, 
+			#46c806 100%), 
+		linear-gradient(
+			#e3e3e3, 
+			#e3e3e3);
+		background-blend-mode: normal, 
+			normal;
+		border-radius: 39rpx;
+		font-family: PingFang-SC-Medium;
+		font-size: 30rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		line-height: 79rpx;
+		letter-spacing: 0rpx;
+		color: #ffffff;
+		margin-left: 181rpx;
+	}
+}
+</style>
