@@ -38,17 +38,17 @@
 			</view>
 			<view :class="tab == 2 ? 'comment': 'hide'"  v-for="(item ,index) in commentList" :key="index">
 				<view class="commentHeader">
-					<image class="avatar" :src="item.avatar"></image>
-					<view class="name">{{item.name}}</view>
-					<image :class="item.star>=1 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.star>=2 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.star>=3 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.star>=4 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.star>=5 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<view class="date">{{item.date}}</view>
+					<image class="avatar" :src="item.headimgurl"></image>
+					<view class="name">{{item.nickname}}</view>
+					<image :class="item.level>=1 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image :class="item.level>=2 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image :class="item.level>=3 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image :class="item.level>=4 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image :class="item.level>=5 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<view class="date">{{item.createtime}}</view>
 				</view>
 				<view class="commentContent">{{item.content}}</view>
-				<view :class="item.commentPic.length>0?'commentPic':'hide'">
+				<view :class="item.images.length>0?'commentPic':'hide'">
 					<image :src="itemPic" class="pic" v-for="(itemPic ,index) in item.commentPic" :key="index"></image>
 				</view>
 			</view>
@@ -68,8 +68,8 @@
 				<image :src="imgSrc+'public/xiangqing_kefu.png'"></image>
 				<view style="margin-top: 24rpx;">客服</view>
 			</button>
-			<button class="btn addCart" @tap="addCartModel(true)">加入购物车</button>
-			<button class="btn buy" @tap="addCartModel(true)">立刻购买</button>
+			<button class="btn addCart" @tap="addCartModel(true,1)">加入购物车</button>
+			<button class="btn buy" @tap="addCartModel(true,2)">立刻购买</button>
 		</view>
 		<!-- 物流说明弹框 -->
 		<uni-popup ref="popup" type="bottom">
@@ -169,25 +169,9 @@
 					img: `${this.$store.state.imgSrc}productInfo/banner2.png`
 				}],
 				current: 0,
+				modelType: 1, // 1是加入购物车的,2是支付的
 				tab: 1,//商品详情1，用户评价2
-				commentList: [
-					{
-						avatar: `${this.$store.state.imgSrc}index/add.png`,
-						name: '张先生',
-						star: 2,
-						date: '2019-12-25',
-						content: '机油收到了，已经购买了几次了，值得信赖的商家，还是一如既往的好，和实体店购买的一样，实惠质量也非常不错！！！！',
-						commentPic: [`${this.$store.state.imgSrc}index/listpic1.png`,`${this.$store.state.imgSrc}index/listpic1.png`,`${this.$store.state.imgSrc}index/listpic1.png`]
-					},
-					{
-						avatar: `${this.$store.state.imgSrc}index/add.png`,
-						name: 'x先生',
-						star: 3,
-						date: '2019-11-25',
-						content: 'xxxxxxxx！！！',
-						commentPic: []
-					},
-				],
+				commentList: [],
 				/**
 				 * 选择规格数据
 				 */
@@ -206,7 +190,8 @@
 				qrShow: false,
 				canvasId: 'default_PosterCanvasId',
 				goods: [],
-				goodscontent: ""
+				goodscontent: "",
+				compage:1
 				//
 			}
 		},
@@ -231,7 +216,45 @@
 				).then((res)=>{
 					// console.log(res.data.goods)
 					this.goods = res.data.goods
+					this.getComment(id)
 					// 成功方法
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			getComment(id){
+				Request(
+					'goods.get_comment_list',
+					{
+						id:id,
+						level:'all',
+						page:this.compage
+					}
+				).then((res)=>{
+					console.log(res.data)
+					this.commentList = res.data.list
+					// 成功方法
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			addToCart(id,num){
+				Request(
+					'member.cart.add',
+					{
+						id:id,
+						total:num
+					}
+				).then((res)=>{
+					// 成功方法
+					if(res.data.error==0){
+						_app.showToast('添加成功');
+					}
+					// uni.navigateTo({
+					// 	url: '/pages/isSureOrder/isSureOrder'
+					// })
 				})
 				.catch((res)=>{
 					// 失败方法
@@ -242,7 +265,8 @@
 				bool ? this.$refs.popup.open() : this.$refs.popup.close()
 			},
 			// 商品加入购物车弹出模态框
-			addCartModel(bool){
+			addCartModel(bool,num){
+				this.modelType = num
 				bool ? this.$refs.addCartPopup.open() : this.$refs.addCartPopup.close()
 			},
 			//返回首页
@@ -268,10 +292,14 @@
 			// 提交
 			submitBtn(){
 				this.$refs.addCartPopup.close()
-				const info =  this.id;
-				uni.navigateTo({
-					url: '/pages/isSureOrder/isSureOrder?id='+info+'&num='+this.productNum
-				})
+				const info =  this.id
+				if(this.modelType==1){
+					this.addToCart(info,this.productNum)
+				}else{
+					uni.navigateTo({
+						url: '/pages/isSureOrder/isSureOrder'
+					})
+				}
 			},
 			/**
 			 * 绘制海报
