@@ -297,7 +297,7 @@
 					this.addToCart(info,this.productNum)
 				}else{
 					uni.navigateTo({
-						url: '/pages/isSureOrder/isSureOrder'
+						url: '/pages/isSureOrder/isSureOrder?id='+info+'&num='+this.productNum
 					})
 				}
 			},

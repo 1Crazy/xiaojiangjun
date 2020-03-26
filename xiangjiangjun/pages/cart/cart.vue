@@ -27,7 +27,7 @@
 				<view class="alltotall">合计：</view>
 				<view class="price">￥{{lists.totalprice}}</view>
 			</view>
-			<button class="btn">结算({{lists.total}})</button>
+			<button class="btn" @tap="settlement">结算({{lists.total}})</button>
 		</view>
 	</view>
 </template>
@@ -122,6 +122,11 @@
 				}else{
 					this.upGoodsNum(this.lists.list[e.target.id]['id'],parseInt(e.detail.value))
 				}
+			},
+			settlement(){
+				uni.navigateTo({
+					url: '/pages/isSureOrder/isSureOrder'
+				})
 			}
 		}
 	}
