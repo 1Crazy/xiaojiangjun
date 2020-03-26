@@ -9,25 +9,25 @@
 			<uni-list>
 			    <uni-list-item title="快递邮寄" :show-arrow="false" notHighLight :thumb="imgSrc+'public/adress1.png'"></uni-list-item>
 			</uni-list>
-			<uni-list v-if="!isAdress">
+			<uni-list v-if="!orderInfo.address">
 				<uni-list-item title="添加收货地址"></uni-list-item>
 			</uni-list>
-			<view class="address-info" v-if="isAdress" @tap="gotoAddressManagement">
+			<view class="address-info" v-if="orderInfo.address" @tap="gotoAddressManagement">
 				<view class="top">
-					<view class="name">柚子007</view>
-					<view class="phone">13540738352</view>
+					<view class="name">{{orderInfo.address.realname}}</view>
+					<view class="phone">{{orderInfo.address.mobile}}</view>
 				</view>
 				<uni-list>
-					<uni-list-item notHighLight title="四川省成都市成华区保和街道云顶山路兴城佳苑2期B区"></uni-list-item>
+					<uni-list-item notHighLight :title="orderInfo.address.city+orderInfo.address.area+orderInfo.address.address"></uni-list-item>
 				</uni-list>
 			</view>
 		</view>
-		<view class="c-info">
+		<view class="c-info" v-for="(item , index) in goods" :key="index">
 			<product-title
-				:img="imgSrc+'productInfo/banner1.png'"
-				title="马驰宝汽车机油正品全合成5W-40德国进口奔驰宝马奥迪大众本田4L"
-				details="净含量：4L"
-				stock="库存：5999件"
+				:img="item.thumb"
+				:title="item.title"
+				:details="'净含量：'+item.weight+'克'"
+				:stock="'库存：'+item.kucun+'件'"
 			></product-title>
 			<view class="c-bottom">
 				<view class="c-b-word">产品规格</view>
@@ -37,16 +37,16 @@
 				<view class="c-b-word">购买数量</view>
 				<view class="r-wrap">
 					<button class="symbol" @tap="delNum()">-</button>
-					<input class="ipt" type="text" v-model="productNum" />
+					<input class="ipt" type="text" v-model="item.total" />
 					<button class="symbol" @tap="addNum()">+</button>
 				</view>
 			</view>
 			<view class="totalPrice">
-				<text class="txt1">共2件商品</text>
+				<text class="txt1">共{{item.total}}件商品</text>
 				<text class="txt2">合计：</text>
-				<text class="txt3">￥466</text>
+				<text class="txt3">￥{{item.marketprice*item.total}}</text>
 			</view>
-			<view class="integral">
+			<!-- <view class="integral">
 				<view class="leftWord">可用560个积分抵用5.60元</view>
 				<radio value="r1" :checked="false" class="radio"/>
 			</view>
@@ -59,13 +59,13 @@
 					<text class="txt3">-￥10</text>
 					<image :src="imgSrc+'public/arrow.png'"></image>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<view style="height: 116rpx;"></view>
 		<view class="b-footer">
 			<view class="txtWrap">
 				<view class="txt1">合计</view>
-				<view class="txt2">￥960.4</view>
+				<view class="txt2">￥{{orderInfo.realprice}}</view>
 			</view>
 			<button type="default" class="btn" @tap="pay">立即支付</button>
 		</view>
@@ -91,13 +91,15 @@
 				isStoreName: true, // 是否到店自提
 				isAdress: true, // 控制快递地址
 				productNum: 1,
+				orderInfo:[],
+				goods:[]
 			};
 		},
 		onLoad(e) {
 			console.log(e)
 			this.id = e.id;
 			this.num = e.num;
-			this.getData();
+			this.getData(this.id,this.num);
 		},
 		onShow() {
 			
@@ -132,12 +134,19 @@
 					url: '/pages/paySuccess/paySuccess'
 				})
 			},
-			getData(){
+			getData(id='',num=''){
 				Request(
-					'order.create'
+					'order.create',
+					{
+						id:id,
+						total:num
+					}
 				).then((res)=>{
 					console.log(res)
 					// 成功方法
+					this.orderInfo = res.data
+					this.goods = res.data.goods[0]['goods']
+					// console.log()
 					
 				})
 				.catch((res)=>{

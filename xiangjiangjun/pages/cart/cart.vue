@@ -13,10 +13,10 @@
 			</view>
 			<view class="wrap">
 				<view class="del" @tap="delNum(index)">-</view>
-				<input class="num" type="text" v-model="item.total"  />
+				<input class="num" type="text" v-model="item.total" :id="index" @confirm="choose" />
 				<view class="add" @tap="addNum(index)">+</view>
 			</view>
-			<image class="delete" :src="imgSrc+'public/delete.png'"></image>
+			<image class="delete" :src="imgSrc+'public/delete.png'" @tap="delNum(index,true)"></image>
 		</view>
 		
 		<view style="height: 98rpx;"></view>
@@ -27,7 +27,7 @@
 				<view class="alltotall">合计：</view>
 				<view class="price">￥{{lists.totalprice}}</view>
 			</view>
-			<button class="btn">结算({{lists.total}})</button>
+			<button class="btn" @tap="settlement">结算({{lists.total}})</button>
 		</view>
 	</view>
 </template>
@@ -75,13 +75,58 @@
 					// 失败方法
 				})
 			},
-			delNum(id){
-				this.upGoodsNum(this.lists.list[id]['id'],parseInt(this.lists.list[id]['total'])-1)
+			delGoods(id){
+				// console.log(id)
+				Request(
+					'member.cart.remove',
+					{
+						ids:id
+					}
+				).then((res)=>{
+					console.log(res)
+					// 成功方法
+					this.getData()
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			delNum(id,remove=false){
+				if(remove){
+					// console.log('点击删除');
+					const ids = [];
+					ids.push(this.lists.list[id]['id'])
+					this.delGoods(ids)
+				}else{
+					if(parseInt(this.lists.list[id]['total'])-1==0){
+						const ids = [];
+						ids.push(this.lists.list[id]['id'])
+						this.delGoods(ids)
+					}else{
+						this.upGoodsNum(this.lists.list[id]['id'],parseInt(this.lists.list[id]['total'])-1)
+					}
+				}
 			},
 			addNum(id){
-				console.log(id)
-				console.log(this.lists.list[id]['id'])
+				// console.log(id)
+				// console.log(this.lists.list[id]['id'])
 				this.upGoodsNum(this.lists.list[id]['id'],parseInt(this.lists.list[id]['total'])+1)
+			},
+			choose(e){
+				// console.log(e.target.id)
+				// console.log(e.detail.value)
+				if(parseInt(e.detail.value)==0){
+					const ids = [];
+					ids.push(this.lists.list[e.target.id]['id'])
+					this.delGoods(ids)
+				}else{
+					this.upGoodsNum(this.lists.list[e.target.id]['id'],parseInt(e.detail.value))
+				}
+			},
+			settlement(){
+				uni.navigateTo({
+					url: '/pages/isSureOrder/isSureOrder'
+				})
 			}
 		}
 	}
