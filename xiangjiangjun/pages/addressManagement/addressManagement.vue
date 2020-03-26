@@ -8,7 +8,7 @@
 						<view class="name">{{item.realname}} {{item.mobile}}</view>
 						<view class="address">{{item.province}} {{item.city}} {{item.area}} {{item.address}}</view>
 					</view>
-					<image class="img" :src="imgSrc+'public/dizhi_xiugai.png'" @tap="gotoAddOrUpdateAddress()"></image>
+					<image class="img" :src="imgSrc+'public/dizhi_xiugai.png'" @tap="gotoAddOrUpdateAddress(item.id)"></image>
 				</view>
 					<view class="bottom">
 							<label class="radio" @tap="setDefault(item.id)">
@@ -60,9 +60,10 @@
 					// 失败方法
 				})
 			},
-			gotoAddOrUpdateAddress() {
+			gotoAddOrUpdateAddress(id=null) {
+				
 				uni.navigateTo({
-					url: '/pages/addOrUpdateAddress/addOrUpdateAddress'
+					url: '/pages/addOrUpdateAddress/addOrUpdateAddress?id='+id
 				})
 			},
 			delAddress(id){

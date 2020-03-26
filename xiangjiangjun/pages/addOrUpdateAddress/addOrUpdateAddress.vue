@@ -2,46 +2,72 @@
 	<view>
 		<view class="iptWrap">
 			<view class="name">姓名</view>
-			<input class="ipt" type="text" value="" placeholder="填写姓名"/>
+			<input class="ipt" type="text" value="" :placeholder="addrss.realname"/>
 		</view>
 		<view class="iptWrap">
 			<view class="name">手机号码</view>
-			<input class="ipt" type="text" value="" placeholder="填写手机号码"/>
+			<input class="ipt" type="text" value="" :placeholder="addrss.mobile"/>
 		</view>
 		<view class="iptWrap">
 			<view class="name">所在地区</view>
 			<picker class="ipt" mode="multiSelector" @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="multiIndex" :range="multiArray">
 				<view class="picker">
-				  {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}}
+				  <!-- {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}} -->
+					{{addrss.province}},{{addrss.city}},{{addrss.area}}
 				</view>
 			</picker>
 			<image class="img" :src="imgSrc+'public/arrow.png'" mode=""></image>
 		</view>
 		<view class="iptWrap">
 			<view class="name">详细地址</view>
-			<input class="ipt" type="text" value="" placeholder="填写小区名/门牌号等详细地址"/>
+			<input class="ipt" type="text" value="" :placeholder="addrss.address"/>
 		</view>
 		<button class="saveBtn">保存</button>
 	</view>
 </template>
 
 <script>
-
-export default {
+	import { Request } from '../../public/utils.js'
+	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				multiArray: [['北京', '成都'], ['青羊区', '金牛区', '武侯区'], ['1', '2']],
 				multiIndex: [0, 0, 0],
+				addrss:[]
 			};
+		},
+		onLoad(e){
+			console.log(e)
+			if(e.id=='null'){
+				console.log('添加')
+			}else{
+				console.log('编辑')
+				this.getData(e.id)
+			}
 		},
 		methods: {
 			bindMultiPickerChange(e) {
-			  this.multiIndex= e.detail.value
-		  },
-		  bindMultiPickerColumnChange(e) {
+				this.multiIndex= e.detail.value
+			},
+			bindMultiPickerColumnChange(e) {
 		      
 		    },
+			getData(id){
+				Request(
+					'member.address.get_detail',
+					{
+						id:id
+					}
+				).then((res)=>{
+					console.log(res)
+					// 成功方法
+					this.addrss = res.data.detail
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			}
 		}
 	}
 </script>
