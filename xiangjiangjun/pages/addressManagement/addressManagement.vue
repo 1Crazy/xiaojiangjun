@@ -62,7 +62,6 @@
 				})
 			},
 			gotoAddOrUpdateAddress(id=null) {
-				
 				uni.navigateTo({
 					url: '/pages/addOrUpdateAddress/addOrUpdateAddress?id='+id
 				})

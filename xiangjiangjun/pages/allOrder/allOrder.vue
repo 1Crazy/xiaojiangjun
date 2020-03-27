@@ -1,67 +1,53 @@
 <template>
 	<view>
 		<view class="navWrap">
-			<view @tap="changeTab(1)" :class="navIndex == 1 ? 'itemWrap active': ''">
+			<view @tap="changeTab(0)" :class="navIndex == 0 ? 'itemWrap active': ''">
 				<view class="word">待支付</view>
 				<view class="line"></view>
 			</view>
-			<view @tap="changeTab(2)" :class="navIndex == 2 ? 'itemWrap active': ''">
+			<view @tap="changeTab(1)" :class="navIndex == 1 ? 'itemWrap active': ''">
 				<view class="word">待发货</view>
 				<view class="line"></view>
 			</view>
-			<view @tap="changeTab(3)" :class="navIndex == 3 ? 'itemWrap active': ''">
+			<view @tap="changeTab(2)" :class="navIndex == 2 ? 'itemWrap active': ''">
 				<view class="word">待收货</view>
 				<view class="line"></view>
 			</view>
-			<view @tap="changeTab(4)" :class="navIndex == 4 ? 'itemWrap active': ''">
+			<view @tap="changeTab(3)" :class="navIndex == 3 ? 'itemWrap active': ''">
 				<view class="word">已完成</view>
 				<view class="line"></view>
 			</view>
-			<view @tap="changeTab(5)" :class="navIndex == 5 ? 'itemWrap active': ''">
+			<view @tap="changeTab(4)" :class="navIndex == 4 ? 'itemWrap active': ''">
 				<view class="word">售后退款</view>
 				<view class="line"></view>
 			</view>
 		</view>
-		<view class="c-info">
-			<product-title
-				:img="imgSrc+'productInfo/banner1.png'"
-				title="马驰宝汽车机油正品全合成5W-40德国进口奔驰宝马奥迪大众本田4L"
-				shortTitle='马驰宝汽'
-				price='1366'
-				num=1
+		<view class="c-info" v-if="orderList.length!=0" v-for="(item , index) in orderList" :key="index">
+			
+			<product-title v-for="(items,indexs) in item.goods[0]['goods']" :key="indexs"
+				:img=items.thumb
+				:title=items.title
+				:price=items.price
+				:num=items.total
 				:borderBottomStyle='none'
 			></product-title>
 			<view class="totalPrice">
-				<text class="txt1">共2件商品</text>
+				<text class="txt1">共{{item.goods[0]['goods'].length}}件商品</text>
 				<text class="txt2">合计：</text>
-				<text class="txt3">￥466</text>
+				<text class="txt3">￥{{item.price}}</text>
 			</view>
-			<view class="btnWrap">
-				<button>取消订单</button>
-				<button class="activeBtn">去支付</button>
-				<button class="activeBtn">去评论</button>
+			<view class="btnWrap" v-if="navIndex!=1">
+				<button v-if="navIndex==0">取消订单</button>
+				<button v-if="navIndex==3">删除订单</button>
+				<button v-if="navIndex==0" class="activeBtn">去支付</button>
+				<button v-if="navIndex==2" class="activeBtn">确认收货</button>
+				<button v-if="navIndex==3" class="activeBtn">去评论</button>
+				<button v-if="navIndex==2||navIndex==3" class="activeBtn">查看物流</button>
+				<!-- <button class="activeBtn">退换货</button> -->
 			</view>
 		</view>
-		<view class="c-info">
-			<product-title
-				:img="imgSrc+'productInfo/banner1.png'"
-				title="马驰宝汽车机油正品全合成5W-40德国进口奔驰宝马奥迪大众本田4L"
-				shortTitle='马驰宝汽'
-				price='1366'
-				num=1
-				:borderBottomStyle='none'
-			></product-title>
-			<view class="totalPrice">
-				<text class="txt1">共2件商品</text>
-				<text class="txt2">合计：</text>
-				<text class="txt3">￥466</text>
-			</view>
-			<view class="btnWrap">
-				<button>取消订单</button>
-				<button class="activeBtn">退换货</button>
-			</view>
-		</view>
-		<view class="noDataBg" v-if="list.length==0">
+		
+		<view class="noDataBg" v-if="orderList.length==0">
 			<image class="noDataImg" :src="imgSrc+'public/img_kongbaiye.png'" mode="" />
 			<view class="word">暂还没有订单哦~</view>
 		</view>
@@ -70,6 +56,7 @@
 
 <script>
 	import productTitle from '@/components/productTitle/productTitle.vue'
+	import { Request } from '../../public/utils.js'
 	export default {
 		components: {
 			productTitle
@@ -77,13 +64,37 @@
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
-				navIndex: 1,
-				list: [1]
+				navIndex: 0,
+				orderList: []
 			};
+		},
+		onLoad() {
+			
+		},
+		onShow() {
+			this.getData(0)
 		},
 		methods: {
 			changeTab(index){
 				this.navIndex = index
+				this.getData(index)
+			},
+			getData(type){
+				Request(
+					'order.get_list',
+					{
+						page:1,
+						status:type
+					}
+				)
+				.then((res)=>{
+					console.log(res)
+					// 成功方法
+					this.orderList = res.data.list
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
 			}
 		}
 	}
