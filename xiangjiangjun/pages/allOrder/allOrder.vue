@@ -36,6 +36,30 @@
 				<text class="txt2">合计：</text>
 				<text class="txt3">￥466</text>
 			</view>
+			<view class="btnWrap">
+				<button>取消订单</button>
+				<button class="activeBtn">去支付</button>
+				<button class="activeBtn">去评论</button>
+			</view>
+		</view>
+		<view class="c-info">
+			<product-title
+				:img="imgSrc+'productInfo/banner1.png'"
+				title="马驰宝汽车机油正品全合成5W-40德国进口奔驰宝马奥迪大众本田4L"
+				shortTitle='马驰宝汽'
+				price='1366'
+				num=1
+				:borderBottomStyle='none'
+			></product-title>
+			<view class="totalPrice">
+				<text class="txt1">共2件商品</text>
+				<text class="txt2">合计：</text>
+				<text class="txt3">￥466</text>
+			</view>
+			<view class="btnWrap">
+				<button>取消订单</button>
+				<button class="activeBtn">退换货</button>
+			</view>
 		</view>
 		<view class="noDataBg" v-if="list.length==0">
 			<image class="noDataImg" :src="imgSrc+'public/img_kongbaiye.png'" mode="" />
@@ -89,6 +113,9 @@
 		}
 		.active{
 			position: relative;
+			.word{
+				color: #1db728;
+			}
 			.line{
 				width: 50%;
 				height: 5rpx;
@@ -124,6 +151,7 @@
 	padding: 30rpx 20rpx;
 	padding-bottom: 0;
 	background-color: white;
+	margin-bottom: 20rpx;
 	.c-bottom{
 		margin-top: 40rpx;
 		// height: 166rpx;
@@ -172,7 +200,6 @@
 	.totalPrice{
 		text-align: right;
 		padding: 40rpx 0;
-		border-bottom: 1px solid #e3e3e3;
 		.txt1{
 			font-family: PingFang-SC-Medium;
 			font-size: 28rpx;
@@ -244,6 +271,32 @@
 			width: 12rpx;
 			height: 20rpx;
 			margin-left:38rpx;
+		}
+	}
+	.btnWrap{
+		padding: 30rpx 0;
+		border-top: 1px solid #e3e3e3;
+		display: flex;
+		justify-content: flex-end;
+		button{
+			width: 180rpx;
+			height: 66rpx;
+			border-radius: 33rpx;
+			border: solid 1rpx #cccccc;
+			font-family: PingFang-SC-Medium;
+			font-size: 28rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #666666;
+			line-height: 66rpx;
+			margin-right: 40rpx;
+		}
+		button:last-child{
+			margin-right: 0;
+		}
+		.activeBtn{
+			border: solid 1px #1db728;
+			color: #1db728;
 		}
 	}
 }
