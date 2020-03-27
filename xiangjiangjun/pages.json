@@ -84,6 +84,12 @@
             	"navigationBarTitleText": "个人信息完善"
             }
         }
+        ,{
+            "path" : "pages/mineInvite/mineInvite",
+            "style" : {
+            	"navigationBarTitleText": "名下邀请客户"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
