@@ -62,7 +62,7 @@ function getCurrentTime() {
   return keep // 20160614134947
 }
 const payUrl = dev
-const Request = (url, data, method = 'GET', title = '加载中', baseUrl = dev , dataType = 'json') => {
+const Request = (url, data, method = 'GET' , head = 'application/json', title = '加载中', baseUrl = dev , dataType = 'json') => {
   let src = ''
   if(!data){
 	  data = {}
@@ -89,6 +89,9 @@ const Request = (url, data, method = 'GET', title = '加载中', baseUrl = dev ,
       method,
       dataType,
       responseType: 'text',
+	  header: {
+		'content-type': head //自定义请求头信息
+	  },
       success: function (res) {
         resolve(res)
       },

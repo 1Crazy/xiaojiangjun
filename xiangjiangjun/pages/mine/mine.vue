@@ -11,23 +11,23 @@
 				<view class="rightTitle" @tap="gotoAllOrder()">查看全部订单 ></view>
 			</view>
 			<view class="content">
-				<view class="item" @tap="gotoAllOrder(1)">
+				<view class="item" @tap="gotoAllOrder(0)">
 					<image :src="imgSrc+'mine/list1.png'" class="img"></image>
 					<view class="word">待支付</view>
 				</view>
-				<view class="item" @tap="gotoAllOrder(2)">
+				<view class="item" @tap="gotoAllOrder(1)">
 					<image :src="imgSrc+'mine/list2.png'" class="img"></image>
 					<view class="word">待发货</view>
 				</view>
-				<view class="item" @tap="gotoAllOrder(3)">
+				<view class="item" @tap="gotoAllOrder(2)">
 					<image :src="imgSrc+'mine/list3.png'" class="img"></image>
 					<view class="word">待收货</view>
 				</view>
-				<view class="item" @tap="gotoAllOrder(4)">
+				<view class="item" @tap="gotoAllOrder(3)">
 					<image :src="imgSrc+'mine/list4.png'" class="img"></image>
 					<view class="word">已完成</view>
 				</view>
-				<view class="item" @tap="gotoAllOrder(5)">
+				<view class="item" @tap="gotoAllOrder(4)">
 					<image :src="imgSrc+'mine/list5.png'" class="img"></image>
 					<view class="word">退款售后</view>
 				</view>
@@ -95,7 +95,7 @@
 			},
 			gotoAllOrder(num){
 				uni.navigateTo({
-					url: '/pages/allOrder/allOrder'
+					url: '/pages/allOrder/allOrder?status='+num
 				})
 			},
 			gotoAccount(){
