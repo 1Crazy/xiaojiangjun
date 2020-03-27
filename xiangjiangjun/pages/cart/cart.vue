@@ -42,9 +42,9 @@
 			}
 		},
 		onLoad() {
-			this.getData()
-		},onShow() {
 			
+		},onShow() {
+			this.getData()
 		},
 		methods: {
 			getData(){

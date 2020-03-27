@@ -22,6 +22,7 @@
 			</view>
 		</radio-group>
 		</view>
+		<view class="listbtn"></view>
 		<view class="btnWrap">
 			<button class="addAdressBtn" @tap="gotoAddOrUpdateAddress()">+ 添加地址</button>
 		</view>
@@ -39,10 +40,10 @@
 			};
 		},
 		onLoad() {
-			this.getData();
+			
 		},
 		onShow() {
-			
+			this.getData();
 		},
 		methods: {
 			// 
