@@ -69,7 +69,7 @@
 			<view class="word">体验者</view>
 			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
-		<view class="listItem">
+		<view class="listItem" @tap="gotoMineCoupon">
 			<image class="img" :src="imgSrc+'mine/item3.png'"></image>
 			<view class="word">优惠券</view>
 			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
@@ -101,6 +101,11 @@
 			gotoAccount(){
 				uni.navigateTo({
 					url: '/pages/account/account'
+				})
+			},
+			gotoMineCoupon(){
+				uni.navigateTo({
+					url: '/pages/mingCoupon/mingCoupon'
 				})
 			}
 		}
