@@ -72,6 +72,18 @@
 				"navigationBarTitleText": "购物车"
 			}
 		}
+        ,{
+            "path" : "pages/registerAccount/registerAccount",
+            "style" : {
+            	"navigationBarTitleText": "注册成为会员"
+            }
+        }
+        ,{
+            "path" : "pages/updatePersonalInfomation/updatePersonalInfomation",
+            "style" : {
+            	"navigationBarTitleText": "个人信息完善"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
