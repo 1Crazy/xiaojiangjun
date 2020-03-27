@@ -6,38 +6,92 @@
 				<image :src="imgSrc+'public/fdj1.png'" class="img"></image>
 			</view>
 		</view>
-		<view class="listWrap">
+		<view class="listWrap" v-for="(item ,index) in list" :key="index">
 			<view>
-				<view class="distance">1.5km</view>
-				<view class="storeName">成都市高新区环球店</view>
+				<view class="distance">{{item.distance}}km</view>
+				<view class="storeName">{{item.storename}}</view>
 			</view>
 			<button type="default" class="btn">确定</button>
 		</view>
-		<view class="listWrap">
-			<view>
-				<view class="distance">1.5km</view>
-				<view class="storeName">成都市高新区环球店</view>
-			</view>
-			<button type="default" class="btn">确定</button>
-		</view>
-		<view class="listWrap">
-			<view>
-				<view class="distance">1.5km</view>
-				<view class="storeName">成都市高新区环球店</view>
-			</view>
-			<button type="default" class="btn">确定</button>
-		</view>
-		<button type="default" class="lookMore">查看更多</button>
+		
+		<button v-if="nomore" type="default" class="lookMore" @tap="moreData()">查看更多</button>
 	</view>
 </template>
 
 <script>
 	import './index.scss'
+	import { Request } from '../../public/utils.js'
 	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				list:[],
+				page:1,
+				nomore:true
 			};
+		},
+		onLoad() {
+			this.getLocation()
+		},
+		onShow() {
+			
+		},
+		methods:{
+			getData(){
+				const that = this;
+				Request(
+					'store.get_stores',
+					{
+						lng:that.longitude,
+						lat:that.latitude
+					}
+				).then((res)=>{
+					// console.log(res)
+					// 成功方法
+					that.list = res.data.list
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			getLocation(){
+				const that = this;
+				wx.getLocation({
+					type: 'gcj02 ',
+					success (res) {
+						that.longitude = res.longitude
+						that.latitude = res.latitude
+						that.getData();
+					}
+				})
+			},
+			moreData(){
+				// console.log(this.page+1)
+				this.page = this.page+1
+				// console.log( this.list)
+				Request(
+					'store.get_stores',
+					{
+						lng:this.longitude,
+						lat:this.latitude,
+						page:this.page
+					}
+				).then((res)=>{
+					// console.log(res)
+					// 成功方法
+					if(res.data.list==''){
+						this.nomore=false;
+					}else{
+						// this.lists = res.data.list
+						this.list = this.list.concat(res.data.list)
+					}
+					
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+				
+			}
 		}
 	}
 </script>
