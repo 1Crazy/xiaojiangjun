@@ -2,17 +2,20 @@
 	<view>
 		<view class="iptWrap">
 			<view class="name">姓名</view>
-			<input class="ipt" type="text" value="" :placeholder="addrss.realname"/>
+			<input class="ipt" type="text" v-model="addrss.realname" placeholder="请输入姓名"/>
 		</view>
 		<view class="iptWrap">
 			<view class="name">手机号码</view>
-			<input class="ipt" type="text" value="" :placeholder="addrss.mobile"/>
+			<input class="ipt" type="text" v-model="addrss.mobile" placeholder="请输入联系方式"/>
 		</view>
 		<view class="iptWrap">
 			<view class="name">所在地区</view>
 			<picker class="ipt" mode="multiSelector" @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="multiIndex" :range="multiArray">
-				<view class="picker">
-				  <!-- {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}} -->
+				<view class="picker" v-if="!addrss.province">
+					<!-- {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}} -->
+					请选择地址
+				</view>
+				<view class="picker" v-if="addrss.province">
 					{{addrss.province}},{{addrss.city}},{{addrss.area}}
 				</view>
 			</picker>
@@ -20,7 +23,7 @@
 		</view>
 		<view class="iptWrap">
 			<view class="name">详细地址</view>
-			<input class="ipt" type="text" value="" :placeholder="addrss.address"/>
+			<input class="ipt" type="text" v-model="addrss.address" placeholder="请输入详细地址"/>
 		</view>
 		<button class="saveBtn">保存</button>
 	</view>
@@ -38,11 +41,12 @@
 			};
 		},
 		onLoad(e){
-			console.log(e)
+			// console.log(e)
 			if(e.id=='null'){
-				console.log('添加')
+				// console.log('添加')
+				this.addrss['province'] = "请输入"
 			}else{
-				console.log('编辑')
+				// console.log('编辑')
 				this.getData(e.id)
 			}
 		},
