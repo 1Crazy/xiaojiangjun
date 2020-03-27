@@ -1,17 +1,17 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-		    "path" : "pages/account/account",
-		    "style" : {
-		    	"navigationBarTitleText": "会员"
-		    }
-		},{
 		    "path" : "pages/mine/mine",
 		    "style" : {
 				"navigationBarTitleText": "我的",
 				"navigationBarBackgroundColor": "#50ce13",
 				"navigationBarTextStyle":"white"
 			}
+		},{
+		    "path" : "pages/account/account",
+		    "style" : {
+		    	"navigationBarTitleText": "会员"
+		    }
 		},{
 		    "path" : "pages/allOrder/allOrder",
 		    "style" : {
@@ -89,6 +89,12 @@
             "style" : {
             	"navigationBarTitleText": "名下邀请客户"
             }
+        }
+        ,{
+            "path" : "pages/mingCoupon/mingCoupon",
+            "style" : {
+				"navigationBarTitleText": "我的优惠券"
+           }
         }
     ],
 	"globalStyle": {
