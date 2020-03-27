@@ -10,7 +10,8 @@
 		</view>
 		<view class="iptWrap">
 			<view class="name">所在地区</view>
-			<picker class="ipt" mode="multiSelector" @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" :value="multiIndex" :range="multiArray">
+			<!-- 不兼容支付宝小程序,当mode=region时 -->
+			<picker class="ipt" mode="region" @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange">
 				<view class="picker" v-if="!addrss.province">
 					<!-- {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}} -->
 					请选择地址
@@ -52,7 +53,9 @@
 		},
 		methods: {
 			bindMultiPickerChange(e) {
-				this.multiIndex= e.detail.value
+				this.addrss.province = e.detail.value[0]
+				this.addrss.city = e.detail.value[1]
+				this.addrss.area = e.detail.value[2]
 			},
 			bindMultiPickerColumnChange(e) {
 		      
