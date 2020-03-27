@@ -12,12 +12,9 @@
 			<view class="name">所在地区</view>
 			<!-- 不兼容支付宝小程序,当mode=region时 -->
 			<picker class="ipt" mode="region" @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange">
-				<view class="picker" v-if="!addrss.province">
+				<view class="picker">
 					<!-- {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}} -->
-					请选择地址
-				</view>
-				<view class="picker" v-if="addrss.province">
-					{{addrss.province}},{{addrss.city}},{{addrss.area}}
+					{{addrss.province}}{{addrss.city}}{{addrss.area}}
 				</view>
 			</picker>
 			<image class="img" :src="imgSrc+'public/arrow.png'" mode=""></image>
@@ -26,26 +23,32 @@
 			<view class="name">详细地址</view>
 			<input class="ipt" type="text" v-model="addrss.address" placeholder="请输入详细地址"/>
 		</view>
-		<button class="saveBtn">保存</button>
+		
+		<button class="saveBtn" @tap="addAddress">保存</button>
 	</view>
 </template>
 
 <script>
-	import { Request } from '../../public/utils.js'
+	import { Request,VerifyPhoneNumber } from '../../public/utils.js'
+	import _app from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js';
 	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				multiArray: [['北京', '成都'], ['青羊区', '金牛区', '武侯区'], ['1', '2']],
 				multiIndex: [0, 0, 0],
-				addrss:[]
+				addrss:{
+					province : "请选择地址区域",
+					city : "",
+					area : ""
+				}
 			};
 		},
 		onLoad(e){
 			// console.log(e)
 			if(e.id=='null'){
-				// console.log('添加')
-				this.addrss['province'] = "请输入"
+				console.log('添加')
+				// this.addrss.province = "请选择地址区域"
 			}else{
 				// console.log('编辑')
 				this.getData(e.id)
@@ -70,10 +73,46 @@
 					console.log(res)
 					// 成功方法
 					this.addrss = res.data.detail
+					
 				})
 				.catch((res)=>{
 					// 失败方法
 				})
+			},
+			addAddress(){
+				if(!VerifyPhoneNumber(this.addrss.mobile)){
+					_app.showToast('电话格式不正确')
+				}else{
+					const id = this.addrss.id
+					const name = this.addrss.realname
+					const mobile = this.addrss.mobile
+					const address = this.addrss.address
+					const province = this.addrss.province
+					const city = this.addrss.city
+					const area = this.addrss.area
+					Request(
+						'member.address.submit',
+						{
+							id:id,
+							realname: name,
+							mobile: mobile,
+							address: address,
+							province: province,
+							city: city,
+							area: area
+						}
+					).then((res)=>{
+						console.log(res)
+						// 成功方法
+						_app.showToast('成功')
+						uni.navigateTo({
+							url: '/pages/addressManagement/addressManagement'
+						})
+					})
+					.catch((res)=>{
+						// 失败方法
+					})
+				}
 			}
 		}
 	}
