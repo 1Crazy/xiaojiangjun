@@ -40,7 +40,7 @@
 				<button v-if="navIndex==0" @tap="cancelOrder(item.id)">取消订单</button>
 				<button v-if="navIndex==3">删除订单</button>
 				<button v-if="navIndex==0" class="activeBtn">去支付</button>
-				<button v-if="navIndex==2" class="activeBtn">确认收货</button>
+				<button v-if="navIndex==2" class="activeBtn" @tap="finishOrder(item.id)">确认收货</button>
 				<button v-if="navIndex==3" class="activeBtn">去评论</button>
 				<!-- <button v-if="navIndex==2||navIndex==3" class="activeBtn">查看物流</button> -->
 				<!-- <button class="activeBtn">退换货</button> -->
@@ -104,7 +104,24 @@
 					{
 						id:id,
 						remark:"取消购买",
-						comefrom:'wxapp'
+					},
+					'Post',
+					'application/x-www-form-urlencoded'
+				)
+				.then((res)=>{
+					console.log(res)
+					// 成功方法
+					this.getData(this.navIndex)
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			finishOrder(id){
+				Request(
+					'order.op.finish',
+					{
+						id:id,
 					},
 					'Post',
 					'application/x-www-form-urlencoded'
