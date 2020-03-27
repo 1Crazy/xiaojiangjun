@@ -196,8 +196,8 @@
 			}
 		},
 		onLoad(e) {
-			this.getGoodDetail(e.info);
-			this.id = e.info;
+			this.id = e.id;
+			this.getGoodDetail(e.id);
 		},
 		methods: {
 			swiperChange (e) {
@@ -336,7 +336,7 @@
 									rs([
 										{
 											type: 'image',
-											url: '/static/productInfo/banner1.png',
+											url: this.goods.thumb,
 											alpha: 1,
 											dx: 30,
 											dy: 30,
@@ -350,7 +350,7 @@
 										},
 										{
 											type: 'image',
-											url: '/static/productInfo/banner2.png',
+											url: this.goods.thumb,//小程序二维码
 											alpha: 1,
 											dx: 30,
 											dy: 1020,
@@ -365,7 +365,7 @@
 										{
 											type: 'text',
 											fontStyle: 'normal',
-											text: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
+											text: this.goods.title,
 											size: 30,
 											color: 'black',
 											alpha: 1,
@@ -391,7 +391,7 @@
 										{
 											type: 'text',
 											fontStyle: 'normal',
-											text: '￥366',
+											text: this.goods.marketprice,
 											size: 36,
 											color: '#ff9000',
 											alpha: 1,

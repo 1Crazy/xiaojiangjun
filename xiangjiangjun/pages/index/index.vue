@@ -160,7 +160,7 @@
 			},
 			gotoProductInfo(info){
 				uni.navigateTo({
-					url: `/pages/productInfo/productInfo?info=${info}`
+					url: `/pages/productInfo/productInfo?id=${info}`
 				})
 			}
 		}
