@@ -3,7 +3,7 @@
 		<view class="header">
 			<image class="avatar" :src="imgSrc+'index/listpic1.png'" mode=""></image>
 			<view class="name">橙子007</view>
-			<view class="vip">会员  ></view>
+			<view class="vip" @tap="gotoAccount">会员  ></view>
 		</view>
 		<view class="orderlist">
 			<view class="title">
@@ -37,7 +37,7 @@
 		<view class="orderlist">
 			<view class="title">
 				<view class="leftTitle">服务订单</view>
-				<view class="rightTitle" @tap="gotoAllOrder()">查看全部订单 ></view>
+				<view class="rightTitle" @tap="gotoAllOrder(1,)">查看全部订单 ></view>
 			</view>
 			<view class="content">
 				<view class="item">
@@ -96,6 +96,11 @@
 			gotoAllOrder(num){
 				uni.navigateTo({
 					url: '/pages/allOrder/allOrder'
+				})
+			},
+			gotoAccount(){
+				uni.navigateTo({
+					url: '/pages/account/account'
 				})
 			}
 		}
