@@ -92,6 +92,8 @@
  */
 		font-size: 14px;
 		color: #666;
+		text-align: center;
+		padding: 20rpx 0;
 	}
 
 	.uni-tip-group-button {

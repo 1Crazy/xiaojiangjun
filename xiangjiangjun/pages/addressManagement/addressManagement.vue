@@ -27,7 +27,7 @@
 		<view class="btnWrap">
 			<button class="addAdressBtn" @tap="gotoAddOrUpdateAddress()">+ 添加地址</button>
 		</view>
-		<center-popup ref="togglePopupChild" @centerPopupSureBtn="delAddress(currentListItem.id)"></center-popup>
+		<center-popup ref="togglePopupChild" title="删除提示" content="确定要删除该地址吗?" @centerPopupSureBtn="delAddress(currentListItem.id)"></center-popup>
 	</view>
 </template>
 
