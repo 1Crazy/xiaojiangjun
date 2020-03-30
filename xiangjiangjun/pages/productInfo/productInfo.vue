@@ -119,7 +119,7 @@
 					<view class="c-bottom-bottom">
 						<view class="c-b-title">选择规格：</view>
 						<view class="btn-wrap">
-							<button type="default" :class="specificationIndex==index ? 'active-btn btn ' : 'btn'" v-for="(item ,index) in specificationList" :key="index" @tap="changeActiveBtn(index)">{{item}}</button>				
+							<button type="default" :class="specificationIndex==index ? 'active-btn btn ' : 'btn'" v-for="(item ,index) in picker" :key="index" @tap="changeActiveBtn(index)">{{item.title}}</button>				
 						</view>
 					</view>
 				</view>
@@ -191,7 +191,9 @@
 				canvasId: 'default_PosterCanvasId',
 				goods: [],
 				goodscontent: "",
-				compage:1
+				compage:1,
+				picker:[],
+				pickerChoose:''
 				//
 			}
 		},
@@ -217,6 +219,7 @@
 					// console.log(res.data.goods)
 					this.goods = res.data.goods
 					this.getComment(id)
+					this.getPicker(id)
 					// 成功方法
 				})
 				.catch((res)=>{
@@ -240,25 +243,47 @@
 					// 失败方法
 				})
 			},
-			addToCart(id,num){
+			getPicker(id){
 				Request(
-					'member.cart.add',
+					'goods.get_picker',
 					{
-						id:id,
-						total:num
+						id:id
 					}
 				).then((res)=>{
+					console.log(res.data)
+					this.picker = res.data.options
 					// 成功方法
-					if(res.data.error==0){
-						_app.showToast('添加成功');
-					}
-					// uni.navigateTo({
-					// 	url: '/pages/isSureOrder/isSureOrder'
-					// })
 				})
 				.catch((res)=>{
 					// 失败方法
 				})
+			},
+			addToCart(id,num){
+				if(this.pickerChoose=='' && this.picker.length!=0){
+					_app.showToast('请选择规格');
+					return false
+					// this.$refs.addCartPopup.open()
+				}else{
+					Request(
+						'member.cart.add',
+						{
+							id:id,
+							total:num,
+							optionid:this.pickerChoose
+						}
+					).then((res)=>{
+						// 成功方法
+						if(res.data.error==0){
+							_app.showToast('添加成功');
+						}
+						// uni.navigateTo({
+						// 	url: '/pages/isSureOrder/isSureOrder'
+						// })
+					})
+					.catch((res)=>{
+						// 失败方法
+					})
+				}
 			},
 			//物流说明模态框
 			LogisticsInfoModel(bool){
@@ -278,6 +303,8 @@
 			// 改变当前规格参数值
 			changeActiveBtn(index){
 				this.specificationIndex = index
+				this.pickerChoose = this.picker[index]['id']
+				console.log(this.pickerChoose)
 			},
 			delNum(){
 				if (this.productNum > 1) {
@@ -291,7 +318,7 @@
 			},
 			// 提交
 			submitBtn(){
-				this.$refs.addCartPopup.close()
+				// this.$refs.addCartPopup.close()
 				const info =  this.id
 				if(this.modelType==1){
 					this.addToCart(info,this.productNum)

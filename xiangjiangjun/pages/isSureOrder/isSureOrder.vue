@@ -29,9 +29,9 @@
 				:details="'净含量：'+item.weight+'克'"
 				:stock="'库存：'+item.kucun+'件'"
 			></product-title>
-			<view class="c-bottom">
+			<view class="c-bottom" v-if="item.optiontitle">
 				<view class="c-b-word">产品规格</view>
-				<view class="r-wrap-c">我是规格</view>
+				<view class="r-wrap-c">{{item.optiontitle}}</view>
 			</view>
 			<view class="c-bottom">
 				<view class="c-b-word">购买数量</view>
