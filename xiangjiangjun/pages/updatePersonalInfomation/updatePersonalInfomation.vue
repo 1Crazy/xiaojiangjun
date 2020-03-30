@@ -1,24 +1,68 @@
 <template>
 	<view>
 		<view class="wrap">
-			<input class="ipt" type="text" value=""  placeholder="跑了多少公里"/>
+			<input class="ipt" type="number" v-model="carInfo.how_long"  placeholder="跑了多少公里"/>
 		</view>
 		<view class="wrap">
-			<input class="ipt" type="text" value=""  placeholder="多久做一次保养"/>
+			<input class="ipt" type="text" v-model="carInfo.how_maintenance"  placeholder="多久做一次保养"/>
 		</view>
 		<view class="wrap">
-			<input class="ipt" type="text" value=""  placeholder="汽车型号品牌"/>
+			<input class="ipt" type="text" v-model="carInfo.car_type" placeholder="汽车型号品牌"/>
 		</view>
-		<button class="isSure">确定</button>
+		<button class="isSure" @tap="sumbit()">确定</button>
 	</view>
 </template>
 
 <script>
+	import { Request } from '../../public/utils.js'
 	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				carInfo:[]
 			};
+		},
+		onLoad(e) {
+			
+		},
+		onShow() {
+			this.getData();
+		},
+		methods:{
+			getData(){
+				Request(
+					'member.getCarInfos'
+				)
+				.then((res)=>{
+					this.carInfo = res.data.carInfo[0]
+					console.log(this.carInfo)
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			sumbit(){
+				// console.log(this.carInfo)
+				if(this.carInfo.id==null){
+					this.carInfo.id = null
+				}
+				Request(
+					'member.inputCarInfo',
+					{
+						'id':this.carInfo.id,
+						'how_long':this.carInfo.how_long,
+						'how_maintenance':this.carInfo.how_maintenance,
+						'car_type':this.carInfo.car_type
+					}
+				)
+				.then((res)=>{
+					// this.carInfo = res.data.carInfo[0]
+					console.log(res)
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			}
 		}
 	}
 </script>
