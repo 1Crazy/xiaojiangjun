@@ -26,7 +26,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="formcontent">
+		<view class="formcontent" v-if="!isQualify">
 			<view class="formcontentbottom">您已成功邀请5人，填写完整汽车资料即可参与体验</view>
 			<view class="item">
 				<view class="leftWrod">行驶证</view>
@@ -62,6 +62,22 @@
 			</view>
 			<button type="default" class="btn">提交资料</button>
 		</view>
+		<view class="qualifyWrap" v-if="isQualify">
+			<view class="nav">
+				<view class="word active">
+					核销
+					<view class="line"></view>
+				</view>
+				<view class="wrod">
+					体验记录
+					<view class="line"></view>
+				</view>
+			</view>
+			<view class="qrcodeWrap">
+				<image src="../../static/public/adress1.png" class="img"></image>
+				<view class="word">商家扫码核销</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -71,6 +87,7 @@
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				isQualify: true
 			};
 		}
 	}

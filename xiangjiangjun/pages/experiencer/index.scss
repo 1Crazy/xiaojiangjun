@@ -64,9 +64,10 @@ page{
 	height: 1284rpx;
 	background-color: #ffffff;
 	border-radius: 10rpx 10rpx 0rpx 0rpx;
-	position: relative;
-	top: -100rpx;
+	// position: relative;
+	// top: -100rpx;
 	margin: 0 auto;
+	margin-top: -100rpx;
 	.formcontentbottom{
 		width: 710rpx;
 		height: 100rpx;
@@ -119,5 +120,58 @@ page{
 		color: #ffffff;
 		margin: 0 auto;
 		margin-top: 49rpx;
+	}
+}
+
+.qualifyWrap{
+	margin-top: -100rpx;
+	.nav{
+		width: 750rpx;
+		height: 110rpx;
+		background-color: #ffffff;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		.word{
+			font-family: PingFang-SC-Bold;
+			font-size: 33rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			color: #333333;
+			height: 110rpx;
+			line-height: 110rpx;
+			position: relative;
+		}
+		.active{
+			color: #50ce13;
+			.line{
+				width: 50%;
+				margin: 0 auto;
+				border-bottom: 4rpx solid #50ce13;
+				position: absolute;
+				left: 25%;
+				bottom: 0;
+			}
+		}
+	}
+	.qrcodeWrap{
+		width: 750rpx;
+		height: 667rpx;
+		background-color: #ffffff;
+		margin-top: 27rpx;
+		text-align: center;
+		.img{
+			width: 500rpx;
+			height: 500rpx;
+			margin-top: 50rpx;
+		}
+		.word{
+			font-family: PingFang-SC-Bold;
+			font-size: 30rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			margin-top: 27rpx;
+			color: #666666;
+		}
 	}
 }
