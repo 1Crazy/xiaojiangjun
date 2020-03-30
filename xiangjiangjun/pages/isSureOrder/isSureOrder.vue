@@ -36,9 +36,9 @@
 			<view class="c-bottom">
 				<view class="c-b-word">购买数量</view>
 				<view class="r-wrap">
-					<button class="symbol" @tap="delNum()">-</button>
+					<button class="symbol" @tap="delNum(index)">-</button>
 					<input class="ipt" type="text" v-model="item.total" />
-					<button class="symbol" @tap="addNum()">+</button>
+					<button class="symbol" @tap="addNum(index)">+</button>
 				</view>
 			</view>
 			<view class="totalPrice">
@@ -92,28 +92,28 @@
 				isAdress: true, // 控制快递地址
 				productNum: 1,
 				orderInfo:[],
-				goods:[]
+				goods:[],
+				chooseAddress:''
 			};
 		},
-		onLoad(e) {
-			console.log(e)
-			this.id = e.id;
-			this.num = e.num;
-			this.getData(this.id,this.num);
+		onLoad(options) {
+			console.log(32323232323232323232)
+			console.log(options)
+			this.id = options.id;
+			this.num = options.num;
+			this.optionid = options.optionid;
+			this.getData(this.id,this.num,this.optionid);
 		},
-		onShow() {
-			
+		onShow(e) {
+			// console.log()
+			console.log(this.chooseAddress)
 		},
 		methods:{
-			delNum(){
-				if (this.productNum > 1) {
-					this.productNum--
-				}
+			delNum(id){
+				
 			},
-			addNum(){
-				if (this.productNum < 200) {
-					this.productNum++
-				}
+			addNum(id){
+				
 			},
 			// 门店页跳转
 			gotoDorPages(){
@@ -134,12 +134,13 @@
 					url: '/pages/paySuccess/paySuccess'
 				})
 			},
-			getData(id='',num=''){
+			getData(id='',num='',optionid=''){
 				Request(
 					'order.create',
 					{
 						id:id,
-						total:num
+						total:num,
+						optionid:optionid
 					}
 				).then((res)=>{
 					console.log(res)

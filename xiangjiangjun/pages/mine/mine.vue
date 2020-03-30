@@ -84,8 +84,9 @@
 				imgSrc: this.$store.state.imgSrc,
 			}
 		},
-		onLoad() {
-			 
+		onLoad(e) {
+		},
+		onShow(e) {
 		},
 		methods: {
 			gotoAddressManagement(){

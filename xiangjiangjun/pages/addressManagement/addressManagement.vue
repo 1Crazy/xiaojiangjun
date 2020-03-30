@@ -4,7 +4,7 @@
 		 <radio-group>
 			<view class="addressList" v-for="(item ,index) in lists" :key="index">
 				<view class="top">
-					<view>
+					<view @tap="chooseAddress(item.id)">
 						<view class="name">{{item.realname}} {{item.mobile}}</view>
 						<view class="address">{{item.province}} {{item.city}} {{item.area}} {{item.address}}</view>
 					</view>
@@ -96,6 +96,14 @@
 				.catch((res)=>{
 					// 失败方法
 				})
+			},
+			chooseAddress(id){
+				console.log(id)
+				var pages = getCurrentPages();
+				// var nowPage = pages[pages.length -1]
+				var prevPage = pages[pages.length - 2];  
+				prevPage.$vm.chooseAddress = id 
+				uni.navigateBack();
 			}
 		}
 	}

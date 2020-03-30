@@ -323,9 +323,15 @@
 				if(this.modelType==1){
 					this.addToCart(info,this.productNum)
 				}else{
-					uni.navigateTo({
-						url: '/pages/isSureOrder/isSureOrder?id='+info+'&num='+this.productNum
-					})
+					if(this.pickerChoose=='' && this.picker.length!=0){
+						_app.showToast('请选择规格');
+						return false
+						// this.$refs.addCartPopup.open()
+					}else{
+						uni.navigateTo({
+							url: '/pages/isSureOrder/isSureOrder?id='+info+'&num='+this.productNum+'&optionid='+this.pickerChoose
+						})
+					}
 				}
 			},
 			/**

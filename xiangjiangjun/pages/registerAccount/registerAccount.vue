@@ -1,28 +1,85 @@
 <template>
 	<view>
 		<view class="wrap">
-			<input class="ipt" type="text" value=""  placeholder="输入您的姓名"/>
+			<input class="ipt" type="text" v-model="name"  placeholder="输入您的姓名"/>
 		</view>
 		<view class="wrap">
-			<input class="ipt" type="text" value=""  placeholder="输入您的电话号码"/>
+			<input class="ipt" type="text" v-model="mobile"  placeholder="输入您的电话号码"/>
 		</view>
 		<view class="wrap">
-			<input class="ipt" type="text" value=""  placeholder="输入短信验证码"/>
-			<button type="default" class="getCodeBtn">获取验证码</button>
+			<input class="ipt" style="width: 500rpx;" type="text" v-model="code"  placeholder="输入短信验证码"/>
+			<button type="default" class="getCodeBtn" @tap="sendSms()">获取验证码</button>
 		</view>
-		<button class="isSure">确定</button>
+		<button class="isSure" @tap="sumbit()">确定</button>
 	</view>
 </template>
 
 <script>
+	import _app from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js';
+	import { Request,VerifyPhoneNumber } from '../../public/utils.js'
 	export default {
 		data() {
 			return {
-				
+				mobile:'',
+				name:'',
+				code:''
 			}
 		},
-		methods: {
+		onLoad() {
 			
+		},
+		onShow() {
+			
+		},
+		methods: {
+			sendSms(){
+				console.log(this.mobile)
+				if(!VerifyPhoneNumber(this.mobile)){
+					_app.showToast('手机号有误')
+				}else{
+					Request(
+						'sms.register',
+						{
+							mobile:this.mobile
+						}
+					)
+					.then((res)=>{
+						if(res.data.error==0){
+							_app.showToast('已发送,请注意查收')
+						}
+					})
+					.catch((res)=>{
+						
+					})
+				}
+			},
+			sumbit(){
+				if(!VerifyPhoneNumber(this.mobile)){
+					_app.showToast('手机号有误')
+					return
+				}else if(this.code.length!=6){
+					_app.showToast('验证码错误')
+					return
+				}else if(this.name.length==0){
+					_app.showToast('请填写姓名')
+					return
+				}else{
+					Request(
+						'member.registerVip',
+						{
+							mobile:this.mobile,
+							code:this.code,
+							name:this.name
+						}
+					)
+					.then((res)=>{
+						
+					})
+					.catch((res)=>{
+						
+					})
+				}
+			}
 		}
 	}
 </script>
