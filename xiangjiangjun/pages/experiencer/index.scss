@@ -157,7 +157,7 @@ page{
 	.qrcodeWrap{
 		width: 750rpx;
 		height: 667rpx;
-		background-color: #ffffff;
+		background-color: #f6f6f6;
 		margin-top: 27rpx;
 		text-align: center;
 		.img{
@@ -172,6 +172,44 @@ page{
 			font-stretch: normal;
 			margin-top: 27rpx;
 			color: #666666;
+		}
+		.itemWrap{
+			width: 750rpx;
+			background-color: #ffffff;
+			padding:0 40rpx;
+			box-sizing: border-box;
+			text-align: left;
+			margin-top: 20rpx;
+			.title{
+				font-family: PingFang-SC-Bold;
+				font-size: 30rpx;
+				font-weight: normal;
+				font-stretch: normal;
+				height: 89rpx;
+				line-height: 89rpx;
+				color: #333333;
+				border-bottom: 1px solid #e3e3e3;	
+			}
+			.textcontent{
+				padding: 27rpx 0;
+				.txt1{
+					font-family: PingFang-SC-Medium;
+					font-size: 30rpx;
+					font-weight: normal;
+					font-stretch: normal;
+					letter-spacing: 0rpx;
+					color: #333333;
+				}
+				.txt2{
+					font-family: PingFang-SC-Medium;
+					font-size: 24rpx;
+					font-weight: normal;
+					font-stretch: normal;
+					letter-spacing: 0rpx;
+					margin-top: 19rpx;
+					color: #999999;
+				}
+			}
 		}
 	}
 }
