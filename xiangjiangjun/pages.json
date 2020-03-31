@@ -1,16 +1,16 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-		    "path" : "pages/experiencer/experiencer",
+		    "path" : "pages/mine/mine",
 		    "style" : {
-		    	"navigationBarTitleText": "体验者",
+				"navigationBarTitleText": "我的",
 				"navigationBarBackgroundColor": "#50ce13",
 				"navigationBarTextStyle":"white"
 			}
 		},{
-		    "path" : "pages/mine/mine",
+		    "path" : "pages/experiencer/experiencer",
 		    "style" : {
-				"navigationBarTitleText": "我的",
+		    	"navigationBarTitleText": "体验者",
 				"navigationBarBackgroundColor": "#50ce13",
 				"navigationBarTextStyle":"white"
 			}
