@@ -3,7 +3,7 @@
 		<view class="header">
 			<view>
 				<text class="txt1">积分余额</text>
-				<text class="txt2">2693</text>
+				<text class="txt2">{{member.credit1}}</text>
 			</view>
 		</view>
 		<view class="contentWrap">
@@ -11,36 +11,12 @@
 				<image class="img" :src="imgSrc+'public/jifen_jilu.png'" mode=""></image>
 				<view>积分记录</view>
 			</view>
-			<view class="itenamemWrap">
-				<view class="name">返积分</view>
-				<view class="time">2019012.20  12:23:30</view>
-				<view class="num">+20</view>
+			<view class="itenamemWrap" v-for="(item , index) in list" :key="index">
+				<view class="name">{{item.remark}}</view>
+				<view class="time">{{item.createtime}}</view>
+				<view class="num">{{item.num}}</view>
 			</view>
-			<view class="itenamemWrap">
-				<view class="name">抵扣</view>
-				<view class="time">2019012.20  12:23:30</view>
-				<view class="num">+20</view>
-			</view>
-			<view class="itenamemWrap">
-				<view class="name">返积分</view>
-				<view class="time">2019012.20  12:23:30</view>
-				<view class="num">+20</view>
-			</view>
-			<view class="itenamemWrap">
-				<view class="name">购物积分</view>
-				<view class="time">2019012.20  12:23:30</view>
-				<view class="num">+20</view>
-			</view>
-			<view class="itenamemWrap">
-				<view class="name">抵扣</view>
-				<view class="time">2019012.20  12:23:30</view>
-				<view class="num">+20</view>
-			</view>
-			<view class="itenamemWrap">
-				<view class="name">返积分</view>
-				<view class="time">2019012.20  12:23:30</view>
-				<view class="num">+20</view>
-			</view>
+			
 		</view>
 		
 	</view>
@@ -52,14 +28,23 @@
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				member:[],
+				list:[]
 			};
 		},
 		onShow() {
-			
+			this.getData()
 		},
 		methods:{
 			getData(){
-				
+				Request(
+					'member.getCredit1Log'
+				)
+				.then((res)=>{
+					this.member = res.data.member
+					this.list = res.data.list
+				})
+				.catch((res=>{}))
 			}
 		}
 	}
