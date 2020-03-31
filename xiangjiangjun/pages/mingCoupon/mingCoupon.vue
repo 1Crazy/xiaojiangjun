@@ -8,7 +8,7 @@
 				<text class="txt3">满380元可使用</text>
 			</view>
 			<view class="time">使用期限：2019.12.10-2020.05.10</view>
-			<button type="default" class="useImmediately">立即使用</button>
+			<button type="default" class="useImmediately" @tap='gotoUse'>立即使用</button>
 		</view>
 		<view class="wrap">
 			<image class="img" :src="imgSrc+'public/quan_img.png'"></image>
@@ -18,7 +18,7 @@
 				<text class="txt3">满380元可使用</text>
 			</view>
 			<view class="time">使用期限：2019.12.10-2020.05.10</view>
-			<button type="default" class="useImmediately">立即使用</button>
+			<button type="default" class="useImmediately" @tap='gotoUse'>立即使用</button>
 		</view>
 		<view class="wrap">
 			<image class="img" :src="imgSrc+'public/quan_img.png'"></image>
@@ -28,7 +28,7 @@
 				<text class="txt3">满380元可使用</text>
 			</view>
 			<view class="time">使用期限：2019.12.10-2020.05.10</view>
-			<button type="default" class="useImmediately">立即使用</button>
+			<button type="default" class="useImmediately" @tap='gotoUse'>立即使用</button>
 		</view>
 	</view>
 </template>
@@ -41,7 +41,11 @@
 			}
 		},
 		methods: {
-			
+			gotoUse(){
+				uni.reLaunch({
+					url: '/pages/category/category'
+				})
+			}
 		}
 	}
 </script>

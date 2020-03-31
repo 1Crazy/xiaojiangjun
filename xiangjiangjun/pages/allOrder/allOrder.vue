@@ -41,7 +41,7 @@
 				<button v-if="navIndex==3">删除订单</button>
 				<button v-if="navIndex==0" class="activeBtn">去支付</button>
 				<button v-if="navIndex==2" class="activeBtn" @tap="finishOrder(item.id)">确认收货</button>
-				<button v-if="navIndex==3" class="activeBtn">去评论</button>
+				<button v-if="navIndex==3" class="activeBtn" @tap="gotoReview">去评论</button>
 				<!-- <button v-if="navIndex==2||navIndex==3" class="activeBtn">查看物流</button> -->
 				<!-- <button class="activeBtn">退换货</button> -->
 			</view>
@@ -133,6 +133,11 @@
 				})
 				.catch((res)=>{
 					// 失败方法
+				})
+			},
+			gotoReview () {
+				uni.navigateTo({
+					url: '/pages/review/review'
 				})
 			}
 		}

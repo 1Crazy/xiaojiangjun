@@ -73,13 +73,14 @@
 		.rightBox{
 			margin-left: 20rpx;
 			.r-title{
-				width: 343rpx;
+				width: 470rpx;
 				font-family: PingFang-SC-Medium;
 				font-size: 28rpx;
 				font-weight: normal;
 				font-stretch: normal;
 				color: #333333;
 				line-height: 29rpx;
+				margin-top: 20rpx;
 			}
 			.r-shortTitle{
 				font-family: PingFang-SC-Medium;
@@ -87,6 +88,7 @@
 				font-weight: normal;
 				font-stretch: normal;
 				color: #888888;
+				margin-top: 29rpx;
 			}
 			.r-info{
 				font-family: PingFang-SC-Medium;
