@@ -105,9 +105,9 @@
 						console.log(res)
 						// 成功方法
 						_app.showToast('成功')
-						uni.navigateTo({
-							url: '/pages/addressManagement/addressManagement'
-						})
+						var pages = getCurrentPages();
+						var prevPage = pages[pages.length - 2];  
+						uni.navigateBack();
 					})
 					.catch((res)=>{
 						// 失败方法
