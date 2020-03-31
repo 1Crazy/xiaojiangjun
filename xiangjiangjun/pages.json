@@ -1,10 +1,12 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-		    "path" : "pages/mineIntegral/mineIntegral",
+		    "path" : "pages/experiencer/experiencer",
 		    "style" : {
-				"navigationBarTitleText": "我的积分"
-		    }
+		    	"navigationBarTitleText": "体验者",
+				"navigationBarBackgroundColor": "#50ce13",
+				"navigationBarTextStyle":"white"
+			}
 		},{
 		    "path" : "pages/mine/mine",
 		    "style" : {
@@ -12,6 +14,11 @@
 				"navigationBarBackgroundColor": "#50ce13",
 				"navigationBarTextStyle":"white"
 			}
+		},{
+		    "path" : "pages/mineIntegral/mineIntegral",
+		    "style" : {
+				"navigationBarTitleText": "我的积分"
+		    }
 		},{
 		    "path" : "pages/account/account",
 		    "style" : {
@@ -101,7 +108,7 @@
 				"navigationBarTitleText": "我的优惠券"
            }
         }
-       
+
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -29,7 +29,7 @@
 			
 		},
 		onShow() {
-			
+			this.check()
 		},
 		methods: {
 			sendSms(){
@@ -57,7 +57,7 @@
 				if(!VerifyPhoneNumber(this.mobile)){
 					_app.showToast('手机号有误')
 					return
-				}else if(this.code.length!=6){
+				}else if(this.code.length==0){
 					_app.showToast('验证码错误')
 					return
 				}else if(this.name.length==0){
@@ -73,12 +73,35 @@
 						}
 					)
 					.then((res)=>{
-						
+						if(res.data.error==0){
+							_app.showToast('提交成功,请耐心等待审核')
+						}else{
+							_app.showToast(res.data.message)
+						}
 					})
 					.catch((res)=>{
 						
 					})
 				}
+			},
+			check(){
+				Request(
+					'member.checkRegister',
+				)
+				.then((res)=>{
+					if(res.data.code == 0){
+						console.log('没有提交')
+					}else if(res.data.code == 1){
+						console.log('审核中')
+						_app.showToast('您的申请还在审核!')
+					}else if(res.data.code == 2){
+						console.log('已通过')
+						_app.showToast('您的申请已通过,不能重复提交!')
+					}
+				})
+				.catch((res)=>{
+					
+				})
 			}
 		}
 	}

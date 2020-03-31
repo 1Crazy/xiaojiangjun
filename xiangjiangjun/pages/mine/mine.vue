@@ -64,7 +64,7 @@
 			<view class="word">地址管理</view>
 			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
-		<view class="listItem">
+		<view class="listItem" @tap="gotoExperiencer">
 			<image class="img" :src="imgSrc+'mine/item2.png'"></image>
 			<view class="word">体验者</view>
 			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
@@ -107,6 +107,12 @@
 			gotoMineCoupon(){
 				uni.navigateTo({
 					url: '/pages/mingCoupon/mingCoupon'
+				})
+			},
+			// 体验者页面
+			gotoExperiencer(){
+				uni.navigateTo({
+					url: '/pages/experiencer/experiencer'
 				})
 			}
 		}

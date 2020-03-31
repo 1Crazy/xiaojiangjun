@@ -47,11 +47,20 @@
 </template>
 
 <script>
+	import { Request } from '../../public/utils.js'
 	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
 			};
+		},
+		onShow() {
+			
+		},
+		methods:{
+			getData(){
+				
+			}
 		}
 	}
 </script>
