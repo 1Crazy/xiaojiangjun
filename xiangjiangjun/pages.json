@@ -1,11 +1,12 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-		    "path" : "pages/review/review",
+		    "path" : "pages/returnRefund/returnRefund",
 		    "style" : {
-		    	"navigationBarTitleText": "商品评价"
+		    	"navigationBarTitleText": "申请退款"
 		    }
-		},{
+		}
+		,{
 		    "path" : "pages/mine/mine",
 		    "style" : {
 				"navigationBarTitleText": "我的",
@@ -14,6 +15,17 @@
 			}
 		}
 		,{
+		    "path" : "pages/chooseRefundMethod/chooseRefundMethod",
+		    "style" : {
+		    	"navigationBarTitleText": "选择服务类型"
+		    }
+		}
+		,{
+		    "path" : "pages/review/review",
+		    "style" : {
+		    	"navigationBarTitleText": "商品评价"
+		    }
+		},{
 		    "path" : "pages/experiencer/experiencer",
 		    "style" : {
 		    	"navigationBarTitleText": "体验者",
