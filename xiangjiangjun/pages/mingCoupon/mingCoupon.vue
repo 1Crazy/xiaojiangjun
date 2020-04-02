@@ -7,34 +7,10 @@
 				<text class="txt2">{{item.deduct}}</text>
 				<text class="txt3">{{item.title2}}</text>
 			</view>
-<<<<<<< HEAD
 			<view class="time">使用期限：{{item.timestr}}</view>
-			<button type="default" class="useImmediately">立即使用</button>
-=======
-			<view class="time">使用期限：2019.12.10-2020.05.10</view>
 			<button type="default" class="useImmediately" @tap='gotoUse'>立即使用</button>
 		</view>
-		<view class="wrap">
-			<image class="img" :src="imgSrc+'public/quan_img.png'"></image>
-			<view class="leftTop">
-				<text class="txt1">￥</text>
-				<text class="txt2">20</text>
-				<text class="txt3">满380元可使用</text>
-			</view>
-			<view class="time">使用期限：2019.12.10-2020.05.10</view>
-			<button type="default" class="useImmediately" @tap='gotoUse'>立即使用</button>
-		</view>
-		<view class="wrap">
-			<image class="img" :src="imgSrc+'public/quan_img.png'"></image>
-			<view class="leftTop">
-				<text class="txt1">￥</text>
-				<text class="txt2">20</text>
-				<text class="txt3">满380元可使用</text>
-			</view>
-			<view class="time">使用期限：2019.12.10-2020.05.10</view>
-			<button type="default" class="useImmediately" @tap='gotoUse'>立即使用</button>
->>>>>>> 67618f3be5668a425b459f44dba089b94d478091
-		</view>
+		
 	</view>
 </template>
 
@@ -52,7 +28,6 @@
 			this.getData()
 		},
 		methods: {
-<<<<<<< HEAD
 			getData(){
 				Request(
 					'sale.coupon.my.getlist',
@@ -63,13 +38,11 @@
 				.then((res)=>{
 					this.couponlist = res.data.list
 				})
-				.catch((res)=>{
-					
-=======
+				.catch((res)=>{})
+			},
 			gotoUse(){
 				uni.reLaunch({
 					url: '/pages/category/category'
->>>>>>> 67618f3be5668a425b459f44dba089b94d478091
 				})
 			}
 		}
