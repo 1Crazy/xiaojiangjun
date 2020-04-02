@@ -189,6 +189,7 @@ page{
 	align-items: center;
 	padding-left: 30rpx;
 	padding-right: 10rpx;
+	box-sizing: border-box;
 	.txtWrap{
 		display: flex;
 		align-items: center;
@@ -228,5 +229,7 @@ page{
 		letter-spacing: 0rpx;
 		color: #ffffff;
 		margin-left: 181rpx;
+		position: absolute;
+		right: 20rpx;
 	}
 }

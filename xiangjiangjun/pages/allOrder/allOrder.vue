@@ -36,14 +36,14 @@
 				<text class="txt2">合计：</text>
 				<text class="txt3">￥{{item.price}}</text>
 			</view>
-			<view class="btnWrap" v-if="navIndex!=1">
+			<view class="btnWrap">
 				<button v-if="navIndex==0" @tap="cancelOrder(item.id)">取消订单</button>
 				<button v-if="navIndex==3">删除订单</button>
 				<button v-if="navIndex==0" class="activeBtn">去支付</button>
 				<button v-if="navIndex==2" class="activeBtn" @tap="finishOrder(item.id)">确认收货</button>
-				<button v-if="navIndex==3" class="activeBtn">去评论</button>
+				<button v-if="navIndex==3" class="activeBtn" @tap="gotoReview">去评论</button>
 				<!-- <button v-if="navIndex==2||navIndex==3" class="activeBtn">查看物流</button> -->
-				<!-- <button class="activeBtn">退换货</button> -->
+				<button v-if="navIndex==3 || navIndex==2|| navIndex==1" @tap="gotoReturnRefund" class="activeBtn">退换货</button>
 			</view>
 		</view>
 		
@@ -133,6 +133,16 @@
 				})
 				.catch((res)=>{
 					// 失败方法
+				})
+			},
+			gotoReview () {
+				uni.navigateTo({
+					url: '/pages/review/review'
+				})
+			},
+			gotoReturnRefund(){
+				uni.navigateTo({
+					url: '/pages/chooseRefundMethod/chooseRefundMethod'
 				})
 			}
 		}
