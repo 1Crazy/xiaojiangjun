@@ -49,7 +49,7 @@
 			<!-- <view class="integral">
 				<view class="leftWord">可用560个积分抵用5.60元</view>
 				<radio value="r1" :checked="false" class="radio"/>
-			</view>
+			</view> -->
 			<view class="y-h-q">
 				<view>
 					<text class="txt1">优惠券：</text>
@@ -59,7 +59,7 @@
 					<text class="txt3">-￥10</text>
 					<image :src="imgSrc+'public/arrow.png'"></image>
 				</view>
-			</view> -->
+			</view>
 		</view>
 		<view style="height: 116rpx;"></view>
 		<view class="b-footer">
@@ -93,20 +93,25 @@
 				productNum: 1,
 				orderInfo:[],
 				goods:[],
-				chooseAddress:''
+				chooseAddress:'',
+				aa:'',
+				bb:''
 			};
 		},
 		onLoad(options) {
-			console.log(32323232323232323232)
-			console.log(options)
 			this.id = options.id;
 			this.num = options.num;
 			this.optionid = options.optionid;
 			this.getData(this.id,this.num,this.optionid);
 		},
 		onShow(e) {
-			// console.log()
 			console.log(this.chooseAddress)
+			if(this.chooseAddress==''){
+				console.log('不是返回进入')
+			}else{
+				console.log('返回进入')
+				this.updataOrder();
+			}
 		},
 		methods:{
 			delNum(id){
@@ -143,16 +148,52 @@
 						optionid:optionid
 					}
 				).then((res)=>{
-					console.log(res)
+					
 					// 成功方法
+					// this.aa = JSON.stringify(res)
+					// this.bb = JSON.parse(this.aa)
+					
+					
+					
+					
 					this.orderInfo = res.data
 					this.goods = res.data.goods[0]['goods']
+					// this.goods = Array.from(res.data.goods[0]['goods'])
+					// console.log()
 					// console.log()
 					
 				})
 				.catch((res)=>{
 					// 失败方法
 				})
+			},
+			updataOrder(){
+				console.log(Array.from(this.goods))
+				
+				Request(
+					'order.create.caculate',
+					{
+						goods: Array.from(this.goods),
+						// dflag: this.data.data.dispatchtype,
+						addressid: this.chooseAddress ? this.chooseAddress : 0,
+						packageid: this.orderInfo.packageid,
+						// bargain_id: this.data.bargainid,
+						discountprice: this.orderInfo.discountprice,
+						// cardid: this.data.cardid,
+						// couponid: i
+					},
+					'POST',
+					'application/x-www-form-urlencoded'
+				).then((res)=>{
+					console.log(res)
+					// 成功方法
+					
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+				
+				
 			}
 		}
 	}

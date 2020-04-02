@@ -1,46 +1,45 @@
 <template>
 	<view>
-		<view class="wrap">
+		<view class="wrap" v-for="(item , index) in couponlist" :key="index">
 			<image class="img" :src="imgSrc+'public/quan_img.png'"></image>
 			<view class="leftTop">
 				<text class="txt1">￥</text>
-				<text class="txt2">20</text>
-				<text class="txt3">满380元可使用</text>
+				<text class="txt2">{{item.deduct}}</text>
+				<text class="txt3">{{item.title2}}</text>
 			</view>
-			<view class="time">使用期限：2019.12.10-2020.05.10</view>
+			<view class="time">使用期限：{{item.timestr}}</view>
 			<button type="default" class="useImmediately" @tap='gotoUse'>立即使用</button>
 		</view>
-		<view class="wrap">
-			<image class="img" :src="imgSrc+'public/quan_img.png'"></image>
-			<view class="leftTop">
-				<text class="txt1">￥</text>
-				<text class="txt2">20</text>
-				<text class="txt3">满380元可使用</text>
-			</view>
-			<view class="time">使用期限：2019.12.10-2020.05.10</view>
-			<button type="default" class="useImmediately" @tap='gotoUse'>立即使用</button>
-		</view>
-		<view class="wrap">
-			<image class="img" :src="imgSrc+'public/quan_img.png'"></image>
-			<view class="leftTop">
-				<text class="txt1">￥</text>
-				<text class="txt2">20</text>
-				<text class="txt3">满380元可使用</text>
-			</view>
-			<view class="time">使用期限：2019.12.10-2020.05.10</view>
-			<button type="default" class="useImmediately" @tap='gotoUse'>立即使用</button>
-		</view>
+		
 	</view>
 </template>
 
 <script>
+	import { Request } from '../../public/utils.js'
 	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				page:1,
+				couponlist:[]
 			}
 		},
+		onShow() {
+			this.getData()
+		},
 		methods: {
+			getData(){
+				Request(
+					'sale.coupon.my.getlist',
+					{
+						page:this.page
+					}
+				)
+				.then((res)=>{
+					this.couponlist = res.data.list
+				})
+				.catch((res)=>{})
+			},
 			gotoUse(){
 				uni.reLaunch({
 					url: '/pages/category/category'

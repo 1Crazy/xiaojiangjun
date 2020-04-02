@@ -98,7 +98,7 @@
 				})
 			},
 			chooseAddress(id){
-				console.log(id)
+				// console.log(id)
 				var pages = getCurrentPages();
 				// var nowPage = pages[pages.length -1]
 				var prevPage = pages[pages.length - 2];  
