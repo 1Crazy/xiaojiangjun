@@ -35,12 +35,12 @@ page{
 		box-sizing: border-box;
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-between;
+		// justify-content: space-between;
 		.item{
 			display: flex;
 			flex-direction: column;
-			justify-content: center;
 			align-items: center;
+			margin-right: 50rpx;
 			.img{
 				width: 88rpx;
 				height: 88rpx;
@@ -55,6 +55,9 @@ page{
 				font-stretch: normal;
 				color: #ffffff;
 				margin-top: 20rpx;
+			}
+			&:last-child{
+				margin-right: 0;
 			}
 		}
 	}
