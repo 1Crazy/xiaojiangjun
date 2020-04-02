@@ -287,7 +287,8 @@
 			},
 			//物流说明模态框
 			LogisticsInfoModel(bool){
-				bool ? this.$refs.popup.open() : this.$refs.popup.close()
+				bool ? this.$
+				.popup.open() : this.$refs.popup.close()
 			},
 			// 商品加入购物车弹出模态框
 			addCartModel(bool,num){
