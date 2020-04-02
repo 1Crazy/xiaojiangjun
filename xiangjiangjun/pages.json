@@ -117,8 +117,10 @@
         ,{
             "path" : "pages/mineInvite/mineInvite",
             "style" : {
-            	"navigationBarTitleText": "名下邀请客户"
+            	"navigationBarTitleText": "名下邀请客户",
+				"enablePullDownRefresh":true
             }
+			
         }
         ,{
             "path" : "pages/mingCoupon/mingCoupon",

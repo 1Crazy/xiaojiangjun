@@ -1,34 +1,55 @@
 <template>
 	<view>
-		<view class="itemWrap">
-			<image class="avatar" :src="imgSrc+'index/listpic1.png'" mode=""></image>
-			<view class="name">橙子007</view>
-			<view class="date">2019-12-27</view>
-		</view>
-		<view class="itemWrap">
-			<image class="avatar" :src="imgSrc+'index/listpic1.png'" mode=""></image>
-			<view class="name">橙子007</view>
-			<view class="date">2019-12-27</view>
-		</view>
-		<view class="itemWrap">
-			<image class="avatar" :src="imgSrc+'index/listpic1.png'" mode=""></image>
-			<view class="name">橙子007</view>
-			<view class="date">2019-12-27</view>
-		</view>
-		<view class="itemWrap">
-			<image class="avatar" :src="imgSrc+'index/listpic1.png'" mode=""></image>
-			<view class="name">橙子007</view>
-			<view class="date">2019-12-27</view>
+		<view class="itemWrap" v-for="(item , index) in list" :key="index">
+			<image class="avatar" :src="item.avatar" mode=""></image>
+			<view class="name">{{item.nickname}}</view>
+			<view class="date">{{item.agenttime}}</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { Request } from '../../public/utils.js'
 	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				page:1,
+				list:[1,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
 			};
+		},
+		onLoad() {
+			
+		},
+		onShow() {
+			this.getData()
+		},
+		methods:{
+			getData(){
+				Request(
+					'commission.down.get_list',
+					{
+						page:this.page,
+						level:1
+					}
+				).then((res)=>{
+					this.list = this.list.concat(res.data.list)
+					this.page = this.page+1
+				}).catch((res)=>{
+					
+				})
+			},
+			// 上拉加载，拉到底部触发
+			onReachBottom() {
+			  // console.log('aa')
+			  this.getData()
+			},
+			onPullDownRefresh() {
+			    this.getData()
+			    setTimeout(function () {
+			        uni.stopPullDownRefresh();
+			    }, 1000);
+			}
 		}
 	}
 </script>
