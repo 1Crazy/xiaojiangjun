@@ -6,11 +6,12 @@
 				<image :src="imgSrc+'public/fdj1.png'" class="img"></image>
 			</view>
 		</view>
-		<view class="nav">
-			<view class="tit1">综合排序</view>
-			<view class="tit2">距离</view>
+		<view class="nav" v-if="isUser">
+			<view :class="cutDorStoreSortNum == 1 ? 'tit1 active' : 'tit1'" @tap="cutDorStoreSort(1)">综合排序</view>
+			<view :class="cutDorStoreSortNum == 2 ? 'tit2 active' : 'tit2'"  @tap="cutDorStoreSort(2)">距离</view>
 		</view>
-		<view class="content">
+		<ss-scroll-navbar  v-if="!isUser" :navArr="navList" :tabCurrentIndex="currentIndex" @navbarTap="navbarTapHandler"></ss-scroll-navbar>
+		<view class="content" v-if="isUser">
 			<view class="itemView" v-for="(item ,index) in liststores" :key="index">
 				<image :src="item.logo" class="img"></image>
 				<view class="rightBox">
@@ -23,25 +24,84 @@
 				<image class="threedot" :src="imgSrc+'public/threeDot.png'"></image>
 			</view>
 		</view>
+		<view class="content2" v-if="!isUser">
+			<view class="itemWrap">
+				<product-title class="listItem" img="../../static/public/goumai_guanbi.png" title='YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯' priceColor="#ff9000" price="366" originPrice="555" shortTitle='我是短标题' borderBottomStyle='none'></product-title>
+				<button>购买</button>
+			</view>
+			<view class="itemWrap">
+				<product-title class="listItem" img="../../static/public/goumai_guanbi.png" title='YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯' priceColor="#ff9000" price="366" originPrice="555" shortTitle='我是短标题' borderBottomStyle='none'></product-title>
+				<button>购买</button>
+			</view>
+			<view class="itemWrap">
+				<product-title class="listItem" img="../../static/public/goumai_guanbi.png" title='YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯' priceColor="#ff9000" price="366" originPrice="555" shortTitle='我是短标题' borderBottomStyle='none'></product-title>
+				<button>购买</button>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
 	import { Request } from '../../public/utils.js'
+	import ssScrollNavbar from '@/components/ss-scroll-navbar/ss-scroll-navbar.vue'
+	import productTitle from '@/components/productTitle/productTitle.vue'
 	export default {
+		components:{
+		    ssScrollNavbar,
+			productTitle
+		},
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				liststores:[],
 				longitude:'',
-				latitude:''
+				latitude:'',
+				// 区分汽修厂家与终端用户 true终端用户，false为汽修厂家
+				isUser: false,
+				cutDorStoreSortNum: 1,
+				// 索引
+				currentIndex: 0,
+				// 导航
+				navList: [
+					{
+						title: '机油',
+						url: '机油'
+					}, {
+						title: '挡泥板',
+						url: '挡泥板'
+					}, {
+						title: '清洁',
+						url: '清洁'
+					}, {
+						title: '贴膜',
+						url: '贴膜'
+					}, {
+						title: '车载手机支架',
+						url: '车载手机支架'
+					}, {
+						title: '车载手机',
+						url: '车载手机'
+					}
+				]
 			}
 		},
 		onLoad() {
+			let title = '门店/商家'
+			this.isUser ? title = '门店/商家' : title = '汽车配件'
+			uni.setNavigationBarTitle({
+			    title
+			});
 			this.getLocation();
-			
 		},
 		methods: {
+			// 切换综合商家和距离的方法
+			cutDorStoreSort(num){
+				this.cutDorStoreSortNum = num
+			},
+			navbarTapHandler (index) {
+				console.log(index,'index')
+				this.currentIndex = index;
+			},
 			getLocation(){
 				const that = this;
 				wx.getLocation({
@@ -123,11 +183,11 @@
 	padding: 24rpx 30rpx;
 	background-color: white;
 	.tit1{
-		font-family: PingFang-SC-Bold;
+		font-family: PingFang-SC-Medium;
 		font-size: 30rpx;
 		font-weight: normal;
 		font-stretch: normal;
-		color: #1db728;
+		color: #999999;
 	}
 	.tit2{
 		font-family: PingFang-SC-Medium;
@@ -136,6 +196,10 @@
 		font-stretch: normal;
 		color: #999999;
 		margin-left: 78rpx;
+	}
+	.active{
+		color: #1db728;
+		font-family: PingFang-SC-Bold;
 	}
 }
 //列表
@@ -195,6 +259,42 @@
 			top: 98rpx;
 			width: 34rpx;
 			height: 8rpx;
+		}
+	}
+}
+.content2{
+	.itemWrap{
+		background-color: white;
+		padding: 0 20rpx;
+		box-sizing: border-box;
+		padding-top:30rpx;
+		margin-bottom: 20rpx;
+		position: relative;
+		&:last-child{
+			margin-bottom: 0;
+		}
+		button{
+			position: absolute;
+			bottom: 20rpx;
+			right: 20rpx;
+			width: 140rpx;
+			height: 54rpx;
+			background-image: linear-gradient(90deg, 
+				#6fde39 0%, 
+				#46c806 100%), 
+			linear-gradient(
+				#1eac28, 
+				#1eac28);
+			background-blend-mode: normal, 
+				normal;
+			border-radius: 27rpx;
+			font-family: PingFang-SC-Bold;
+			font-size: 30rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			line-height: 54rpx;
+			letter-spacing: 0rpx;
+			color: #fffefe;
 		}
 	}
 }
