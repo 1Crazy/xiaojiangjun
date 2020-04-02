@@ -30,6 +30,7 @@
 </template>
 
 <script>
+	import { Request } from '../../public/utils.js'
 	import productTitle from '@/components/productTitle/productTitle.vue'
 	export default {
 		components:{
@@ -39,6 +40,29 @@
 			return {
 				imgSrc: this.$store.state.imgSrc,
 			};
+		},
+		onLoad(e) {
+			console.log(e)
+			this.getData(e.id)
+		},
+		onShow() {
+			
+		},
+		methods:{
+			getData(id){
+				Request(
+					'order.comment',
+					{
+						id:id
+					}
+				)
+				.then((res)=>{
+					
+				})
+				.catch((res)=>{
+					
+				})
+			}
 		}
 	}
 </script>

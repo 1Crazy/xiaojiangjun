@@ -15,7 +15,7 @@
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				page:1,
-				list:[1,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
+				list:[]
 			};
 		},
 		onLoad() {
@@ -34,7 +34,7 @@
 					}
 				).then((res)=>{
 					this.list = this.list.concat(res.data.list)
-					this.page = this.page+1
+					
 				}).catch((res)=>{
 					
 				})
@@ -42,10 +42,13 @@
 			// 上拉加载，拉到底部触发
 			onReachBottom() {
 			  // console.log('aa')
+			  this.page = this.page+1
 			  this.getData()
 			},
 			onPullDownRefresh() {
-			    this.getData()
+				this.page = 1;
+				this.list = [];
+				this.getData()
 			    setTimeout(function () {
 			        uni.stopPullDownRefresh();
 			    }, 1000);
