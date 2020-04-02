@@ -9,7 +9,7 @@
 			></product-title>
 		</view>
 		<view class="content">
-			<view class="listItem">
+			<view class="listItem" @tap="gotoReturnRefund('notReturnGoods')">
 				<image class="img" src="../../static/public/ic_tuikuan.png" mode=""></image>
 				<view class="center">
 					<view class="txt1">我要退款(无需退货)</view>
@@ -17,7 +17,7 @@
 				</view>
 				<image class="arrow" src="../../static/public/arrow.png" mode=""></image>
 			</view>
-			<view class="listItem" @tap="gotoReturnRefund">
+			<view class="listItem" @tap="gotoReturnRefund()">
 				<image class="img" src="../../static/public/ic_tuihuo.png" mode=""></image>
 				<view class="center">
 					<view  class="txt1">我要退货退款</view>
@@ -27,34 +27,36 @@
 			</view>
 		</view>
 		
-		<!-- 加入购物车商品规格选择模态框 -->
-		<uni-popup ref="addCartPopup" type="bottom">
-			<view class="productSpecificationsModelContent">
-				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="addCartModel(false)"></image>
-				
-				<button class="submitBtn" @tap="submitBtn()">提交</button>
-			</view>
-		</uni-popup>
+		
 	</view>
 </template>
 
 <script>
 	import productTitle from '@/components/productTitle/productTitle.vue'
+
 	export default {
 		components: {
 			productTitle
 		},
 		data() {
 			return {
-				
+				imgSrc: this.$store.state.imgSrc,
 			};
 		},
 		methods:{
-			gotoReturnRefund(){
-				uni.navigateTo({
-					url: '/pages/returnRefund/returnRefund'
-				})
-			}
+			gotoReturnRefund(w){
+				if (w == 'notReturnGoods'){
+					uni.navigateTo({
+						url: `/pages/returnRefund/returnRefund?word=${w}`
+					})
+				}else{
+					uni.navigateTo({
+						url: '/pages/returnRefund/returnRefund'
+					})
+				}
+				
+			},
+			
 		}
 	}
 </script>
@@ -110,54 +112,6 @@ page{
 			right: 14rpx;
 			top: 73rpx;
 		}
-	}
-}
-
-// 加入购物车显示模态框
-.productSpecificationsModelContent{
-	width: 750rpx;
-	// height: 722rpx;
-	background-color: #ffffff;
-	border-radius: 20rpx 20rpx 0rpx 0rpx;
-	position: relative;
-	padding-bottom: 29rpx;
-	padding-top: 40rpx;
-	padding-left: 20rpx;
-	padding-right: 30rpx;
-	box-sizing: border-box;
-	.closeImg{
-		position: absolute;
-		width: 50rpx;
-		height: 50rpx;
-		right: 20rpx;
-		top: 21rpx;
-	}
-	.submitBtn{
-		width: 710rpx;
-		height: 79rpx;
-		background-image: linear-gradient(90deg, 
-			#6fde39 0%, 
-			#46c806 100%), 
-		linear-gradient(
-			#e3e3e3, 
-			#e3e3e3);
-		background-blend-mode: normal, 
-			normal;
-		border-radius: 39rpx;
-		font-family: PingFang-SC-Regular;
-		font-size: 28rpx;
-		font-weight: normal;
-		font-stretch: normal;
-		line-height: 79rpx;
-		color: #333333;
-		margin-top: 60rpx;
-		font-family: PingFang-SC-Bold;
-		font-size: 30rpx;
-		font-weight: normal;
-		font-stretch: normal;
-		line-height: 79rpx;
-		letter-spacing: 0rpx;
-		color: #ffffff;
 	}
 }
 

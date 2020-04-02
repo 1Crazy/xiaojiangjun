@@ -9,11 +9,11 @@
 			></product-title>
 		</view>
 		<view class="chooiseWrap">
-			<view class="chooiseItem isborder" @tap="goodsStatus">
+			<view class="chooiseItem isborder" @tap="goodsStatus(true)" v-if="notReturnGoods">
 				<view class="leftWrap">
 					<view class="title">货物状态</view>
 				</view>
-				<view class="right">请选择</view>
+				<view class="right">{{currentStatusGoodsWord?currentStatusGoodsWord:'请选择'}}</view>
 				<image class="img" src="../../static/public/arrow.png" mode=""></image>
 			</view>
 			<view class="chooiseItem"  @tap="refundReson">
@@ -24,7 +24,7 @@
 						<text class="txt2">￥336</text>
 					</view>
 				</view>
-				<view class="right">请选择</view>
+				<view class="right">{{currentReturnResonWord?currentReturnResonWord:'请选择'}}</view>
 				<image class="img" src="../../static/public/arrow.png" mode=""></image>
 			</view>
 		</view>
@@ -44,12 +44,30 @@
 		
 		<view style="height: 108rpx;width: 750rpx;background-color: white;"></view>
 		<button class="submitBtn">提交</button>
-		<!-- 加入购物车商品规格选择模态框 -->
+		<!-- 货物状态模态框 -->
 		<uni-popup ref="addCartPopup" type="bottom">
 			<view class="productSpecificationsModelContent">
-				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="addCartModel(false)"></image>
-				
+				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="goodsStatus(false)"></image>
+				<view class="title">货物状态</view>
+				 <radio-group @change="goodsStatusChange">
+					<label class="radio" v-for="(item ,index) in goodsStatusArray" :key="index">
+						<text>{{item.name}}</text><radio :value="item.value" color="#ff9000"/>
+					</label>
+				</radio-group>
 				<button class="submitBtn" @tap="submitBtn()">提交</button>
+			</view>
+		</uni-popup>
+		<!-- 退款原因模态框 -->
+		<uni-popup ref="returnMoneyReason" type="bottom">
+			<view class="productSpecificationsModelContent">
+				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="refundReson(false)"></image>
+				<view class="title">退款原因</view>
+				 <radio-group class="radioGroup" @change="returnReasonChange">
+					<label class="radio" v-for="(item ,index) in returnReasonArray" :key="index">
+						<text>{{item.name}}</text><radio :value="item.value" color="#ff9000"/>
+					</label>
+				 </radio-group>
+				<button class="submitBtn" @tap="returnMoneyReasonSubmitBtn()">提交</button>
 			</view>
 		</uni-popup>
 	</view>
@@ -57,23 +75,77 @@
 
 <script>
 	import productTitle from '@/components/productTitle/productTitle.vue'
+	import {uniPopup} from '../../components/uni/uni-popup/uni-popup.vue'
 	export default {
 		components: {
-			productTitle
+			productTitle,
+			uniPopup
 		},
 		data() {
 			return {
-				
+				imgSrc: this.$store.state.imgSrc,
+				notReturnGoods: true,
+				currentStatusGoodsWord: null,
+				currentReturnResonWord: null,
+				tmpWord: ['请选择','请选择'],
+				goodsStatusArray: [{
+					name: '未收到货',
+					value: '0'
+				},{
+					name: '已收到货',
+					value: '1'
+				},],
+				returnReasonArray: [{
+					name: '不想买了',
+					value: '0'
+				},{
+					name: '不想买了不想买了不想买了不想买了',
+					value: '1'
+				},{
+					name: '不想买了不想买了不想买了不想买了',
+					value: '1'
+				},]
 			};
 		},
+		onLoad(options) {
+			options.word == 'notReturnGoods' ? this.notReturnGoods = false : this.notReturnGoods = true
+		},
 		methods:{
-			goodsStatus(bool,num){
-				this.modelType = num
+			goodsStatus(bool){
 				bool ? this.$refs.addCartPopup.open() : this.$refs.addCartPopup.close()
 			},
-			refundReson(){
-				
+			refundReson(bool){
+				bool ? this.$refs.returnMoneyReason.open() : this.$refs.returnMoneyReason.close()
 			},
+			submitBtn(){
+				this.currentStatusGoodsWord = this.tmpWord[0]
+				this.$refs.addCartPopup.close()
+			},
+			//货物切换状态
+			goodsStatusChange(e){
+				// currentStatusGoodsWord: null,
+				// currentReturnResonWord: null,
+				// goodsStatusArray,returnReasonArray  this.currentReturnResonWord
+				this.goodsStatusArray.map(curr=>{
+					if ( curr.value == e.detail.value ) {
+						this.tmpWord[0] = curr.name
+					}
+				})
+				console.log(e)
+			},
+			//退款原因切换状态
+			returnReasonChange(e){
+				this.returnReasonArray.map(curr=>{
+					if ( curr.value == e.detail.value ) {
+						this.tmpWord[1] = curr.name
+					}
+				})
+			},
+			// 退款原因模态框中的确定按钮
+			returnMoneyReasonSubmitBtn(){
+				this.currentReturnResonWord = this.tmpWord[1]
+				this.$refs.returnMoneyReason.close()
+			}
 		}
 	}
 </script>
@@ -105,6 +177,7 @@ page{
 			top: 49rpx;
 		}
 		.right{
+			width: 442rpx;
 			font-family: PingFang-SC-Medium;
 			font-size: 30rpx;
 			font-weight: normal;
@@ -112,6 +185,10 @@ page{
 			line-height: 36rpx;
 			letter-spacing: 0rpx;
 			color: #999999;
+			text-align: right;
+			overflow:hidden; 
+			text-overflow:ellipsis; 
+			white-space:nowrap; 
 		}
 		.leftWrap{
 			.leftBottom{
@@ -175,6 +252,7 @@ page{
 			margin-top: 41rpx;
 		}
 	}
+
 }
 .submitBtn{
 	width: 710rpx;
@@ -213,6 +291,16 @@ page{
 		right: 20rpx;
 		top: 21rpx;
 	}
+	.title{
+		font-family: PingFang-SC-Bold;
+		font-size: 30rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		line-height: 36rpx;
+		letter-spacing: 0rpx;
+		color: #333333;
+		text-align: center;
+	}
 	.submitBtn{
 		width: 710rpx;
 		height: 79rpx;
@@ -239,6 +327,14 @@ page{
 		line-height: 79rpx;
 		letter-spacing: 0rpx;
 		color: #ffffff;
+	}
+	.radio{
+			display: flex;
+			justify-content: space-between;
+			margin-top: 48rpx;
+		}
+	.radio:last-child{
+		margin-bottom: 136rpx;
 	}
 }
 </style>
