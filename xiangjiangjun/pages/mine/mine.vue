@@ -8,7 +8,7 @@
 		<view class="orderlist">
 			<view class="title">
 				<view class="leftTitle">商品订单</view>
-				<view class="rightTitle" @tap="gotoAllOrder()">查看全部订单 ></view>
+				<view class="rightTitle" @tap="gotoAllOrder(0)">查看全部订单 ></view>
 			</view>
 			<view class="content">
 				<view class="item" @tap="gotoAllOrder(0)">
