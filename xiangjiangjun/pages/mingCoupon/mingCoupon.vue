@@ -91,7 +91,7 @@
 			}
 			.txt2{
 				font-family: Impact;
-				font-size: 70rpx;
+				font-size: 56rpx;
 				font-weight: normal;
 				font-stretch: normal;
 				line-height: 42rpx;

@@ -14,8 +14,13 @@
 							<label class="radio" @tap="setDefault(item.id)">
 								<radio :value="item.id" :checked="item.isdefault==0?false:true"/><text class="defaultAddress" style="margin-left: 18rpx;" >默认地址</text>
 							</label>
-						<view class="del">
+						<!-- <view class="del">
 							<view @tap="delAddress(item.id)">删除</view>
+							<image class="img" :src="imgSrc+'public/delete.png'"></image>
+						</view> -->
+						<view class="del"  @tap="togglePopup(item)">
+							<view>删除</view>
+							 <!-- @tap="delAddress(item.id)" -->
 							<image class="img" :src="imgSrc+'public/delete.png'"></image>
 						</view>
 					</view>
@@ -26,13 +31,18 @@
 		<view class="btnWrap">
 			<button class="addAdressBtn" @tap="gotoAddOrUpdateAddress()">+ 添加地址</button>
 		</view>
+		<center-popup ref="togglePopupChild" @centerPopupSureBtn="delAddress(currentListItem.id)"></center-popup>
 	</view>
 </template>
 
 <script>
 	import './index.scss'
 	import { Request } from '../../public/utils.js'
+	import centerPopup from '@/components/centerPopup/centerPopup.vue'
 	export default {
+		components: {
+			centerPopup,
+		},
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
@@ -104,7 +114,12 @@
 				var prevPage = pages[pages.length - 2];  
 				prevPage.$vm.chooseAddress = id 
 				uni.navigateBack();
-			}
+			},
+			// 弹出删除模态框
+			togglePopup(item) {
+				this.currentListItem = item
+				this.$refs.togglePopupChild.togglePopup()
+			},
 		}
 	}
 </script>

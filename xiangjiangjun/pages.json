@@ -1,6 +1,14 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+		    "path" : "pages/mine/mine",
+		    "style" : {
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#50ce13",
+				"navigationBarTextStyle":"white"
+			}
+		}
+		,{
 		    "path" : "pages/chooseRefundMethod/chooseRefundMethod",
 		    "style" : {
 		    	"navigationBarTitleText": "选择服务类型"
@@ -11,14 +19,6 @@
 		    "style" : {
 		    	"navigationBarTitleText": "申请退款"
 		    }
-		}
-		,{
-		    "path" : "pages/mine/mine",
-		    "style" : {
-				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#50ce13",
-				"navigationBarTextStyle":"white"
-			}
 		}
 		,{
 		    "path" : "pages/review/review",
