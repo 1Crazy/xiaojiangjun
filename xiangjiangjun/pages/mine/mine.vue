@@ -105,15 +105,7 @@
 		},
 		onShow(e) {
 			if (!this.hasLogin) {
-			 uni.login({
-				  provider: 'weixin',
-				    success: function (res) {
-				      console.log(res);
-					  if (res.code){
-						  uni.setStorageSync('login_code', res.code)
-					  }
-				    }
-				});
+				
 				this.showLoginModel()
 			}else{
 				
@@ -165,26 +157,34 @@
 			islogin(){
 				console.log(444)
 				const code = uni.getStorageSync('login_code')
-				Request(
-					'wxapp.update_info', 
-					{
-						code,
-						comefrom:'wxapp'
-					}, 
-					'POST',
-					'application/x-www-form-urlencoded'
-				)
-				.then((res)=>{
-				    // 成功方法
-					if (res.data.code == 1){
-						this.login(res)
-					}else{
-						this.$refs.togglePopupChild.togglePopup()
-					}
-				})
-				.catch((res)=>{
-				    // 失败方法
-				})
+				
+				uni.getUserInfo({
+				  provider: 'weixin',
+				    success: function (res) {
+				      console.log(res);
+						
+						Request(
+							'wxapp.update_info', 
+							{
+								data : res.userInfo,
+								iv : res.iv
+							}
+						)
+						.then((res)=>{
+						    // 成功方法
+							if (res.data.code == 1){
+								this.login(res)
+							}else{
+								this.$refs.togglePopupChild.togglePopup()
+							}
+						})
+						.catch((res)=>{
+						    // 失败方法
+						})
+				    }
+				});
+				
+				
 			},
 			// 返回首页
 			cancelLogin(){

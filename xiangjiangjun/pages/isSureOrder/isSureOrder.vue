@@ -134,7 +134,19 @@
 			},
 			// 支付
 			pay() {
-				// 支付成功后页面跳转
+				Request(
+					'order.create',
+					{
+						id:id,
+						total:num,
+						optionid:optionid
+					}
+				).then((res)=>{
+					
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
 				uni.navigateTo({
 					url: '/pages/paySuccess/paySuccess'
 				})
@@ -152,16 +164,9 @@
 					// 成功方法
 					// this.aa = JSON.stringify(res)
 					// this.bb = JSON.parse(this.aa)
-					
-					
-					
-					
 					this.orderInfo = res.data
 					this.goods = res.data.goods[0]['goods']
 					// this.goods = Array.from(res.data.goods[0]['goods'])
-					// console.log()
-					// console.log()
-					
 				})
 				.catch((res)=>{
 					// 失败方法
@@ -169,11 +174,13 @@
 			},
 			updataOrder(){
 				console.log(Array.from(this.goods))
-				
+				// console.log(JSON.parse(JSON.stringify(this.goods)))
+				// const goods =  JSON.parse(JSON.stringify(this.goods))
+				// console.log(this.goods)
 				Request(
 					'order.create.caculate',
 					{
-						goods: Array.from(this.goods),
+						goods: JSON.stringify(this.goods),
 						// dflag: this.data.data.dispatchtype,
 						addressid: this.chooseAddress ? this.chooseAddress : 0,
 						packageid: this.orderInfo.packageid,
@@ -183,17 +190,14 @@
 						// couponid: i
 					},
 					'POST',
-					'application/x-www-form-urlencoded'
+					'application/json'
 				).then((res)=>{
 					console.log(res)
 					// 成功方法
-					
 				})
 				.catch((res)=>{
 					// 失败方法
 				})
-				
-				
 			}
 		}
 	}

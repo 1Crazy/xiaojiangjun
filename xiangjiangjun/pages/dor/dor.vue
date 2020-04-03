@@ -27,7 +27,7 @@
 		<view class="content2" v-if="!isUser">
 			<view class="itemWrap" v-for="(item ,index ) in chooselist" :key="index">
 				<product-title class="listItem" :img="item.logo" :title='item.name' priceColor="#ff9000" :price="item.marketprice" :originPrice="item.productprice" :shortTitle='item.shorttitle' borderBottomStyle='none'></product-title>
-				<button>购买</button>
+				<button @tap="goodsDetail(item.id)">购买</button>
 			</view>
 		</view>
 	</view>
@@ -58,21 +58,6 @@
 					{
 						title: '机油',
 						url: '机油'
-					}, {
-						title: '挡泥板',
-						url: '挡泥板'
-					}, {
-						title: '清洁',
-						url: '清洁'
-					}, {
-						title: '贴膜',
-						url: '贴膜'
-					}, {
-						title: '车载手机支架',
-						url: '车载手机支架'
-					}, {
-						title: '车载手机',
-						url: '车载手机'
 					}
 				],
 				chooselist:[] //当前分类子菜单列表
@@ -146,6 +131,11 @@
 				})
 				.catch((res)=>{
 					// 失败方法
+				})
+			},
+			goodsDetail(id){
+				uni.navigateTo({
+					url: `/pages/productInfo/productInfo?id=${id}`
 				})
 			}
 		}

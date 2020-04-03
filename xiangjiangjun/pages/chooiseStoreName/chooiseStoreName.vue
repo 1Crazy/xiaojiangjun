@@ -11,7 +11,7 @@
 				<view class="distance">{{item.distance}}km</view>
 				<view class="storeName">{{item.storename}}</view>
 			</view>
-			<button type="default" class="btn">确定</button>
+			<button type="default" class="btn" @tap="chooseStore(item.id)">确定</button>
 		</view>
 		
 		<button v-if="nomore" type="default" class="lookMore" @tap="moreData()">查看更多</button>
@@ -90,8 +90,15 @@
 				.catch((res)=>{
 					// 失败方法
 				})
-				
-			}
+			},
+			chooseStore(id){
+				// console.log(id)
+				var pages = getCurrentPages();
+				// var nowPage = pages[pages.length -1]
+				var prevPage = pages[pages.length - 2];  
+				prevPage.$vm.chooseStore = id 
+				uni.navigateBack();
+			},
 		}
 	}
 </script>

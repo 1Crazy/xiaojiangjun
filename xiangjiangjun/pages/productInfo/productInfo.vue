@@ -76,17 +76,9 @@
 			<view class="logisticsInfoModelContent">
 				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="LogisticsInfoModel(false)"></image>
 				<view class="h-title">物流说明</view>
-				<view class="step">
-					<view class="num">1</view>
-					<view class="model-content">付款后一般24小时内发货，付款后一般24小时内发货付款后一般24小时内发货付款后一般24小时内发货</view>
-				</view>
-				<view class="step">
-					<view class="num">2</view>
-					<view class="model-content">付款后一般24小时内发货，付款后一般24小时内发货付款后一般24小时内发货付款后一般24小时内发货</view>
-				</view>
-				<view class="step">
-					<view class="num">3</view>
-					<view class="model-content">付款后一般24小时内发货，付款后一般24小时内发货付款后一般24小时内发货付款后一般24小时内发货付款后一般24小时内发货，付款后一般24小时内发货付款。</view>
+				<view class="step" v-for="(item , index) in delivery" :key="index">
+					<view class="num">{{index+1}}</view>
+					<view class="model-content">{{item}}</view>
 				</view>
 			</view>
 		</uni-popup>
@@ -193,7 +185,8 @@
 				goodscontent: "",
 				compage:1,
 				picker:[],
-				pickerChoose:''
+				pickerChoose:'',
+				delivery:[]//物流说明
 				//
 			}
 		},
@@ -218,6 +211,7 @@
 				).then((res)=>{
 					// console.log(res.data.goods)
 					this.goods = res.data.goods
+					this.delivery = res.data.deliverys.delivery_msg
 					this.getComment(id)
 					this.getPicker(id)
 					// 成功方法
@@ -287,8 +281,7 @@
 			},
 			//物流说明模态框
 			LogisticsInfoModel(bool){
-				bool ? this.$
-				.popup.open() : this.$refs.popup.close()
+				bool ? this.$refs.popup.open() : this.$refs.popup.close()
 			},
 			// 商品加入购物车弹出模态框
 			addCartModel(bool,num){
