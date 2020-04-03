@@ -177,7 +177,7 @@
 				.then((res)=>{
 				    // 成功方法
 					if (res.data.code == 1){
-						this.login(res)
+						this.login(res.data)
 					}else{
 						this.$refs.togglePopupChild.togglePopup()
 					}
