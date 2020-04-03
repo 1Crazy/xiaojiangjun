@@ -8,12 +8,12 @@
 		},
 		onLaunch: function() {
 			let userInfo = uni.getStorageSync('userInfo') || '';
-			if(userInfo.openid){
+			if(userInfo.code == 1){
 				//更新登陆状态
 				uni.getStorage({
 					key: 'userInfo',
 					success: (res) => {
-						this.login(res.data);
+						this.login(res.data,true);
 					}
 				});
 			}

@@ -11,18 +11,21 @@ const store = new Vuex.Store({
 		userInfo: {id: 1,idd:2},
 	},
 	mutations: {
-		login(state, provider) {
+		login(state, provider,notShowModel) {
 			state.hasLogin = true;
 			state.userInfo = provider;
 			uni.setStorage({//缓存用户登陆状态
 			    key: 'userInfo',  
 			    data: provider  
 			}) 
-			uni.showToast({
-			    title: '登录成功',
-			    duration: 2000,
-				icon: 'none'
-			});
+			if (notShowModel) {
+				uni.showToast({
+				    title: '登录成功',
+				    duration: 2000,
+					icon: 'none'
+				});
+			}
+			
 			console.log(state.userInfo);
 		},
 		logout(state) {
