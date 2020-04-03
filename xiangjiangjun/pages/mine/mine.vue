@@ -74,21 +74,56 @@
 			<view class="word">优惠券</view>
 			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
+		<view class="listItem" @tap="gotoCooperation">
+			<image class="img" :src="imgSrc+'public/hezuo.png'"></image>
+			<view class="word">合作加盟</view>
+			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
+		</view>
+		
+		<center-popup title="提示" content="登录后即可操作?" cancelBtn="返回首页" ref="togglePopupChild" @cancelBtn="cancelLogin" @centerPopupSureBtn="islogin()"></center-popup>
 	</view>
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
+	import { Request } from '../../public/utils.js'
+	import centerPopup from '@/components/centerPopup/centerPopup.vue'
 	export default {
+		components: {
+			centerPopup,
+		},
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
 			}
 		},
 		onLoad(e) {
+			
 		},
 		onShow(e) {
+			if (!this.hasLogin) {
+			 uni.login({
+				  provider: 'weixin',
+				    success: function (res) {
+				      console.log(res);
+					  if (res.code){
+						  uni.setStorageSync('login_code', res.code)
+					  }
+				    }
+				});
+				this.showLoginModel()
+			}else{
+				
+			}
+		},
+		computed:{
+			...mapState(['hasLogin','userInfo'])
 		},
 		methods: {
+			...mapMutations(['login']),
 			gotoAddressManagement(){
 				uni.navigateTo({
 					url: '/pages/addressManagement/addressManagement'
@@ -113,6 +148,48 @@
 			gotoExperiencer(){
 				uni.navigateTo({
 					url: '/pages/experiencer/experiencer'
+				})
+			},
+			// 去合作加盟页面
+			gotoCooperation() {
+				uni.navigateTo({
+					url: '/pages/cooperation/cooperation'
+				})
+			},
+			// 显示登陆授权框
+			showLoginModel(){
+				console.log(3333)
+				this.$refs.togglePopupChild.togglePopup()
+			},
+			// 登录
+			islogin(){
+				console.log(444)
+				const code = uni.getStorageSync('login_code')
+				Request(
+					'wxapp.update_info', 
+					{
+						code,
+						comefrom:'wxapp'
+					}, 
+					'POST',
+					'application/x-www-form-urlencoded'
+				)
+				.then((res)=>{
+				    // 成功方法
+					if (res.data.code == 1){
+						this.login(res)
+					}else{
+						this.$refs.togglePopupChild.togglePopup()
+					}
+				})
+				.catch((res)=>{
+				    // 失败方法
+				})
+			},
+			// 返回首页
+			cancelLogin(){
+				uni.reLaunch({
+					url: '/pages/index/index'
 				})
 			}
 		}

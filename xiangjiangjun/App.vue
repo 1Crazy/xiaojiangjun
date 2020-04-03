@@ -1,10 +1,23 @@
 <script>
+	import {
+		mapMutations
+	} from 'vuex';
 	export default {
-		// globalData: {
-		//    imgSrc: '/static' 
-		// },ss
+		methods: {
+			...mapMutations(['login'])
+		},
 		onLaunch: function() {
-			console.log('App Launch')
+			let userInfo = uni.getStorageSync('userInfo') || '';
+			if(userInfo.openid){
+				//更新登陆状态
+				uni.getStorage({
+					key: 'userInfo',
+					success: (res) => {
+						this.login(res.data);
+					}
+				});
+			}
+			
 		},
 		onShow: function() {
 			console.log('App Show')
@@ -33,11 +46,3 @@
 		display: block;
 	}
 </style>
-<script>
-	/**
-	 * vuex管理登陆状态，具体可以参考官方登陆模板示例
-	 */
-	import {
-		mapMutations
-	} from 'vuex';
-</script>

@@ -76,7 +76,10 @@ const Request = (url, data, method = 'GET' , head = 'application/json', title = 
     data.token = uni.getStorageSync('userInfo').token
   }
   data.timestamp = new Date().valueOf()
-  data.openid = 'sns_wa_o2iWn5Dqvh1NHnN_bjPpi8pKphWs' // test
+	  
+  if (url != 'wxapp.update_info'){
+	  data.openid = 'sns_wa_o2iWn5Dqvh1NHnN_bjPpi8pKphWs'   // test
+  }
   // data.sign = ''
   uni.showLoading({
     title,

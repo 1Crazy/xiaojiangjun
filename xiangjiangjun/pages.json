@@ -128,7 +128,12 @@
 				"navigationBarTitleText": "我的优惠券"
            }
         }
-
+        ,{
+            "path" : "pages/cooperation/cooperation",
+            "style" : {
+				"navigationBarTitleText": "合作加盟"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

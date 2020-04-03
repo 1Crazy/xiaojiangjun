@@ -53,6 +53,7 @@
 			},
 			cancel() {
 				this.$refs['showtip'].close()
+				this.$emit('cancelBtn');// 触发取消按钮
 			},
 			// 确认按钮点击事件
 			isSureBtn(){
