@@ -25,16 +25,8 @@
 			</view>
 		</view>
 		<view class="content2" v-if="!isUser">
-			<view class="itemWrap">
-				<product-title class="listItem" img="../../static/public/goumai_guanbi.png" title='YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯' priceColor="#ff9000" price="366" originPrice="555" shortTitle='我是短标题' borderBottomStyle='none'></product-title>
-				<button>购买</button>
-			</view>
-			<view class="itemWrap">
-				<product-title class="listItem" img="../../static/public/goumai_guanbi.png" title='YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯' priceColor="#ff9000" price="366" originPrice="555" shortTitle='我是短标题' borderBottomStyle='none'></product-title>
-				<button>购买</button>
-			</view>
-			<view class="itemWrap">
-				<product-title class="listItem" img="../../static/public/goumai_guanbi.png" title='YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯' priceColor="#ff9000" price="366" originPrice="555" shortTitle='我是短标题' borderBottomStyle='none'></product-title>
+			<view class="itemWrap" v-for="(item ,index ) in chooselist" :key="index">
+				<product-title class="listItem" :img="item.logo" :title='item.name' priceColor="#ff9000" :price="item.marketprice" :originPrice="item.productprice" :shortTitle='item.shorttitle' borderBottomStyle='none'></product-title>
 				<button>购买</button>
 			</view>
 		</view>
@@ -82,16 +74,21 @@
 						title: '车载手机',
 						url: '车载手机'
 					}
-				]
+				],
+				chooselist:[] //当前分类子菜单列表
 			}
 		},
 		onLoad() {
+			
+		},
+		onShow(){
 			let title = '门店/商家'
 			this.isUser ? title = '门店/商家' : title = '汽车配件'
 			uni.setNavigationBarTitle({
 			    title
 			});
-			this.getLocation();
+			
+			this.isUser ? this.getLocation() : this.getGoodsData()
 		},
 		methods: {
 			// 切换综合商家和距离的方法
@@ -101,6 +98,7 @@
 			navbarTapHandler (index) {
 				console.log(index,'index')
 				this.currentIndex = index;
+				this.chooselist = this.navList[index].subCategoryList;//赋值给当前菜单列表
 			},
 			getLocation(){
 				const that = this;
@@ -133,6 +131,22 @@
 			},
 			find(e){
 				this.getStores(e.detail.value)
+			},
+			getGoodsData(findkey=''){
+				Request(
+					'goods.get_bycategory',
+					{
+						findkey:findkey,
+						type:2
+					}
+				)
+				.then((res)=>{
+					this.navList = res.data.categoryList//返回总数组
+					this.chooselist = this.navList[0].subCategoryList;//第一个菜单列表
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
 			}
 		}
 	}
