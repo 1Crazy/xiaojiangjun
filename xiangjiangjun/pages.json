@@ -1,6 +1,19 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+		    "path" : "pages/dorInfo/dorInfo",
+		    "style" : {
+				"navigationBarTitleText": "门店详情"
+		    }
+		},{
+		    "path" : "pages/mine/mine",
+		    "style" : {
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#50ce13",
+				"navigationBarTextStyle":"white"
+			}
+		}
+		,{
 		    "path" : "pages/becomeAccount/becomeAccount",
 		    "style" : {
 		    	"navigationBarTitleText": "成为会员"
@@ -11,14 +24,6 @@
 				"navigationBarTitleText": "门店/商家"
 			}
 		},{
-		    "path" : "pages/mine/mine",
-		    "style" : {
-				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#50ce13",
-				"navigationBarTextStyle":"white"
-			}
-		}
-		,{
 		    "path" : "pages/chooseRefundMethod/chooseRefundMethod",
 		    "style" : {
 		    	"navigationBarTitleText": "选择服务类型"

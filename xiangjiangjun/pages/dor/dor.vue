@@ -12,7 +12,7 @@
 		</view>
 		<ss-scroll-navbar  v-if="!isUser" :navArr="navList" :tabCurrentIndex="currentIndex" @navbarTap="navbarTapHandler"></ss-scroll-navbar>
 		<view class="content" v-if="isUser">
-			<view class="itemView" v-for="(item ,index) in liststores" :key="index">
+			<view class="itemView" v-for="(item ,index) in liststores" :key="index" @tap="listStoresClick">
 				<image :src="item.logo" class="img"></image>
 				<view class="rightBox">
 					<view class="title">{{item.storename}}</view>
@@ -49,7 +49,7 @@
 				longitude:'',
 				latitude:'',
 				// 区分汽修厂家与终端用户 true终端用户，false为汽修厂家
-				isUser: false,
+				isUser: true,
 				cutDorStoreSortNum: 1,
 				// 索引
 				currentIndex: 0,
@@ -136,6 +136,12 @@
 			goodsDetail(id){
 				uni.navigateTo({
 					url: `/pages/productInfo/productInfo?id=${id}`
+				})
+			},
+			// 进入门店详情
+			listStoresClick(){
+				uni.navigateTo({
+					url: '/pages/dorInfo/dorInfo'
 				})
 			}
 		}
