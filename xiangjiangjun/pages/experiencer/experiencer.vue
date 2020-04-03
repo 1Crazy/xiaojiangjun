@@ -4,25 +4,9 @@
 			<view class="headerWord">邀请5人注册商城账号可获得体验者资格</view>
 			<button class="btn">邀请好友注册</button>
 			<view class="man">
-				<view class="item">
-					<image src="../../static/public/adress1.png" class="img"></image>
-					<view>橙子007</view>
-				</view>
-				<view class="item">
-					<image src="../../static/public/adress1.png" class="img"></image>
-					<view>橙子007</view>
-				</view>
-				<view class="item">
-					<image src="../../static/public/adress1.png" class="img"></image>
-					<view>橙子007</view>
-				</view>
-				<view class="item">
-					<image src="../../static/public/adress1.png" class="img"></image>
-					<view>橙子007</view>
-				</view>
-				<view class="item">
-					<image src="../../static/public/adress1.png" class="img"></image>
-					<view>橙子007</view>
+				<view class="item" v-for="(item, index) in userList" :key="index">
+					<image :src="item.avatar" class="img"></image>
+					<view>{{item.nickname}}</view>
 				</view>
 			</view>
 		</view>
@@ -78,25 +62,11 @@
 				<view class="word">商家扫码核销</view>
 			</view>
 			<view class="qrcodeWrap" v-if="isQualify && currentTab == 2">
-				<view class="itemWrap">
-					<view class="title">XX汽车美容服务</view>
+				<view class="itemWrap" v-for="(item,index) in exLog" :key="index">
+					<view class="title">{{item.storename}}</view>
 					<view class="textcontent">
-						<view class="txt1">汽车贴膜</view>
-						<view class="txt2">2019-12-30</view>
-					</view>
-				</view>
-				<view class="itemWrap">
-					<view class="title">XX汽车美容服务</view>
-					<view class="textcontent">
-						<view class="txt1">汽车贴膜</view>
-						<view class="txt2">2019-12-30</view>
-					</view>
-				</view>
-				<view class="itemWrap">
-					<view class="title">XX汽车美容服务</view>
-					<view class="textcontent">
-						<view class="txt1">汽车贴膜</view>
-						<view class="txt2">2019-12-30</view>
+						<view class="txt1">{{item.service}}</view>
+						<view class="txt2">{{item.use_date}}</view>
 					</view>
 				</view>
 			</view>
@@ -106,18 +76,46 @@
 
 <script>
 	import './index.scss'
+	import { Request } from '../../public/utils.js'
 	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				isQualify: true,
-				currentTab: 2
+				currentTab: 2,
+				userList:[],
+				exLog:[]
 			};
+		},
+		onLoad(e) {
+			// this.getData();
+		},
+		onShow(e) {
+			this.getData();
 		},
 		methods:{
 			cutTab(num){
 				this.currentTab = num
 			},
+			getData(){
+				Request(
+					'member.getMyExperiencer'
+				)
+				.then((res)=>{
+					this.userList = res.data.users
+					this.exLog = res.data.exlog
+					console.log(res.data.exlog)
+					if(res.data.users.length>1 && this.exLog.length<0 ){
+						this.isQualify=false
+					}
+				})
+				.catch((res)=>{
+					
+				})
+			},
+			sumbit(){
+				
+			}
 		}
 	}
 </script>

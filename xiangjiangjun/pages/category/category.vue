@@ -67,7 +67,8 @@
 						Request(
 							'goods.get_bycategory',
 							{
-								findkey:findkey
+								findkey:findkey,
+								type:1
 							}
 						)
 						.then((res)=>{
