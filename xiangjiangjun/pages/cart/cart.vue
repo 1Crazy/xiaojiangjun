@@ -1,8 +1,7 @@
 <template>
 	<view>
-		<view class="itemMenu" v-for="(item ,index) in lists.list" :key="index">
-			
-			<radio class="itemRadio" color="#ff9000" value="r3" />
+		<view class="itemMenu" v-for="(item ,index) in lists.list" :key="item.id">	
+			<radio class="itemRadio" color="#ff9000" :value="item.id" @tap="radioChange(item.id)" :checked="item.selected==1 ? true : false" />
 			<image class="img" :src="item.thumb"></image>
 			<view class="info">
 				<view class="infoTop">
@@ -22,7 +21,7 @@
 		<view style="height: 98rpx;"></view>
 		<view class="bottom">
 			<label class="radio">
-				<radio class="itemRadio" color="#ff9000" value="r2" />全选</label>
+				<radio class="itemRadio" color="#ff9000" value="all" :checked="allSelectChecked" @tap="AllCheckRadio" />全选</label>
 			<view class="center">
 				<view class="alltotall">合计：</view>
 				<view class="price">￥{{lists.totalprice}}</view>
@@ -38,15 +37,70 @@
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
-				lists:[]
+				lists:[],
+				allSelectChecked: false
 			}
 		},
 		onLoad() {
 			
-		},onShow() {
+		},
+		onShow() {
 			this.getData()
 		},
 		methods: {
+			// 全选
+			AllCheckRadio(e){
+				console.log(e,'ewwewe')
+				const lists = this.lists
+				if (!this.allSelectChecked) {
+					lists.list = lists.list.map(curr=>{
+						curr.selected = 1
+						return curr
+					})
+					this.upGoodsChecked('all',1)
+				}else{
+					lists.list = lists.list.map(curr=>{
+						curr.selected = 0
+						return curr
+					})
+				}
+				this.lists = lists
+				this.allSelectChecked ?  this.allSelectChecked = false : this.allSelectChecked = true
+			},
+			radioChange(id){
+				const lists = this.lists
+				let allSelectChecked = true
+				lists.list = lists.list.map(curr=>{
+					if (curr.id == id) {
+						curr.selected == 1 ? curr.selected = 0 : curr.selected = 1
+						this.upGoodsChecked(id,curr.selected)
+					}
+					if (curr.selected == 0){
+						allSelectChecked = false
+					}
+					return curr
+				})
+				this.allSelectChecked = allSelectChecked
+				this.lists = lists
+			},
+			upGoodsChecked(id,select){
+				Request(
+					'member.cart.update',
+					{
+						id,
+						select
+					},
+					"POST",
+					'application/x-www-form-urlencoded'
+				).then((res)=>{
+					console.log(res)
+					// 成功方法
+					// this.getData()
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
 			getData(){
 				Request(
 					'member.cart.get_cart'
@@ -92,16 +146,32 @@
 				})
 			},
 			delNum(id,remove=false){
+				const that = this
 				if(remove){
 					// console.log('点击删除');
-					const ids = [];
-					ids.push(this.lists.list[id]['id'])
-					this.delGoods(ids)
+					uni.showModal({
+					    title: '提示',
+					    content: '确定删除吗?',
+					    success: function (res) {
+					        if (res.confirm) {
+					           const ids = [];
+					           ids.push(that.lists.list[id]['id'])
+					           that.delGoods(ids)
+					        } else if (res.cancel) {
+					            console.log('用户点击取消');
+					        }
+					    }
+					});
 				}else{
 					if(parseInt(this.lists.list[id]['total'])-1==0){
-						const ids = [];
-						ids.push(this.lists.list[id]['id'])
-						this.delGoods(ids)
+						// this.$refs.centerpopup.open()
+						// const ids = [];
+						// ids.push(this.lists.list[id]['id'])
+						// this.delGoods(ids)
+						uni.showToast({
+							title:'数量已经不能再低了',
+							icon: 'none'
+						})
 					}else{
 						this.upGoodsNum(this.lists.list[id]['id'],parseInt(this.lists.list[id]['total'])-1)
 					}
