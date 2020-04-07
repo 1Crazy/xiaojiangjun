@@ -8,6 +8,11 @@
 				"navigationBarTextStyle":"white"
 			}
 		},{
+		    "path" : "pages/review/review",
+		    "style" : {
+		    	"navigationBarTitleText": "商品评价"
+		    }
+		},{
 		    "path" : "pages/cooperation/cooperation",
 		    "style" : {
 				"navigationBarTitleText": "合作加盟",
@@ -55,11 +60,6 @@
 		    }
 		}
 		,{
-		    "path" : "pages/review/review",
-		    "style" : {
-		    	"navigationBarTitleText": "商品评价"
-		    }
-		},{
 		    "path" : "pages/experiencer/experiencer",
 		    "style" : {
 		    	"navigationBarTitleText": "体验者",
