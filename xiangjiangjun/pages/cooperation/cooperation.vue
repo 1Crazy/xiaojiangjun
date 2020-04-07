@@ -14,8 +14,12 @@
 		</view>
 		<view class="itemWrap">
 			<view class="name">主营产品/服务:</view>
-			<input class="ipt" type="text" placeholder="请输入主营产品/服务">
+			<!-- <input class="ipt" type="text" placeholder="请输入主营产品/服务"> -->
+			<picker class="ipt" @change="bindPickerChange" :value="index" :range="array">
+				<view>{{index == null ? '请输入主营产品/服务' : array[index]}}</view>
+			</picker>
 		</view>
+		
 		<view class="itemWrap">
 			<view class="name">地址:</view>
 			<input class="ipt" type="text" placeholder="地址">
@@ -28,8 +32,14 @@
 	export default {
 		data() {
 			return {
-				
+				array: ['汽修','汽配'],
+				index: 0
 			};
+		},
+		methods:{
+			 bindPickerChange: function(e) {
+				this.index = e.target.value
+			},
 		}
 	}
 </script>

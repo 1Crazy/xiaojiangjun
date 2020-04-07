@@ -97,11 +97,14 @@
 		},
 		data() {
 			return {
-				
+				imgSrc: this.$store.state.imgSrc,
 			}
 		},
 		onLoad(e) {
-			
+			let userInfo = uni.getStorageSync('userInfo') || '';
+			if(userInfo.id){
+				this.login(userInfo,true);
+			}
 		},
 		onShow(e) {
 			console.log(this.hasLogin,'haslogin')
@@ -112,7 +115,7 @@
 			}
 		},
 		computed:{
-			...mapState(['hasLogin','userInfo','imgSrc'])
+			...mapState(['hasLogin','userInfo'])
 		},
 		methods: {
 			...mapMutations(['login']),

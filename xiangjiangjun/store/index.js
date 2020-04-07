@@ -26,8 +26,6 @@ const store = new Vuex.Store({
 					icon: 'none'
 				});
 			}
-			
-			console.log(state.userInfo);
 		},
 		logout(state) {
 			state.hasLogin = false;
