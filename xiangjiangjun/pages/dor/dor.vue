@@ -12,7 +12,7 @@
 		</view>
 		<ss-scroll-navbar  v-if="!isUser" :navArr="navList" :tabCurrentIndex="currentIndex" @navbarTap="navbarTapHandler"></ss-scroll-navbar>
 		<view class="content" v-if="isUser">
-			<view class="itemView" v-for="(item ,index) in liststores" :key="index" @tap="listStoresClick">
+			<view class="itemView" v-for="(item ,index) in liststores" :key="index" @tap="listStoresClick(item.id)">
 				<image :src="item.logo" class="img"></image>
 				<view class="rightBox">
 					<view class="title">{{item.storename}}</view>
@@ -139,9 +139,9 @@
 				})
 			},
 			// 进入门店详情
-			listStoresClick(){
+			listStoresClick(id){
 				uni.navigateTo({
-					url: '/pages/dorInfo/dorInfo'
+					url: '/pages/dorInfo/dorInfo?id='+id
 				})
 			}
 		}
