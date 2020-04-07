@@ -58,10 +58,6 @@
 				</view>
 			</view>
 		</view>
-		
-		<button class="listItem" open-type="getUserInfo" >adsd </button>
-		
-		
 		<view class="listItem" @tap="gotoAddressManagement">
 			<image class="img" :src="imgSrc+'mine/item1.png'"></image>
 			<view class="word">地址管理</view>

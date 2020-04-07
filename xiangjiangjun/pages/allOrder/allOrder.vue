@@ -43,7 +43,7 @@
 				<button v-if="navIndex==2" class="activeBtn" @tap="finishOrder(item.id)">确认收货</button>
 				<button v-if="navIndex==3 && item.cancomment" class="activeBtn" @tap="gotoReview(item.id)">去评论</button>
 				<!-- <button v-if="navIndex==2||navIndex==3" class="activeBtn">查看物流</button> -->
-				<button v-if="navIndex==2|| navIndex==1" @tap="gotoReturnRefund" class="activeBtn">退换货</button>
+				<button v-if="navIndex==2|| navIndex==1" @tap="gotoReturnRefund(item.id)" class="activeBtn">退换货</button>
 			</view>
 		</view>
 		
@@ -142,7 +142,7 @@
 			},
 			gotoReturnRefund(){
 				uni.navigateTo({
-					url: '/pages/chooseRefundMethod/chooseRefundMethod'
+					url: '/pages/chooseRefundMethod/chooseRefundMethod?id='+id
 				})
 			}
 		}

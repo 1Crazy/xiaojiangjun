@@ -1,10 +1,10 @@
 <template>
 	<view>
 		<view class="header-wrap">
-			<product-title
-				img="../../static/public/addpic.png"
-				title="YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯"
-				shortTitle='我是短标题'
+			<product-title v-for="(item,index) in goods" :key="index"
+				:img="item.thumb"
+				:title="item.title"
+				:shortTitle='item.shorttitle'
 				:borderBottomStyle='none'
 			></product-title>
 		</view>
@@ -33,30 +33,52 @@
 
 <script>
 	import productTitle from '@/components/productTitle/productTitle.vue'
-
+	import { Request } from '../../public/utils.js'
 	export default {
 		components: {
 			productTitle
 		},
 		data() {
 			return {
+				orderid:'',//订单id
 				imgSrc: this.$store.state.imgSrc,
+				goods:{}
 			};
+		},
+		onLoad(e) {
+			this.getOrderInfo(e.id)
+			this.orderid = e.id
+		},
+		onShow() {
+			
 		},
 		methods:{
 			gotoReturnRefund(w){
 				if (w == 'notReturnGoods'){
 					uni.navigateTo({
-						url: `/pages/returnRefund/returnRefund?word=${w}`
+						url: `/pages/returnRefund/returnRefund?word=${w}&id=${this.orderid}`
 					})
 				}else{
 					uni.navigateTo({
-						url: '/pages/returnRefund/returnRefund'
+						url: '/pages/returnRefund/returnRefund?id='+this.orderid
 					})
 				}
 				
 			},
-			
+			getOrderInfo(id){
+				Request(
+					'order.detail',
+					{
+						id:id
+					}
+				)
+				.then((res)=>{
+					this.goods = res.data.goods
+				})
+				.catch((res)=>{
+					
+				})
+			}
 		}
 	}
 </script>

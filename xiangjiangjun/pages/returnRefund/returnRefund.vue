@@ -1,10 +1,10 @@
 <template>
 	<view>
 		<view class="header-wrap">
-			<product-title
-				img="../../static/public/addpic.png"
-				title="YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯"
-				shortTitle='我是短标题'
+			<product-title v-for="(item,index) in goods" :key="index"
+				:img="item.thumb"
+				:title="item.title"
+				:shortTitle='item.shorttitle'
 				:borderBottomStyle='none'
 			></product-title>
 		</view>
@@ -21,7 +21,7 @@
 					<view class="title">退款原因</view>
 					<view class="leftBottom">
 						<text class="txt1">退款金额：</text>
-						<text class="txt2">￥336</text>
+						<text class="txt2">￥{{orderInfo.price}}</text>
 					</view>
 				</view>
 				<view class="right">{{currentReturnResonWord?currentReturnResonWord:'请选择'}}</view>
@@ -31,14 +31,9 @@
 		<view class="uploadCertificate">
 			<view class="title">上传凭证</view>
 			<view class="imgWrap">
-				<image class="img" src="../../static/public/addpic.png" mode=""></image>
-				<image class="img" src="../../static/public/addpic.png" mode=""></image>
-				<image class="img" src="../../static/public/addpic.png" mode=""></image>
-				<image class="img" src="../../static/public/addpic.png" mode=""></image>
-				<image class="img" src="../../static/public/addpic.png" mode=""></image>
-				
+				<image class="img" v-for="(item,index) in chooseImg" :key="index" src="../../static/public/addpic.png" mode=""></image>
 				<!-- 上面为图片循环 -->
-				<image class="img" src="../../static/public/addpic.png" mode=""></image>
+				<image class="img" @tap="chooseImges" src="../../static/public/addpic.png" mode=""></image>
 			</view>
 		</view>
 		
@@ -76,6 +71,7 @@
 <script>
 	import productTitle from '@/components/productTitle/productTitle.vue'
 	import {uniPopup} from '../../components/uni/uni-popup/uni-popup.vue'
+	import {Request} from '../../public/utils.js'
 	export default {
 		components: {
 			productTitle,
@@ -99,16 +95,24 @@
 					name: '不想买了',
 					value: '0'
 				},{
-					name: '不想买了不想买了不想买了不想买了',
+					name: '拍错了/订单信息错误',
 					value: '1'
 				},{
-					name: '不想买了不想买了不想买了不想买了',
-					value: '1'
-				},]
+					name: '其他',
+					value: '2'
+				},],
+				orderid:'',//订单id
+				goods:{},
+				orderInfo:{},//订单信息
+				chooseImg:[]
 			};
 		},
 		onLoad(options) {
-			options.word == 'notReturnGoods' ? this.notReturnGoods = false : this.notReturnGoods = true
+			options.word == 'notReturnGoods' ? this.notReturnGoods = false : this.notReturnGoods = true,
+			this.orderid = options.id
+		},
+		onShow() {
+			this.getData()
 		},
 		methods:{
 			goodsStatus(bool){
@@ -145,6 +149,44 @@
 			returnMoneyReasonSubmitBtn(){
 				this.currentReturnResonWord = this.tmpWord[1]
 				this.$refs.returnMoneyReason.close()
+			},
+			getData(){
+				Request(
+					'order.detail',
+					{
+						id:this.orderid
+					}
+				)
+				.then((res)=>{
+					this.goods = res.data.goods
+				})
+				.catch((res)=>{
+					
+				})
+				
+				
+				Request(
+					'order.refund',
+					{
+						id:this.orderid
+					}
+				)
+				.then((res)=>{
+					this.orderInfo = res.data
+				})
+				.catch((res)=>{
+					
+				})
+			},
+			chooseImges(){
+				uni.chooseImage({
+					count: 6, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: function (res) {
+						console.log(JSON.stringify(res.tempFilePaths));
+					}
+				});
 			}
 		}
 	}
