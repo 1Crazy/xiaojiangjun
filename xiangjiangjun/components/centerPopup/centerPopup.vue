@@ -110,5 +110,6 @@
 		text-align: center;
 		font-size: 14px;
 		color: #3b4144;
+		line-height: 35rpx;
 	}
 </style>
