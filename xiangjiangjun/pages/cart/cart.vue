@@ -85,7 +85,7 @@
 			},
 			upGoodsChecked(id,select){
 				Request(
-					'member.cart.update',
+					'member.cart.select',
 					{
 						id,
 						select
@@ -95,7 +95,7 @@
 				).then((res)=>{
 					console.log(res)
 					// 成功方法
-					// this.getData()
+					this.getData()
 				})
 				.catch((res)=>{
 					// 失败方法

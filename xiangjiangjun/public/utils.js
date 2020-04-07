@@ -179,4 +179,5 @@ module.exports = {
   setKey,
   getCurrentTime,
   payUrl,
+  dev
 }

@@ -31,14 +31,14 @@
 		<view class="uploadCertificate">
 			<view class="title">上传凭证</view>
 			<view class="imgWrap">
-				<image class="img" v-for="(item,index) in chooseImg" :key="index" src="../../static/public/addpic.png" mode=""></image>
+				<image class="img" v-for="(item,index) in chooseImg" :key="index" :src="item" mode=""></image>
 				<!-- 上面为图片循环 -->
 				<image class="img" @tap="chooseImges" src="../../static/public/addpic.png" mode=""></image>
 			</view>
 		</view>
 		
 		<view style="height: 108rpx;width: 750rpx;background-color: white;"></view>
-		<button class="submitBtn">提交</button>
+		<button class="submitBtn" @tap="subRefund()">提交</button>
 		<!-- 货物状态模态框 -->
 		<uni-popup ref="addCartPopup" type="bottom">
 			<view class="productSpecificationsModelContent">
@@ -71,7 +71,7 @@
 <script>
 	import productTitle from '@/components/productTitle/productTitle.vue'
 	import {uniPopup} from '../../components/uni/uni-popup/uni-popup.vue'
-	import {Request} from '../../public/utils.js'
+	import {Request,dev} from '../../public/utils.js'
 	export default {
 		components: {
 			productTitle,
@@ -110,9 +110,10 @@
 		onLoad(options) {
 			options.word == 'notReturnGoods' ? this.notReturnGoods = false : this.notReturnGoods = true,
 			this.orderid = options.id
+			this.getData()
 		},
 		onShow() {
-			this.getData()
+			
 		},
 		methods:{
 			goodsStatus(bool){
@@ -124,6 +125,7 @@
 			submitBtn(){
 				this.currentStatusGoodsWord = this.tmpWord[0]
 				this.$refs.addCartPopup.close()
+				
 			},
 			//货物切换状态
 			goodsStatusChange(e){
@@ -163,8 +165,6 @@
 				.catch((res)=>{
 					
 				})
-				
-				
 				Request(
 					'order.refund',
 					{
@@ -179,14 +179,35 @@
 				})
 			},
 			chooseImges(){
+				const that = this
 				uni.chooseImage({
 					count: 6, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: function (res) {
-						console.log(JSON.stringify(res.tempFilePaths));
+						that.chooseImg = that.chooseImg.concat(res.tempFilePaths);
 					}
 				});
+			},
+			subRefund(){
+				console.log(this.chooseImg)
+				const url = dev+'util.uploader.upload&file=file'
+				uni.uploadFile({
+				    url: url, //仅为示例，非真实的接口地址
+				    filePath: this.chooseImg[0],
+				    name: 'file',
+				    success: (uploadFileRes) => {
+				        console.log(uploadFileRes.data);
+				    }
+				});
+				// uni.uploadFile({
+				//     url: url, //仅为示例，非真实的接口地址
+				//     files: this.chooseImg,
+				//     name: 'file',
+				//     success: (uploadFileRes) => {
+				//         console.log(uploadFileRes.data);
+				//     }
+				// });
 			}
 		}
 	}

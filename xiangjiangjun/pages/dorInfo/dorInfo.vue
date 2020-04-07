@@ -1,28 +1,28 @@
 <template>
 	<view>
 		<view class="header">
-			<image class="img" src="../../static/public/addpic.png"></image>
+			<image class="img" :src="storeInfo.logo"></image>
 			<view class="dor-title">主营服务</view>
 			<view class="h-content">
-				<view v-for="(item ,index) in serviceTypeBtn" :key="index">{{item}}</view>
+				<view v-for="(item ,index) in storeInfo.store_services" :key="index">{{item.service_name}}</view>
 			</view>
 		</view>
 		<view class="timeWrap">
 			<view class="item">
 				<image src="../../static/public/shop3.png" mode="" class="img img1"></image>
 				<text class="txt1">营业时间:</text>
-				<text class="txt2">08:00-21:00</text>
+				<text class="txt2">{{storeInfo.saletime}}</text>
 			</view>
 			<view class="item">
 				<image src="../../static/public/shop1.png" mode="" class="img img1"></image>
 				<text class="txt1">联系电话:</text>
-				<text class="txt2">88888888</text>
+				<text class="txt2">{{storeInfo.tel}}</text>
 				<button class="btn">一键拨打</button>
 			</view>
 			<view class="item">
 				<image src="../../static/public/shop2.png" mode="" class="img img1"></image>
 				<text class="txt1">店铺地址:</text>
-				<text class="txt2">成都市高新区交子大道xx号</text>
+				<text class="txt2">{{storeInfo.city}}{{storeInfo.area}}{{storeInfo.address}}</text>
 				<image src="../../static/public/arrow.png" class="arrowImg"></image>
 			</view>
 		</view>
@@ -33,9 +33,7 @@
 				<view :class="tab == 2 ? 'active': ''" @tap="changeTab(2)">用户评价</view>
 			</view>
 			<view :class="tab == 1 ? 'productInfo': 'hide'">
-				<view class="article">抗氧化性能最好，即使用周期最长，减少了废旧机油排放。 fuel-burn系数低，即油门反应高，节省了燃油消耗环保低碳。</view>
-				<image class="img1" :src="imgSrc+'index/picnav3.png'" style="margin-top: 40rpx;margin-bottom: 93rpx;"></image>
-				<image class="img2" :src="imgSrc+'index/picnav3.png'"></image>
+				<view class="article">{{storeInfo.desc}}</view>
 			</view>
 			<view :class="tab == 2 ? 'comment': 'hide'"  v-for="(item ,index) in commentList" :key="index">
 				<view class="commentHeader">
@@ -60,6 +58,7 @@
 
 <script>
 	import './index.scss'
+	import {Request} from '../../public/utils.js'
 	export default {
 		data() {
 			return {
@@ -85,13 +84,34 @@
 						commentPic: []
 					},
 				],
+				storeInfo:[]
 			};
+		},
+		onLoad(e) {
+			this.getData(e.id)
+		},
+		onShow() {
+			
 		},
 		methods:{
 			//改变tab值
 			changeTab(num){
 				this.tab=num
 			},
+			getData(id){
+				Request(
+					'store.storeDetail',
+					{
+						id:id
+					}
+				)
+				.then((res)=>{
+					this.storeInfo = res.data.list
+				})
+				.catch((res)=>{
+					
+				})
+			}
 		}
 	}
 </script>
