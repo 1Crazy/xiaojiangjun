@@ -37,7 +37,7 @@
 				<view class="c-b-word">购买数量</view>
 				<view class="r-wrap">
 					<button class="symbol" @tap="delNum(index)">-</button>
-					<input class="ipt" type="text" v-model="item.total" />
+					<input class="ipt" type="number" v-model="item.total" />
 					<button class="symbol" @tap="addNum(index)">+</button>
 				</view>
 			</view>
@@ -88,7 +88,7 @@
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
-				isStoreName: true, // 是否到店自提
+				isStoreName: false, // 是否到店自提
 				isAdress: true, // 控制快递地址
 				productNum: 1,
 				orderInfo:[],
@@ -110,15 +110,20 @@
 				console.log('不是返回进入')
 			}else{
 				console.log('返回进入')
-				this.updataOrder();
+				// this.updataOrder();
 			}
 		},
 		methods:{
 			delNum(id){
-				
+				// console.log(id,this.goods[id][total])
+				this.goods[id]['total'] = Number(this.goods[id]['total']) - 1
+				this.updataOrder();
 			},
 			addNum(id){
-				
+				// 
+				// console.log(id,this.goods[id]['total'])
+				this.goods[id]['total'] = Number(this.goods[id]['total']) + 1
+				this.updataOrder();
 			},
 			// 门店页跳转
 			gotoDorPages(){
@@ -134,19 +139,19 @@
 			},
 			// 支付
 			pay() {
-				Request(
-					'order.create',
-					{
-						id:id,
-						total:num,
-						optionid:optionid
-					}
-				).then((res)=>{
+				// Request(
+				// 	'order.create',
+				// 	{
+				// 		id:id,
+				// 		total:num,
+				// 		optionid:optionid
+				// 	}
+				// ).then((res)=>{
 					
-				})
-				.catch((res)=>{
-					// 失败方法
-				})
+				// })
+				// .catch((res)=>{
+				// 	// 失败方法
+				// })
 				uni.navigateTo({
 					url: '/pages/paySuccess/paySuccess'
 				})
@@ -173,26 +178,21 @@
 				})
 			},
 			updataOrder(){
-				console.log(Array.from(this.goods))
-				// console.log(JSON.parse(JSON.stringify(this.goods)))
-				// const goods =  JSON.parse(JSON.stringify(this.goods))
-				// console.log(this.goods)
+				console.log(this.goods)
 				Request(
 					'order.create.caculate',
 					{
 						goods: JSON.stringify(this.goods),
-						// dflag: this.data.data.dispatchtype,
-						addressid: this.chooseAddress ? this.chooseAddress : 0,
+						addressid: this.chooseAddress ? this.chooseAddress : this.orderInfo.address.id,//选择收货地址id
 						packageid: this.orderInfo.packageid,
-						// bargain_id: this.data.bargainid,
 						discountprice: this.orderInfo.discountprice,
-						// cardid: this.data.cardid,
-						// couponid: i
+						dflag:""//0自提 1快递
 					},
 					'POST',
-					'application/json'
+					'application/x-www-form-urlencoded'
 				).then((res)=>{
 					console.log(res)
+					this.getData()
 					// 成功方法
 				})
 				.catch((res)=>{
