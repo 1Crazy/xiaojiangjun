@@ -59,45 +59,38 @@
 <script>
 	import productTitle from '@/components/productTitle/productTitle.vue'
 	import './index.scss'
+	import { Request } from "../../public/utils.js"
 	export default {
 		components:{
 			productTitle,
+		},
+		onLoad() {
+			this.getData()
 		},
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				qrcode: `${this.$store.state.imgSrc}index/listpic1.png`,
-				listwrap:[
-					{
-						thumb: `${this.$store.state.imgSrc}index/listpic1.png`,
-						title: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
-						shorttitle: '我是短标题',
-						marketprice: '333',
-						productprice: '555'
-					},
-					{
-						thumb: `${this.$store.state.imgSrc}index/listpic1.png`,
-						title: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
-						shorttitle: '我是短标题',
-						marketprice: '333',
-						productprice: '555'
-					},
-					{
-						thumb: `${this.$store.state.imgSrc}index/listpic1.png`,
-						title: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
-						shorttitle: '我是短标题',
-						marketprice: '333',
-						productprice: '555'
-					},
-				]
+				listwrap:[]
 			};
 		},
 		methods: {
 			gotoProductInfo(info){
 				uni.navigateTo({
-					url: `/pages/productInfo/productInfo?info=${info}`
+					url: `/pages/productInfo/productInfo?id=${info}`
 				})
 			},
+			getData(){
+				Request(
+					'index.get_data'			
+				).then((res)=>{
+					this.listwrap = res.data.data.goods
+					// 成功方法
+				})
+				.catch((res)=>{
+					// 失败方法
+				}) 
+			}
 		}
 	}
 </script>
