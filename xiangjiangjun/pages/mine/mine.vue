@@ -59,6 +59,9 @@
 			</view>
 		</view>
 		
+		<button class="listItem" open-type="getUserInfo" >adsd </button>
+		
+		
 		<view class="listItem" @tap="gotoAddressManagement">
 			<image class="img" :src="imgSrc+'mine/item1.png'"></image>
 			<view class="word">地址管理</view>
@@ -74,6 +77,7 @@
 			<view class="word">优惠券</view>
 			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
+		
 		<view class="listItem" @tap="gotoCooperation">
 			<image class="img" :src="imgSrc+'public/hezuo.png'"></image>
 			<view class="word">合作加盟</view>
@@ -155,17 +159,26 @@
 			},
 			// 登录
 			islogin(){
-				console.log(444)
-				const code = uni.getStorageSync('login_code')
-				
+				const openid = uni.getStorageSync('openid')
+				// console.log(openid)
 				uni.getUserInfo({
-				  provider: 'weixin',
+					provider: 'weixin',
 				    success: function (res) {
-				      console.log(res);
+						console.log('aaa');
+						console.log(res.userInfo);
+						// let data = res.data.userInfo
+						
+						// let data['avaratUrl'] = res.userInfo.avaratUrl;
+						// let data.nickName = res.userInfo.nickName;
+						
+						var data = {};
+						data.avaratUrl= res.userInfo.avaratUrl;
+						data.nickName = res.userInfo.nickName;
 						
 						Request(
 							'wxapp.update_info', 
 							{
+								openid,
 								data : res.userInfo,
 								iv : res.iv
 							}
@@ -183,8 +196,6 @@
 						})
 				    }
 				});
-				
-				
 			},
 			// 返回首页
 			cancelLogin(){

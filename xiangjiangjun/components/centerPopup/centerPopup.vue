@@ -7,7 +7,7 @@
 				<text class="uni-tip-content">{{content}}</text>
 				<view class="uni-tip-group-button">
 					<text class="uni-tip-button" @click="cancel()">{{cancelBtn}}</text>
-					<text class="uni-tip-button" @click="isSureBtn()">{{sureBtn}}</text>
+					<button open-type="getUserInfo" class="uni-tip-button" @click="isSureBtn()">{{sureBtn}}</button>
 				</view>
 			</view>
 		</uni-popup>
