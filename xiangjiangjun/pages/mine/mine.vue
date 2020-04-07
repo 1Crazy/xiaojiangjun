@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<view class="header">
-			<image class="avatar" :src="imgSrc+'index/listpic1.png'" mode=""></image>
-			<view class="name">橙子007</view>
+			<image class="avatar" :src="userInfo.avatar" mode=""></image>
+			<view class="name">{{userInfo.nickname}}</view>
 			<view class="vip" @tap="gotoAccount">会员  ></view>
 		</view>
 		<view class="orderlist">
@@ -97,22 +97,22 @@
 		},
 		data() {
 			return {
-				imgSrc: this.$store.state.imgSrc,
+				
 			}
 		},
 		onLoad(e) {
 			
 		},
 		onShow(e) {
+			console.log(this.hasLogin,'haslogin')
 			if (!this.hasLogin) {
-				
 				this.showLoginModel()
 			}else{
 				
 			}
 		},
 		computed:{
-			...mapState(['hasLogin','userInfo'])
+			...mapState(['hasLogin','userInfo','imgSrc'])
 		},
 		methods: {
 			...mapMutations(['login']),
@@ -156,6 +156,7 @@
 			// 登录
 			islogin(){
 				const openid = uni.getStorageSync('openid')
+				const that = this
 				// console.log(openid)
 				uni.getUserInfo({
 					provider: 'weixin',
@@ -182,9 +183,9 @@
 						.then((res)=>{
 						    // 成功方法
 							if (res.data.code == 1){
-								this.login(res)
+								that.login(res.data.member)
 							}else{
-								this.$refs.togglePopupChild.togglePopup()
+								that.$refs.togglePopupChild.togglePopup()
 							}
 						})
 						.catch((res)=>{

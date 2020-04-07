@@ -8,7 +8,6 @@
 			...mapMutations(['login'])
 		},
 		onLaunch: function() {
-			
 			uni.login({
 				provider: 'weixin',
 					success: function (res) {
@@ -29,6 +28,7 @@
 				'application/x-www-form-urlencoded'	
 			)
 			.then((res)=>{
+				// this.$store.state.hasLogin = true,
 				uni.setStorageSync('openid', res.data.openid)
 			})
 			.catch((res)=>{
@@ -36,7 +36,7 @@
 			})
 			
 			let userInfo = uni.getStorageSync('userInfo') || '';
-			if(userInfo.code == 1){
+			if(userInfo.id){
 				//更新登陆状态
 				uni.getStorage({
 					key: 'userInfo',

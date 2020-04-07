@@ -72,9 +72,9 @@ const Request = (url, data, method = 'GET' , head = 'application/json', title = 
   }else{
     src = `${baseUrl}${url}`
   }
-  if (uni.getStorageSync('userInfo').token) {
-    data.token = uni.getStorageSync('userInfo').token
-  }
+  // if (uni.getStorageSync('userInfo').token) {
+  //   data.token = uni.getStorageSync('userInfo').token
+  // }
   data.timestamp = new Date().valueOf()
 	  
   if (url != 'wxapp.update_info'){

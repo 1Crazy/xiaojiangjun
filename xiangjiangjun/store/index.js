@@ -8,10 +8,11 @@ const store = new Vuex.Store({
 		// imgSrc: '../../static/',
 		imgSrc: 'http://xiaojiangjun.cduxj.com/attachment/images/',
 		hasLogin: false,
-		userInfo: {id: 1,idd:2},
+		userInfo: {},
 	},
 	mutations: {
 		login(state, provider,notShowModel) {
+			console.log(provider)
 			state.hasLogin = true;
 			state.userInfo = provider;
 			uni.setStorage({//缓存用户登陆状态
