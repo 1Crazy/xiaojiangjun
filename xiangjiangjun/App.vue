@@ -8,32 +8,36 @@
 			...mapMutations(['login'])
 		},
 		onLaunch: function() {
+			
 			uni.login({
 				provider: 'weixin',
 					success: function (res) {
 						// console.log(res);
 						if (res.code){
-							uni.setStorageSync('login_code', res.code)
+							// uni.setStorageSync('login_code', res.code)
+							
+							Request(
+								'wxapp.login', 
+								{
+									code:res.code,
+									comefrom:'wxapp'
+								},
+								'POST',
+								'application/x-www-form-urlencoded'	
+							)
+							.then((res)=>{
+								// this.$store.state.hasLogin = true,
+								uni.setStorageSync('openid', res.data.openid)
+							})
+							.catch((res)=>{
+							    // 失败方法
+							})
+							
 						}
 					}
 			});
-			const code = uni.getStorageSync('login_code')
-			Request(
-				'wxapp.login', 
-				{
-					code,
-					comefrom:'wxapp'
-				},
-				'POST',
-				'application/x-www-form-urlencoded'	
-			)
-			.then((res)=>{
-				// this.$store.state.hasLogin = true,
-				uni.setStorageSync('openid', res.data.openid)
-			})
-			.catch((res)=>{
-			    // 失败方法
-			})
+			// const code = uni.getStorageSync('login_code')
+			
 			
 			let userInfo = uni.getStorageSync('userInfo') || '';
 			if(userInfo.id){
