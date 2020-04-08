@@ -49,7 +49,7 @@
 				</view>
 				<view class="commentContent">{{item.content}}</view>
 				<view :class="item.images.length>0?'commentPic':'hide'">
-					<image :src="itemPic" class="pic" v-for="(itemPic ,index) in item.commentPic" :key="index"></image>
+					<image :src="itemPic" class="pic" v-for="(itemPic ,index) in item.images" :key="index"></image>
 				</view>
 			</view>
 		</view>
