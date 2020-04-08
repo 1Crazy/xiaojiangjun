@@ -2,7 +2,7 @@
 	<view>
 		<view class="headerWrap">
 			<view class="header">
-				<input class="ipt" type="text" value="" @input="find" placeholder="搜索您要找的门店名称" />
+				<input class="ipt" type="text" :value="serchName" value="" @input="find" placeholder="搜索您要找的门店名称" />
 				<image :src="imgSrc+'public/fdj1.png'" class="img"></image>
 			</view>
 		</view>
@@ -65,12 +65,16 @@
 				],
 				chooselist:[] ,//当前分类子菜单列表
 				page:1,
+				serchName: '',
 				choTit:false
 			}
 		},
-		onLoad() {
-			
-		},
+		onLoad(options) {
+					if (options.services){
+						this.serchName = options.services
+						this.getStores(options.services)
+					}
+				},
 		computed:{
 			...mapState(["userInfo"])
 		},
@@ -113,7 +117,8 @@
 					success (res) {
 						that.longitude = res.longitude
 						that.latitude = res.latitude
-						that.getStores();
+						// that.getStores();
+						that.getStores(that.serchName);
 					}
 				})
 			},
