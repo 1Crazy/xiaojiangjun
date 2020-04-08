@@ -70,14 +70,12 @@
 		onLoad(options) {
 			if (options.services){
 				this.serchName = options.services
-				this.getStores(options.services)
 			}
 		},
 		computed:{
 			...mapState(["userInfo"])
 		},
 		onShow(){
-			console.log(this.userInfo.groupid,'a')
 			if(this.userInfo.groupid != '' && this.userInfo.groupid){
 				this.isUser = false
 			}
@@ -107,7 +105,7 @@
 					success (res) {
 						that.longitude = res.longitude
 						that.latitude = res.latitude
-						that.getStores();
+						that.getStores(that.serchName);
 					}
 				})
 			},
