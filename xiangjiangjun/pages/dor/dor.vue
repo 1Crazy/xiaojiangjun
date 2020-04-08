@@ -63,7 +63,9 @@
 						url: '机油'
 					}
 				],
-				chooselist:[] //当前分类子菜单列表
+				chooselist:[] ,//当前分类子菜单列表
+				page:1,
+				choTit:false
 			}
 		},
 		onLoad() {
@@ -90,6 +92,14 @@
 			// 切换综合商家和距离的方法
 			cutDorStoreSort(num){
 				this.cutDorStoreSortNum = num
+				this.choTit = true
+				this.page = 1
+				if(num==1){
+					this.getStores('','1')
+				}else{
+					this.getStores('','2')
+				}
+				console.log('a')
 			},
 			navbarTapHandler (index) {
 				console.log(index,'index')
@@ -107,18 +117,26 @@
 					}
 				})
 			},
-			getStores(findkey=''){
+			getStores(findkey='',orby='1'){
 				const that = this;
 				Request(
 					'store.get_stores',
 					{
 						lng:that.longitude,
 						lat:that.latitude,
-						findkey:findkey
+						findkey:findkey,
+						orby:orby,
+						page:this.page
 					}
 				).then((res)=>{
 					console.log(res)
-					this.liststores = res.data.list
+					
+					if(this.choTit){
+						this.liststores = res.data.list
+						this.choTit = false
+					}else{
+						this.liststores = this.liststores.concat(res.data.list)
+					}
 					// 成功方法
 				})
 				.catch((res)=>{
@@ -126,19 +144,30 @@
 				})
 			},
 			find(e){
-				this.getStores(e.detail.value)
+				this.choTit = true
+				this.isUser ? this.getStores(e.detail.value) : this.getGoodsData(e.detail.value)
+			},
+			onReachBottom() {
+				this.page = this.page+1
+				if(this.cutDorStoreSortNum==1){
+					this.getStores('','1')
+				}else{
+					this.getStores('','2')
+				}	
 			},
 			getGoodsData(findkey=''){
 				Request(
 					'goods.get_bycategory',
 					{
 						findkey:findkey,
-						type:2
+						type:2,
+						page:this.page
 					}
 				)
 				.then((res)=>{
 					this.navList = res.data.categoryList//返回总数组
 					this.chooselist = this.navList[0].subCategoryList;//第一个菜单列表
+					// this.chooselist = this.chooselist.concat(res.data.categoryList[this.currentIndex].subCategoryList) ;//赋值给当前菜单列表
 				})
 				.catch((res)=>{
 					// 失败方法

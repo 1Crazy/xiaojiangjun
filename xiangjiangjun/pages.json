@@ -46,7 +46,8 @@
 		    "path" : "pages/dor/dor",
 		    "style" : {
 				"navigationBarTitleText": "门店/商家"
-			}
+			},
+			"enablePullDownRefresh":true
 		},{
 		    "path" : "pages/chooseRefundMethod/chooseRefundMethod",
 		    "style" : {
@@ -70,7 +71,8 @@
 		    "path" : "pages/mineIntegral/mineIntegral",
 		    "style" : {
 				"navigationBarTitleText": "我的积分"
-		    }
+		    },
+			"enablePullDownRefresh":true
 		},{
 		    "path" : "pages/account/account",
 		    "style" : {
@@ -108,7 +110,8 @@
 		    "path" : "pages/chooiseStoreName/chooiseStoreName",
 		    "style" : {
 				"navigationBarTitleText": "附近门店"
-			}
+			},
+			"enablePullDownRefresh":true
 		},{
 		    "path" : "pages/category/category",
 		    "style" : {
