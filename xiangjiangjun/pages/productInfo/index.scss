@@ -51,6 +51,7 @@
 		.commentPic{
 			display: flex;
 			justify-content: space-between;
+			flex-wrap: wrap;
 			.pic{
 				width: 223rpx;
 				height: 223rpx;

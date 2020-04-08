@@ -65,6 +65,9 @@
 </template>
 
 <script>
+	import {
+		mapState
+	} from 'vuex';
 	import uniSwiperDot from "@/components/uni/uni-swiper-dot/uni-swiper-dot.vue"
 	import { Request } from "../../public/utils.js"
 	export default {
@@ -131,6 +134,9 @@
 				]
 			}
 		},
+		computed:{
+			...mapState(["userInfo"])
+		},
 		onLoad() {
 			const that = this;
 			wx.getLocation({
@@ -161,9 +167,16 @@
 				this.current = e.detail.current;
 			},
 			gotoDor(word){
-				uni.reLaunch({
-					url: `/pages/dor/dor?services=${word}`
-				})
+				if (typeof this.userInfo.groupid != 'string') {
+					uni.showToast({
+						title: '该功能暂未对汽修厂开放',
+						icon: 'none'
+					})
+				}else{
+					uni.reLaunch({
+						url: `/pages/dor/dor?services=${word}`
+					})
+				}
 			},
 			gotoProductInfo(info){
 				uni.navigateTo({
