@@ -71,10 +71,10 @@
 		onLoad(e) {
 			console.log(e)
 			this.navIndex = e.status
-			this.getData(e.status)
+			// this.getData(e.status)
 		},
-		onShow(e) {
-			// this.getData(0)
+		onShow() {
+			this.getData(this.navIndex)
 		},
 		methods: {
 			changeTab(index){

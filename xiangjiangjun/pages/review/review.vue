@@ -73,6 +73,7 @@
 			publishReview(){
 				const num = this.starArray.findIndex(curr=>curr == 'star_n.png')
 				const submitImg = []
+				// 循环异步，后期更换
 				this.uploadImg.map((curr,index)=>{
 					uni.uploadFile({
 						url: dev +'util.uploader.upload&file=file', //仅为示例，非真实的接口地址
@@ -98,11 +99,17 @@
 									}
 								)
 								.then((res)=>{
-									console.log(res,'res')
-									this.goods = res.data.goods
+									uni.showToast({
+										title: '评论成功',
+										icon: 'none'
+									})
+									uni.navigateBack({})
 								})
 								.catch((res)=>{
-									
+									uni.showToast({
+										title: '评论失败',
+										icon: 'none'
+									})
 								})
 							}
 						},
