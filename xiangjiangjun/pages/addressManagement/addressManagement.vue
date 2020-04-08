@@ -4,7 +4,7 @@
 		 <radio-group>
 			<view class="addressList" v-for="(item ,index) in lists" :key="index">
 				<view class="top">
-					<view @tap="chooseAddress(item.id)">
+					<view @tap="chooseAddress(index)">
 						<view class="name">{{item.realname}} {{item.mobile}}</view>
 						<view class="address">{{item.province}} {{item.city}} {{item.area}} {{item.address}}</view>
 					</view>
@@ -107,12 +107,19 @@
 					// 失败方法
 				})
 			},
-			chooseAddress(id){
-				// console.log(id)
+			chooseAddress(index){
+				console.log()
 				var pages = getCurrentPages();
-				// var nowPage = pages[pages.length -1]
+				var nowPage = pages[pages.length -1]
 				var prevPage = pages[pages.length - 2];  
-				prevPage.$vm.chooseAddress = id 
+				prevPage.$vm.chooseAddress = this.lists[index]['id']
+				prevPage.$vm.orderInfo.address = this.lists[index]
+				
+				prevPage.$vm.chooseStore = ''
+				prevPage.$vm.checkToPay = true
+				prevPage.$vm.isAdress = true
+				prevPage.$vm.isStoreName = false
+				
 				uni.navigateBack();
 			},
 			// 弹出删除模态框

@@ -62,6 +62,9 @@
 					// 子分类右边点击事件
 	                categorySubClick(category){
 	                    console.log(category);
+						uni.navigateTo({
+							url: `/pages/productInfo/productInfo?id=`+category.id
+						})
 	                },
 					getData(findkey = '',bool){
 						Request(

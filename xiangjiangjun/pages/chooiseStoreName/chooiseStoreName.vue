@@ -97,6 +97,11 @@
 				// var nowPage = pages[pages.length -1]
 				var prevPage = pages[pages.length - 2];  
 				prevPage.$vm.chooseStore = id 
+				prevPage.$vm.chooseAddress = ''
+				prevPage.$vm.checkToPay = true
+				prevPage.$vm.isStoreName = true
+				prevPage.$vm.isAdress = false
+				
 				uni.navigateBack();
 			},
 		}
