@@ -167,7 +167,9 @@
 				.then((res)=>{
 					this.navList = res.data.categoryList//返回总数组
 					this.chooselist = this.navList[0].subCategoryList;//第一个菜单列表
-					// this.chooselist = this.chooselist.concat(res.data.categoryList[this.currentIndex].subCategoryList) ;//赋值给当前菜单列表
+					
+					this.chooselist = this.chooselist.concat(res.data.categoryList[this.currentIndex].subCategoryList) ;//赋值给当前菜单列表
+					
 				})
 				.catch((res)=>{
 					// 失败方法

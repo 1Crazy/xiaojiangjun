@@ -22,7 +22,7 @@
 		</uni-swiper-dot>
 		<!-- 导航 -->
 		<view class="nav">
-			<view v-for="(item ,index) in nav" :key="index">
+			<view v-for="(item ,index) in nav" :key="index" @tap="gotoDor(item.word)">
 				<image class="img" :src="item.img"></image>
 				<view class="word">{{item.word}}</view>
 			</view>
@@ -157,6 +157,11 @@
 		methods: {
 			change(e) {
 				this.current = e.detail.current;
+			},
+			gotoDor(word){
+				uni.reLaunch({
+					url: `/pages/dor/dor?services=${word}`
+				})
 			},
 			gotoProductInfo(info){
 				uni.navigateTo({
