@@ -2,7 +2,7 @@
 	<view>
 		<view class="headerWrap">
 			<view class="header">
-				<input class="ipt" type="text" value="" @input="find" placeholder="搜索您要找的门店名称" />
+				<input class="ipt" type="text" :value="serchName" @input="find" placeholder="搜索您要找的门店名称" />
 				<image :src="imgSrc+'public/fdj1.png'" class="img"></image>
 			</view>
 		</view>
@@ -60,11 +60,15 @@
 						url: '机油'
 					}
 				],
-				chooselist:[] //当前分类子菜单列表
+				chooselist:[], //当前分类子菜单列表
+				serchName: ''
 			}
 		},
-		onLoad() {
-			
+		onLoad(options) {
+			if (options.services){
+				this.serchName = options.services
+				this.getStores(options.services)
+			}
 		},
 		onShow(){
 			let title = '门店/商家'
@@ -115,6 +119,7 @@
 				})
 			},
 			find(e){
+				this.serchName = e.detail.value
 				this.getStores(e.detail.value)
 			},
 			getGoodsData(findkey=''){
