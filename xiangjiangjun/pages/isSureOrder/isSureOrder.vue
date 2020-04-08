@@ -7,12 +7,12 @@
 			</uni-list>
 			<view class="storeName" v-if="isStoreName">成都市高新区环球店</view>
 			<uni-list>
-			    <uni-list-item title="快递邮寄" :show-arrow="false" notHighLight :thumb="imgSrc+'public/adress1.png'"></uni-list-item>
+			    <uni-list-item title="快递邮寄" :show-arrow="false" notHighLight @tap="gotoAddressManagement" :thumb="imgSrc+'public/adress1.png'"></uni-list-item>
 			</uni-list>
 			<uni-list v-if="!orderInfo.address">
 				<uni-list-item title="添加收货地址"></uni-list-item>
 			</uni-list>
-			<view class="address-info" v-if="orderInfo.address" @tap="gotoAddressManagement">
+			<view class="address-info" v-if="isAdress" @tap="gotoAddressManagement">
 				<view class="top">
 					<view class="name">{{orderInfo.address.realname}}</view>
 					<view class="phone">{{orderInfo.address.mobile}}</view>
@@ -79,7 +79,7 @@
 	import productTitle from '@/components/productTitle/productTitle.vue'
 	import './index.scss'
 	import { Request } from '../../public/utils.js'
-	
+	import _app from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js';
 	export default {
 		components: {
 			uniList,
@@ -95,8 +95,10 @@
 				orderInfo:[],
 				goods:[],
 				chooseAddress:'',
+				chooseStore:'',
 				aa:'',
-				bb:''
+				bb:'',
+				checkToPay:false
 			};
 		},
 		onLoad(options) {
@@ -106,13 +108,8 @@
 			this.getData(this.id,this.num,this.optionid);
 		},
 		onShow(e) {
-			console.log(this.chooseAddress)
-			if(this.chooseAddress==''){
-				console.log('不是返回进入')
-			}else{
-				console.log('返回进入')
-				// this.updataOrder();
-			}
+			// console.log(this.chooseAddress)
+			// console.log(this.chooseStore)
 		},
 		methods:{
 			// delNum(id){
@@ -156,79 +153,89 @@
 			// 支付
 			pay() {
 				var that = this;
-				Request(
-					'order.create.submit',
-					{
-						id: 0,//0 
-						goods: JSON.stringify(this.goods),//商品
-						dispatchtype : 0 ,//0快递,1上门
-						fromcart: 1,//1来至购物车
-						// carrierid: 1 == t.data.dispatchtype && t.list.carrierInfo ? t.list.carrierInfo.id : 0,//0
-						addressid: this.chooseAddress ? this.chooseAddress : 0,//地址id
-						couponid: this.optionid ? this.optionid : 0,//0 优惠券
-						submit: true,
-						packageid: 0,//0
-						diydata: false,//false
-						fromquick: 0   //0  快速购买
-					}
-				).then((res)=>{
-					this.orderid = res.data.orderid
-				})
-				.then((res)=>{
+				
+				if(this.checkToPay){
+					
+					console.log('进入购买')
+					
 					Request(
-						'order.pay',
+						'order.create.submit',
 						{
-							id:this.orderid,
-							comefrom:'wxapp'
+							id: 0,//0 
+							goods: JSON.stringify(this.goods),//商品
+							dispatchtype : this.isStoreName ? 1:0 ,//0快递,1上门
+							fromcart: 1,//1来至购物车
+							carrierid: this.isStoreName ? this.chooseStore : 0,//0
+							addressid: this.chooseAddress ? this.chooseAddress : 0,//地址id
+							couponid: this.optionid ? this.optionid : 0,//0 优惠券
+							submit: true,
+							packageid: 0,//0
+							diydata: false,//false
+							fromquick: 0   //0  快速购买
 						}
 					).then((res)=>{
-						console.log(res)
-						return res.data.wechat.payinfo
+						this.orderid = res.data.orderid
 					})
 					.then((res)=>{
-						console.log(res)
-						//微信
-						wx.requestPayment({
-						  timeStamp: res.timeStamp,
-						  nonceStr: res.nonceStr,
-						  package: res.package,
-						  signType: 'MD5',
-						  paySign: res.paySign,
-						  success (res) {
-							console.log(res)
-							if(res.errMsg=="requestPayment:ok"){
-								uni.navigateTo({
-									url: '/pages/paySuccess/paySuccess?id='+that.id
-								})
+						Request(
+							'order.pay',
+							{
+								id:this.orderid,
+								comefrom:'wxapp'
 							}
-						  },
-						  fail (res) { }
+						).then((res)=>{
+							console.log(res)
+							return res.data.wechat.payinfo
 						})
-						//余额
-						// Request(
-						// 	'order.pay.complete',
-						// 	{
-						// 		id:this.orderid,
-						// 		type:'credit',
-						// 		comefrom:'wxapp'
-						// 	},
-						// 	"POST",
-						// 	'application/x-www-form-urlencoded'
-						// ).then((res)=>{
-						// 	// this.orderid = res.data.orderid
-						// 	console.log(res)
-						// })
-						// .catch((res)=>{
-						// 	// 失败方法
-						// })
+						.then((res)=>{
+							console.log(res)
+							// //微信
+							// wx.requestPayment({
+							//   timeStamp: res.timeStamp,
+							//   nonceStr: res.nonceStr,
+							//   package: res.package,
+							//   signType: 'MD5',
+							//   paySign: res.paySign,
+							//   success (res) {
+							// 	console.log(res)
+							// 	if(res.errMsg=="requestPayment:ok"){
+							// 		uni.navigateTo({
+							// 			url: '/pages/paySuccess/paySuccess?id='+that.id
+							// 		})
+							// 	}
+							//   },
+							//   fail (res) { }
+							// })
+							
+							
+							//余额
+							Request(
+								'order.pay.complete',
+								{
+									id:this.orderid,
+									type:'credit',
+									comefrom:'wxapp'
+								},
+								"POST",
+								'application/x-www-form-urlencoded'
+							).then((res)=>{
+								// this.orderid = res.data.orderid
+								console.log(res)
+							})
+							.catch((res)=>{
+								// 失败方法
+							})
+						})
+						.catch((res)=>{
+							// 失败方法
+						})
 					})
 					.catch((res)=>{
 						// 失败方法
 					})
-				})
-				.catch((res)=>{
-					// 失败方法
-				})
+				}else{
+					_app.showToast('请选择到店自提或者快递地址')
+				}	
 			},
 			getData(id='',num='',optionid=''){
 				Request(
@@ -244,8 +251,14 @@
 					// this.aa = JSON.stringify(res)
 					// this.bb = JSON.parse(this.aa)
 					this.orderInfo = res.data
+					this.chooseAddress = res.data.address.id ? res.data.address.id : ''
 					this.goods = res.data.goods[0]['goods']
-					// this.goods = Array.from(res.data.goods[0]['goods'])
+					
+					// console.log(this.chooseAddress,this.chooseAddress == '')
+					if(this.chooseAddress != ''){
+						this.checkToPay = true
+					}
+					
 				})
 				.catch((res)=>{
 					// 失败方法
@@ -260,7 +273,7 @@
 						addressid: this.chooseAddress ? this.chooseAddress : this.orderInfo.address.id,//选择收货地址id
 						packageid: this.orderInfo.packageid,
 						discountprice: this.orderInfo.discountprice,
-						dflag:""//0自提 1快递
+						dflag:this.chooseAddress ? 0 : 1//1自提 0快递
 					},
 					'POST',
 					'application/x-www-form-urlencoded'
