@@ -17,7 +17,7 @@
 				<image src="../../static/public/shop1.png" mode="" class="img img1"></image>
 				<text class="txt1">联系电话:</text>
 				<text class="txt2">{{storeInfo.tel}}</text>
-				<button class="btn">一键拨打</button>
+				<button class="btn" @tap="markPhoneCall()">一键拨打</button>
 			</view>
 			<view class="item">
 				<image src="../../static/public/shop2.png" mode="" class="img img1"></image>
@@ -111,6 +111,11 @@
 				.catch((res)=>{
 					
 				})
+			},
+			markPhoneCall(){
+				uni.makePhoneCall({
+				    phoneNumber: this.storeInfo.tel //仅为示例
+				});
 			}
 		}
 	}
