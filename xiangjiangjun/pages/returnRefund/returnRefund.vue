@@ -30,12 +30,18 @@
 		</view>
 		<view class="uploadCertificate">
 			<view class="title">上传凭证</view>
-			<view class="imgWrap">
-				<image class="img" v-for="(item,index) in chooseImg" :key="index" :src="item" mode=""></image>
-				<!-- 上面为图片循环 -->
-				<image class="img" @tap="chooseImges" src="../../static/public/addpic.png" mode=""></image>
+			<view class="imageWrap">
+				<view class="imgWrap" v-for="(item,index) in chooseImg" :key="index">
+					<image class="img" :src="item" mode=""></image>
+					<image src="../../static/public/redFalse.png" class="img redfalseimg" @tap="delCurrentUploadImg(index)"></image>
+				</view>
+				<!-- 图片以上是循环，图片以下是上传按钮的图片 -->
+				<image class="uploadimg" src="../../static/public/addpic.png" @tap="chooseImges" mode=""></image>
 			</view>
 		</view>
+		
+		
+
 		
 		<view style="height: 108rpx;width: 750rpx;background-color: white;"></view>
 		<button class="submitBtn" @tap="subRefund()">提交</button>
@@ -127,6 +133,13 @@
 				this.$refs.addCartPopup.close()
 				
 			},
+			// 删除图片
+			delCurrentUploadImg(idx){
+				console.log(idx,'idx')
+				this.chooseImg = this.chooseImg.filter((curr,index)=>{
+					return index != idx
+				})
+			},
 			//货物切换状态
 			goodsStatusChange(e){
 				// currentStatusGoodsWord: null,
@@ -190,16 +203,69 @@
 				});
 			},
 			subRefund(){
-				console.log(this.chooseImg)
-				const url = dev+'util.uploader.upload&file=file'
-				uni.uploadFile({
-				    url: url, //仅为示例，非真实的接口地址
-				    filePath: this.chooseImg[0],
-				    name: 'file',
-				    success: (uploadFileRes) => {
-				        console.log(uploadFileRes.data);
-				    }
-				});
+				// console.log(this.chooseImg)
+				// const url = dev+'util.uploader.upload&file=file'
+				// uni.uploadFile({
+				//     url: url, //仅为示例，非真实的接口地址
+				//     filePath: this.chooseImg[0],
+				//     name: 'file',
+				//     success: (uploadFileRes) => {
+				//         console.log(uploadFileRes.data);
+				//     }
+				// });
+				
+				const submitImg = []
+				const that = this
+				// 循环异步，后期更换
+				this.chooseImg.map((curr,index)=>{
+					uni.uploadFile({
+						url: dev +'util.uploader.upload&file=file', //仅为示例，非真实的接口地址
+						filePath: curr,
+						name: 'file',
+						formData: {
+							'user': 'test'
+						},
+						success: (uploadFileRes) => {
+							submitImg.push(JSON.parse(uploadFileRes.data).files[0].url)
+							if(index == this.chooseImg.length-1){
+								const data = {}
+								data.orderid= that.id
+								data.images= submitImg
+								data.price= that.orderInfo.price
+								data.reason= that.currentReturnResonWord
+								if (that.notReturnGoods) {
+									data.rtype=  that.currentStatusGoodsWord == '未收到货' ? 0 : 1
+								}
+													
+								Request(
+									'order.refund.submit',
+									data,
+									'POST'
+								)
+								.then((res)=>{
+									uni.showToast({
+										title: '申请退款成功',
+										icon: 'none'
+									})
+									uni.navigateBack({})
+								})
+								.catch((res)=>{
+									uni.showToast({
+										title: '申请退款失败',
+										icon: 'none'
+									})
+								})
+							}
+						},
+						fail:(err) => {
+							console.log(err)
+						}
+					});
+				})
+				
+				
+				
+				
 				// uni.uploadFile({
 				//     url: url, //仅为示例，非真实的接口地址
 				//     files: this.chooseImg,
@@ -303,17 +369,34 @@ page{
 		letter-spacing: 0rpx;
 		color: #333333;
 	}
-	.imgWrap{
+	.imageWrap{
 		display: flex;
 		flex-wrap: wrap;
+	}
+	.imgWrap{
+		position: relative;
+		width: 158rpx;
+		height: 158rpx;
+		margin-top: 20rpx;
+		margin-right: 15rpx;
+		border: 1px solid #f3f3f3;
 		.img{
-			width: 162rpx;
-			height: 162rpx;
-			border-radius: 4rpx;
-			border: solid 1rpx #999999;
-			margin-right: 18rpx;
-			margin-top: 41rpx;
+			width: 158rpx;
+			height: 158rpx;
 		}
+		.redfalseimg{
+			width: 30rpx;
+			height: 30rpx;
+			position: absolute;
+			right: -15rpx;
+			top: -15rpx;
+		}
+	}
+	.uploadimg{
+		width: 162rpx;
+		height: 162rpx;
+		margin-top: 20rpx;
+		margin-right: 15rpx;
 	}
 
 }

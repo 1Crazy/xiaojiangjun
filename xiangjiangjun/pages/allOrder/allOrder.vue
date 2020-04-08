@@ -140,7 +140,7 @@
 					url: '/pages/review/review?id='+id
 				})
 			},
-			gotoReturnRefund(){
+			gotoReturnRefund(id){
 				uni.navigateTo({
 					url: '/pages/chooseRefundMethod/chooseRefundMethod?id='+id
 				})

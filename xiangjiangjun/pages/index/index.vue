@@ -2,11 +2,11 @@
 	<view>
 		<view class="header">
 			<view class="left">
-				<image class="img" :src="imgSrc+'public/adress1.png'"></image>
+				<image lazy-load class="img" :src="imgSrc+'public/adress1.png'"></image>
 				<view class="address">成都 ></view>
 			</view>
 			<view class="right">
-				<image class="fdj" :src="imgSrc+'public/fdj1.png'"></image>
+				<image lazy-load class="fdj" :src="imgSrc+'public/fdj1.png'"></image>
 				<input class="ipt" type="text" placeholder="输入关键字搜索内容">
 			</view>
 		</view>
@@ -15,7 +15,7 @@
 		    <swiper autoplay class="swiper-box" @change="change">
 		        <swiper-item v-for="(item ,index) in info" :key="index">
 		            <view class="swiper-item">
-		                <image class="img" :src='item'></image>
+		                <image lazy-load class="img" :src='item'></image>
 		            </view>
 		        </swiper-item>
 		    </swiper>
@@ -23,37 +23,37 @@
 		<!-- 导航 -->
 		<view class="nav">
 			<view v-for="(item ,index) in nav" :key="index" @tap="gotoDor(item.word)">
-				<image class="img" :src="item.img"></image>
+				<image lazy-load class="img" :src="item.img"></image>
 				<view class="word">{{item.word}}</view>
 			</view>
 		</view>
 		<!-- 体验区 -->
 		<view class="tyq">
 			<view class="box" v-for="(item ,index) in tyq" :key="index">
-				<image class="img" :src="item.img">
+				<image lazy-load class="img" :src="item.img">
 				<view class="word">{{item.word}}</view>
 			</view>
 		</view>
 		<!-- 图片 -->
 		<view class="picnav">
-			<image class="img img1" :src="imgSrc+'index/picnav1.png'"></image>
-			<image class="img img2" :src="imgSrc+'index/picnav2.png'"></image>
-			<image class="img img3" :src="imgSrc+'index/picnav3.png'"></image>
-			<image class="img img4" :src="imgSrc+'index/picnav4.png'"></image>
+			<image lazy-load class="img img1" :src="ad[0]"></image>
+			<image lazy-load class="img img2" :src="ad[1]"></image>
+			<image lazy-load class="img img3" :src="ad[2]"></image>
+			<image lazy-load class="img img4" :src="ad[3]"></image>
 		</view>
 		<!-- 商品列表 -->
 		<view class='nav-word'>
 			<view class="word">商品列表    </view>
-			<image class="img" :src="imgSrc+'public/arrow.png'"></image>
+			<image lazy-load class="img" :src="imgSrc+'public/arrow.png'"></image>
 		</view>
 		<!-- 列表详情 -->
 		<view class="bggreay">
 			<view class="listwrap"  v-for="(item ,index) in listwrap" :key="index" @tap="gotoProductInfo(item.id)">
-				 <image class="img" :src='item.thumb'></image>
+				 <image lazy-load class="img" :src='item.thumb'></image>
 				 <view class="rightbox">
 					 <view class="title">{{item.title}}</view>
 					 <view class="shorttitle">{{item.shorttitle}}</view>
-					 <image :src="imgSrc+'index/add.png'" class="addimg"></image>
+					 <image lazy-load :src="imgSrc+'index/add.png'" class="addimg"></image>
 					 <view class="price">
 						 <view class="currentPrice">￥ {{item.marketprice}}</view>
 						 <view class="originalPrice">￥ {{item.productprice}}</view>
@@ -86,6 +86,7 @@
 				],
 				current: 0,
 				mode: 'round',
+				ad:[],
 				//nav
 				nav:[
 					{
@@ -148,6 +149,7 @@
 				console.log(res)
 				that.info = res.data.data.info
 				that.listwrap = res.data.data.goods
+				that.ad = res.data.data.ad
 				// 成功方法
 			})
 			.catch((res)=>{

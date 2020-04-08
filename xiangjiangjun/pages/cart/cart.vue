@@ -45,7 +45,6 @@
 			
 		},
 		onShow() {
-			
 			this.getData()
 		},
 		methods: {
@@ -109,6 +108,7 @@
 					console.log(res)
 					// 成功方法
 					this.lists = res.data
+					
 					this.allSelectChecked = res.data.ischeckall
 				})
 				.catch((res)=>{
@@ -196,9 +196,16 @@
 				}
 			},
 			settlement(){
-				uni.navigateTo({
-					url: '/pages/isSureOrder/isSureOrder'
-				})
+				if (this.lists.total > 0) {
+					uni.navigateTo({
+						url: '/pages/isSureOrder/isSureOrder'
+					})
+				}else{
+					uni.showToast({
+						title: '未选择订单',
+						icon: 'none'
+					})
+				}
 			}
 		}
 	}
