@@ -34,6 +34,9 @@
 </template>
 
 <script>
+	import {
+		mapState
+	} from 'vuex';
 	import { Request } from '../../public/utils.js'
 	import ssScrollNavbar from '@/components/ss-scroll-navbar/ss-scroll-navbar.vue'
 	import productTitle from '@/components/productTitle/productTitle.vue'
@@ -70,7 +73,15 @@
 				this.getStores(options.services)
 			}
 		},
+		computed:{
+			...mapState(["userInfo"])
+		},
 		onShow(){
+			console.log(this.userInfo.groupid,'a')
+			if(this.userInfo.groupid != '' && this.userInfo.groupid){
+				this.isUser = false
+			}
+			
 			let title = '门店/商家'
 			this.isUser ? title = '门店/商家' : title = '汽车配件'
 			uni.setNavigationBarTitle({
