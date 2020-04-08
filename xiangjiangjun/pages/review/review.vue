@@ -10,23 +10,23 @@
 			</view>
 			<view class="txtareaWrap">
 				<image src="../../static/public/pen.png" class="img"></image>
-				<textarea value="" placeholder="点评一下吧,您的意见很重要哦~" class="txtarea" />
+				<textarea @input="changeTextAreaContent" :value="reviewContent" placeholder="点评一下吧,您的意见很重要哦~" class="txtarea" />
 			</view>
 			<view class="picWrap">
-				<image class="img" src="../../static/public/index-S.png" mode=""></image>
-				<image class="img" src="../../static/public/index-S.png" mode=""></image>
-				<image class="img" src="../../static/public/index-S.png" mode=""></image>
-				<image class="img" src="../../static/public/index-S.png" mode=""></image>
+				<view class="imgWrap" v-for="(item,index) in uploadImg" :key="index">
+					<image class="img" :src="item" mode=""></image>
+					<image src="../../static/public/redFalse.png" class="img redfalseimg" @tap="delCurrentUploadImg(index)"></image>
+				</view>
 				<!-- 图片以上是循环，图片以下是上传按钮的图片 -->
-				<image class="img" src="../../static/public/addpic.png" @tap="uploadImage" mode=""></image>
+				<image class="uploadimg" src="../../static/public/addpic.png" @tap="uploadImage" mode=""></image>
 			</view>
 		</view>
-		<button class="wordBtn">发表评论</button>
+		<button class="wordBtn" @tap="publishReview">发表评论</button>
 	</view>
 </template>
 
 <script>
-	import { Request } from '../../public/utils.js'
+	import { Request,dev } from '../../public/utils.js'
 	import productTitle from '@/components/productTitle/productTitle.vue'
 	export default {
 		components:{
@@ -38,10 +38,12 @@
 				goods:[],
 				starArray: ['star_n.png','star_n.png','star_n.png','star_n.png','star_n.png'],
 				uploadImg: [],
+				id: '',
+				reviewContent: ''
 			};
 		},
 		onLoad(e) {
-			console.log(e)
+			this.id = e.id
 			this.getData(e.id)
 		},
 		onShow() {
@@ -60,13 +62,68 @@
 					this.goods = res.data.goods
 				})
 				.catch((res)=>{
-					
+
 				})
 			},
+			// 文本框
+			changeTextAreaContent(e){
+				this.reviewContent = e.detail.value
+			},
+			// 发表评论
+			publishReview(){
+				const num = this.starArray.findIndex(curr=>curr == 'star_n.png')
+				const submitImg = []
+				this.uploadImg.map((curr,index)=>{
+					uni.uploadFile({
+						url: dev +'util.uploader.upload&file=file', //仅为示例，非真实的接口地址
+						filePath: curr,
+						name: 'file',
+						formData: {
+							'user': 'test'
+						},
+						success: (uploadFileRes) => {
+							submitImg.push(JSON.parse(uploadFileRes.data).files[0].url)
+							if(index == this.uploadImg.length-1){
+								const comments = this.goods.map(curr=>{
+									curr.level = num
+									curr.content = this.reviewContent
+									curr.images = submitImg
+									return curr
+								})
+								Request(
+									'order.comment.submit',
+									{
+										orderid: this.id,
+										comments
+									}
+								)
+								.then((res)=>{
+									console.log(res,'res')
+									this.goods = res.data.goods
+								})
+								.catch((res)=>{
+									
+								})
+							}
+						},
+						fail:(err) => {
+							console.log(err)
+						}
+					});
+				})
+			},
+			// 星级
 			changeStar(idx){
 				this.starArray = this.starArray.map((curr,index)=>{
 					idx>=index ? curr = 'star.png' : curr = 'star_n.png';
 					return curr
+				})
+			},
+			// 删除图片
+			delCurrentUploadImg(idx){
+				console.log(idx,'idx')
+				this.uploadImg = this.uploadImg.filter((curr,index)=>{
+					return index != idx
 				})
 			},
 			uploadImage(){
@@ -84,20 +141,27 @@
 				    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 				    sourceType: ['album'], //从相册选择
 				    success: function (res) {
-						// console.log(res,'resresres')
-				  //       console.log(JSON.stringify(res.tempFilePaths));
-						that.uploadImg.push(res.tempFilePaths)
-						uni.uploadFile({
-						    url: 'util.uploader.upload&file=file', //仅为示例，非真实的接口地址
-						    filePath: JSON.stringify(that.uploadImg),
-						    name: 'file',
-						    formData: {
-						        'user': 'test'
-						    },
-						    success: (uploadFileRes) => {
-						        // console.log(uploadFileRes.data);
-						    }
-						});
+						console.log(res,'resresres')
+						that.uploadImg = that.uploadImg.concat(res.tempFilePaths)
+						// res.tempFilePaths.map(curr=>{
+						// 	uni.uploadFile({
+						// 	    url: dev +'util.uploader.upload&file=file', //仅为示例，非真实的接口地址
+						// 	    filePath: curr,
+						// 	    name: 'file',
+						// 	    formData: {
+						// 	        'user': 'test'
+						// 	    },
+						// 	    success: (uploadFileRes) => {
+						// 	        console.log(uploadFileRes.data,'1314');
+						// 	    },
+						// 		fail:(err) => {
+						// 			console.log(err)
+						// 		}
+						// 	});
+						// })
+						// that.uploadImg.push(res.tempFilePaths)
+						// that.uploadImage = JSON.parse(JSON.stringify(that.uploadImg))[0].join(',')
+						// console.log(that.uploadImage)
 				    }
 				});
 			}
@@ -163,7 +227,26 @@ page{
 		display: flex;
 		margin-right: 15rpx;
 		flex-wrap: wrap;
-		.img{
+		.imgWrap{
+			position: relative;
+			width: 158rpx;
+			height: 158rpx;
+			margin-top: 20rpx;
+			margin-right: 15rpx;
+			border: 1px solid #f3f3f3;
+			.img{
+				width: 158rpx;
+				height: 158rpx;
+			}
+			.redfalseimg{
+				width: 30rpx;
+				height: 30rpx;
+				position: absolute;
+				right: -15rpx;
+				top: -15rpx;
+			}
+		}
+		.uploadimg{
 			width: 162rpx;
 			height: 162rpx;
 			margin-top: 20rpx;
