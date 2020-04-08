@@ -36,9 +36,10 @@
 			<view class="c-bottom">
 				<view class="c-b-word">购买数量</view>
 				<view class="r-wrap">
-					<button class="symbol" @tap="delNum(index)">-</button>
-					<input class="ipt" type="number" v-model="item.total" />
-					<button class="symbol" @tap="addNum(index)">+</button>
+					<!-- <button class="symbol" @tap="delNum(index)">-</button> -->
+					<!-- <input class="ipt" type="number" v-model="item.total" /> -->
+					<!-- <button class="symbol" @tap="addNum(index)">+</button> -->
+					<view>X {{item.total}}</view>
 				</view>
 			</view>
 			<view class="totalPrice">
@@ -114,17 +115,32 @@
 			}
 		},
 		methods:{
-			delNum(id){
-				// console.log(id,this.goods[id][total])
-				this.goods[id]['total'] = Number(this.goods[id]['total']) - 1
-				this.updataOrder();
-			},
-			addNum(id){
-				// 
-				// console.log(id,this.goods[id]['total'])
-				this.goods[id]['total'] = Number(this.goods[id]['total']) + 1
-				this.updataOrder();
-			},
+			// delNum(id){
+			// 	// console.log(id,this.goods[id][total])
+			// 	this.goods[id]['total'] = Number(this.goods[id]['total']) - 1
+			// 	this.updataNum(id);
+			// },
+			// addNum(id){
+			// 	// 
+			// 	// console.log(id,this.goods[id]['total'])
+			// 	this.goods[id]['total'] = Number(this.goods[id]['total']) + 1
+			// 	this.updataNum(id);
+			// },
+			// updataNum(id){
+			// 	Request(
+			// 		'member.cart.update',
+			// 		{
+			// 			id:this.goods[id]['id'],
+			// 			total:this.goods[id]['total']
+			// 		}
+			// 	).then((res)=>{
+			// 		console.log(res)
+			// 		this.getData(this.id,this.num,this.optionid);
+			// 	})
+			// 	.catch((res)=>{
+			// 		// 失败方法
+			// 	})
+			// },
 			// 门店页跳转
 			gotoDorPages(){
 				uni.navigateTo({
@@ -139,21 +155,79 @@
 			},
 			// 支付
 			pay() {
-				// Request(
-				// 	'order.create',
-				// 	{
-				// 		id:id,
-				// 		total:num,
-				// 		optionid:optionid
-				// 	}
-				// ).then((res)=>{
-					
-				// })
-				// .catch((res)=>{
-				// 	// 失败方法
-				// })
-				uni.navigateTo({
-					url: '/pages/paySuccess/paySuccess'
+				var that = this;
+				Request(
+					'order.create.submit',
+					{
+						id: 0,//0 
+						goods: JSON.stringify(this.goods),//商品
+						dispatchtype : 0 ,//0快递,1上门
+						fromcart: 1,//1来至购物车
+						// carrierid: 1 == t.data.dispatchtype && t.list.carrierInfo ? t.list.carrierInfo.id : 0,//0
+						addressid: this.chooseAddress ? this.chooseAddress : 0,//地址id
+						couponid: this.optionid ? this.optionid : 0,//0 优惠券
+						submit: true,
+						packageid: 0,//0
+						diydata: false,//false
+						fromquick: 0   //0  快速购买
+					}
+				).then((res)=>{
+					this.orderid = res.data.orderid
+				})
+				.then((res)=>{
+					Request(
+						'order.pay',
+						{
+							id:this.orderid,
+							comefrom:'wxapp'
+						}
+					).then((res)=>{
+						console.log(res)
+						return res.data.wechat.payinfo
+					})
+					.then((res)=>{
+						console.log(res)
+						//微信
+						wx.requestPayment({
+						  timeStamp: res.timeStamp,
+						  nonceStr: res.nonceStr,
+						  package: res.package,
+						  signType: 'MD5',
+						  paySign: res.paySign,
+						  success (res) {
+							console.log(res)
+							if(res.errMsg=="requestPayment:ok"){
+								uni.navigateTo({
+									url: '/pages/paySuccess/paySuccess?id='+that.id
+								})
+							}
+						  },
+						  fail (res) { }
+						})
+						//余额
+						// Request(
+						// 	'order.pay.complete',
+						// 	{
+						// 		id:this.orderid,
+						// 		type:'credit',
+						// 		comefrom:'wxapp'
+						// 	},
+						// 	"POST",
+						// 	'application/x-www-form-urlencoded'
+						// ).then((res)=>{
+						// 	// this.orderid = res.data.orderid
+						// 	console.log(res)
+						// })
+						// .catch((res)=>{
+						// 	// 失败方法
+						// })
+					})
+					.catch((res)=>{
+						// 失败方法
+					})
+				})
+				.catch((res)=>{
+					// 失败方法
 				})
 			},
 			getData(id='',num='',optionid=''){

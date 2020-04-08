@@ -2,44 +2,82 @@
 	<view>
 		<view class="itemWrap">
 			<view class="name">姓名:</view>
-			<input class="ipt" type="text" placeholder="请输入姓名">
+			<input class="ipt" type="text" v-model="cooperationInfo.name" placeholder="请输入姓名">
 		</view>
 		<view class="itemWrap">
 			<view class="name">电话号码:</view>
-			<input class="ipt" type="text" placeholder="请输入电话号码">
+			<input class="ipt" type="text" v-model="cooperationInfo.mobil" placeholder="请输入电话号码">
 		</view>
 		<view class="itemWrap">
 			<view class="name">类型:</view>
-			<input class="ipt" type="text" placeholder="请输入类型">
-		</view>
-		<view class="itemWrap">
-			<view class="name">主营产品/服务:</view>
 			<!-- <input class="ipt" type="text" placeholder="请输入主营产品/服务"> -->
 			<picker class="ipt" @change="bindPickerChange" :value="index" :range="array">
 				<view>{{index == null ? '请输入主营产品/服务' : array[index]}}</view>
 			</picker>
 		</view>
+		<view class="itemWrap">
+			<view class="name">主营产品/服务:</view>
+			<input class="ipt" type="text" v-model="cooperationInfo.service" placeholder="请输入类型">
+		</view>
 		
 		<view class="itemWrap">
 			<view class="name">地址:</view>
-			<input class="ipt" type="text" placeholder="地址">
+			<input class="ipt" type="text" v-model="cooperationInfo.address" placeholder="地址">
 		</view>
-		<button class="btn">提交</button>
+		<button class="btn" @tap="sumbit()">提交</button>
 	</view>
 </template>
 
 <script>
+	import {Request,VerifyPhoneNumber} from "../../public/utils.js"
+	import _app from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js';
 	export default {
 		data() {
 			return {
-				array: ['汽修','汽配'],
-				index: 0
+				array: ['汽修厂家','汽配厂家'],
+				index: 0,
+				cooperationInfo:{
+					name:"",
+					mobil:"",
+					type:"",
+					service:"",
+					address:""
+				}
 			};
 		},
 		methods:{
-			 bindPickerChange: function(e) {
+			bindPickerChange: function(e) {
 				this.index = e.target.value
+				this.cooperationInfo.type = e.target.value
 			},
+			sumbit(){
+				console.log(this.cooperationInfo)
+				if(!VerifyPhoneNumber(this.cooperationInfo.mobil)){
+					_app.showToast('电话格式不正确')
+				}else{
+					Request(
+						'member.signCooperation',
+						{
+							name:this.cooperationInfo.name,
+							tel:this.cooperationInfo.mobil,
+							type:this.cooperationInfo.type,
+							service:this.cooperationInfo.service,
+							address:this.cooperationInfo.address
+						}
+					)
+					.then((res)=>{
+						console.log(res)
+						if(res.data.error==0){
+							_app.showToast('提交成功');
+						}else{
+							_app.showToast('网络出现问题,请稍后再试');
+						}
+					})
+					.catch((res)=>{
+						
+					})
+				}
+			}
 		}
 	}
 </script>
