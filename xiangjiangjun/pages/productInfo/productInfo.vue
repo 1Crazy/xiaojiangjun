@@ -316,12 +316,14 @@
 				const info =  this.id
 				if(this.modelType==1){
 					this.addToCart(info,this.productNum)
+					this.$refs.addCartPopup.close()
 				}else{
 					if(this.pickerChoose=='' && this.picker.length!=0){
 						_app.showToast('请选择规格');
 						return false
 						// this.$refs.addCartPopup.open()
 					}else{
+						this.$refs.addCartPopup.close()
 						uni.navigateTo({
 							url: '/pages/isSureOrder/isSureOrder?id='+info+'&num='+this.productNum+'&optionid='+this.pickerChoose
 						})

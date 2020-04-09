@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<view class="header">
-			<view class="left">
+			<view class="left" @tap="_getLocation">
 				<image lazy-load class="img" :src="imgSrc+'public/adress1.png'"></image>
-				<view class="address">成都 ></view>
+				<view class="address">{{cityName?cityName: "获取位置"}} ></view>
 			</view>
 			<view class="right">
 				<image lazy-load class="fdj" :src="imgSrc+'public/fdj1.png'"></image>
@@ -65,11 +65,14 @@
 </template>
 
 <script>
+	import QQMapWX from '../../public/qqmap-wx-jssdk.js'
 	import {
 		mapState
 	} from 'vuex';
 	import uniSwiperDot from "@/components/uni/uni-swiper-dot/uni-swiper-dot.vue"
 	import { Request } from "../../public/utils.js"
+	import { key } from '../../public/config.js'
+	let qqmapsdk = new QQMapWX({key})
 	export default {
 		components: {
 			uniSwiperDot,
@@ -89,6 +92,7 @@
 				],
 				current: 0,
 				mode: 'round',
+				cityName: '',
 				ad:[],
 				//nav
 				nav:[
@@ -138,14 +142,7 @@
 			...mapState(["userInfo"])
 		},
 		onLoad() {
-			const that = this;
-			wx.getLocation({
-				type: 'gcj02 ',
-				success (res) {
-					that.longitude = res.longitude
-					that.latitude = res.latitude
-				}
-			})
+			this._location()
 		},
 		onShow() {
 			const that = this;
@@ -182,6 +179,75 @@
 				uni.navigateTo({
 					url: `/pages/productInfo/productInfo?id=${info}`
 				})
+			},
+			_getLocation(){
+				const that = this;
+				if (that.cityName != ''){
+					return false
+				}
+				 wx.showModal({
+					title: '"小江军养护平台"需要获取你的地理位置',
+					content: '小程序将获取您的用户信息',
+					success: function (res) {
+						console.log(res,'resresres')
+					if (res.cancel) {
+						console.info("1授权失败返回数据");
+		
+					} else if (res.confirm) {
+							that.sq(that)
+						}
+					}
+				})
+			},
+			_location(){
+				console.log(232323)
+				const that = this
+				uni.getLocation({
+					type: 'gcj02 ',
+					success (res) {
+						that.longitude = res.longitude
+						that.latitude = res.latitude
+						qqmapsdk.reverseGeocoder({
+							location: {
+								latitude: that.latitude,
+								longitude: that.longitude
+							},
+							success: function(res) {//成功后的回调
+								that.cityName = res.result.address_component.city
+							},
+							fail: function(error) {
+								console.error(error);
+							},
+							complete: function(res) {
+								console.log(res,'dsfasdfasdfas');
+							}
+						})
+					}
+				})
+			},
+			sq(_this){
+				const that = _this
+				uni.openSetting({
+					success: function (data) {
+						console.log(data);
+						if (data.authSetting["scope.userLocation"] == true) {
+							uni.showToast({
+								title: '授权成功',
+								icon: 'none',
+								duration: 3000
+							})
+							console.log(232323)
+							that._location()
+							console.log(232323)
+						}else{
+							uni.showToast({
+								title: '授权失败',
+								icon: 'none',
+								duration: 3000
+							})
+						}
+					}
+				})
 			}
 		}
 	}
@@ -209,6 +275,9 @@
 				font-weight: normal;
 				font-stretch: normal;
 				color: #333333;
+				overflow:hidden; //超出的文本隐藏
+				text-overflow:ellipsis; //溢出用省略号显示
+				white-space:nowrap; //溢出不换行
 			}
 		}
 		.right{

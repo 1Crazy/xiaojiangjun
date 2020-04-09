@@ -9,10 +9,10 @@
 			<uni-list>
 			    <uni-list-item title="快递邮寄" :show-arrow="false" notHighLight @tap="gotoAddressManagement" :thumb="imgSrc+'public/adress1.png'"></uni-list-item>
 			</uni-list>
-			<uni-list v-if="!orderInfo.address">
-				<uni-list-item title="添加收货地址"></uni-list-item>
+			<uni-list v-if="!orderInfo.address.realname">
+				<uni-list-item title="添加收货地址" :show-arrow="false" notHighLight></uni-list-item>
 			</uni-list>
-			<view class="address-info" v-if="isAdress" @tap="gotoAddressManagement">
+			<view class="address-info" v-if="orderInfo.address.realname" @tap="gotoAddressManagement">
 				<view class="top">
 					<view class="name">{{orderInfo.address.realname}}</view>
 					<view class="phone">{{orderInfo.address.mobile}}</view>
