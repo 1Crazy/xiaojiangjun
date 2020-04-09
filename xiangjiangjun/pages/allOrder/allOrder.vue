@@ -48,7 +48,7 @@
 		</view>
 		
 		<view class="noDataBg" v-if="orderList.length==0">
-			<image class="noDataImg" :src="imgSrc+'public/img_kongbaiye.png'" mode="" />
+			<image lazy-load class="noDataImg" :src="imgSrc+'public/img_kongbaiye.png'" mode="" />
 			<view class="word">暂还没有订单哦~</view>
 		</view>
 	</view>

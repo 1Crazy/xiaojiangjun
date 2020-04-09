@@ -58,7 +58,7 @@
 				</view>
 				<view>
 					<text class="txt3">-￥10</text>
-					<image :src="imgSrc+'public/arrow.png'"></image>
+					<image lazy-load :src="imgSrc+'public/arrow.png'"></image>
 				</view>
 			</view>
 		</view>

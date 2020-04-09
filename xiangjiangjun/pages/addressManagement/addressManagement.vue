@@ -8,7 +8,7 @@
 						<view class="name">{{item.realname}} {{item.mobile}}</view>
 						<view class="address">{{item.province}} {{item.city}} {{item.area}} {{item.address}}</view>
 					</view>
-					<image class="img" :src="imgSrc+'public/dizhi_xiugai.png'" @tap="gotoAddOrUpdateAddress(item.id)"></image>
+					<image lazy-load class="img" :src="imgSrc+'public/dizhi_xiugai.png'" @tap="gotoAddOrUpdateAddress(item.id)"></image>
 				</view>
 					<view class="bottom">
 							<label class="radio" @tap="setDefault(item.id)">
@@ -21,7 +21,7 @@
 						<view class="del"  @tap="togglePopup(item)">
 							<view>删除</view>
 							 <!-- @tap="delAddress(item.id)" -->
-							<image class="img" :src="imgSrc+'public/delete.png'"></image>
+							<image lazy-load class="img" :src="imgSrc+'public/delete.png'"></image>
 						</view>
 					</view>
 			</view>

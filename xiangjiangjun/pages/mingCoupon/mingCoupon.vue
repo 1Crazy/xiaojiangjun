@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="wrap" v-for="(item , index) in couponlist" :key="index">
-			<image class="img" :src="imgSrc+'public/quan_img.png'"></image>
+			<image lazy-load class="img" :src="imgSrc+'public/quan_img.png'"></image>
 			<view class="leftTop">
 				<text class="txt1">￥</text>
 				<text class="txt2">{{item.deduct}}</text>

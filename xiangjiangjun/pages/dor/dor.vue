@@ -2,8 +2,8 @@
 	<view>
 		<view class="headerWrap">
 			<view class="header">
-				<input class="ipt" type="text" :value="serchName" value="" @input="find" placeholder="搜索您要找的门店名称" />
-				<image :src="imgSrc+'public/fdj1.png'" class="img"></image>
+				<input class="ipt" type="text" :value="serchName" @input="find" placeholder="搜索您要找的门店名称" />
+				<image lazy-load :src="imgSrc+'public/fdj1.png'" class="img"></image>
 			</view>
 		</view>
 		<view class="nav" v-if="isUser">
@@ -13,7 +13,7 @@
 		<ss-scroll-navbar  v-if="!isUser" :navArr="navList" :tabCurrentIndex="currentIndex" @navbarTap="navbarTapHandler"></ss-scroll-navbar>
 		<view class="content" v-if="isUser">
 			<view class="itemView" v-for="(item ,index) in liststores" :key="index" @tap="listStoresClick(item.id)">
-				<image :src="item.logo" class="img"></image>
+				<image lazy-load :src="item.logo" class="img"></image>
 				<view class="rightBox">
 					<view class="title">{{item.storename}}</view>
 					<view class="center">
@@ -21,7 +21,7 @@
 					</view>
 					<view class="distance">{{item.distance}}km</view>
 				</view>
-				<image class="threedot" :src="imgSrc+'public/threeDot.png'"></image>
+				<image lazy-load class="threedot" :src="imgSrc+'public/threeDot.png'"></image>
 			</view>
 		</view>
 		<view class="content2" v-if="!isUser">
@@ -53,7 +53,7 @@
 				latitude:'',
 				// 区分汽修厂家与终端用户 true终端用户，false为汽修厂家
 				isUser: true,
-				cutDorStoreSortNum: 1,
+				cutDorStoreSortNum: 1,  // 1是门店，2是距离
 				// 索引
 				currentIndex: 0,
 				// 导航
@@ -70,11 +70,11 @@
 			}
 		},
 		onLoad(options) {
-					if (options.services){
-						this.serchName = options.services
-						this.getStores(options.services)
-					}
-				},
+			if (options.services){
+				this.serchName = options.services
+				this.getStores(options.services)
+			}
+		},
 		computed:{
 			...mapState(["userInfo"])
 		},
@@ -99,9 +99,9 @@
 				this.choTit = true
 				this.page = 1
 				if(num==1){
-					this.getStores('','1')
+					this.getStores(this.serchName,'1')
 				}else{
-					this.getStores('','2')
+					this.getStores(this.serchName,'2')
 				}
 				console.log('a')
 			},
@@ -122,6 +122,7 @@
 					}
 				})
 			},
+			// orby = 1是综合排序，2是距离排序
 			getStores(findkey='',orby='1'){
 				const that = this;
 				Request(
@@ -150,15 +151,12 @@
 			},
 			find(e){
 				this.choTit = true
-				this.isUser ? this.getStores(e.detail.value) : this.getGoodsData(e.detail.value)
+				this.serchName = e.detail.value
+				this.isUser ? this.getStores(e.detail.value,this.cutDorStoreSortNum) : this.getGoodsData(e.detail.value,this.cutDorStoreSortNum)
 			},
 			onReachBottom() {
 				this.page = this.page+1
-				if(this.cutDorStoreSortNum==1){
-					this.getStores('','1')
-				}else{
-					this.getStores('','2')
-				}	
+				this.getStores(this.serchName,this.cutDorStoreSortNum)
 			},
 			getGoodsData(findkey=''){
 				Request(

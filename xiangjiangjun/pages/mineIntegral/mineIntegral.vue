@@ -8,7 +8,7 @@
 		</view>
 		<view class="contentWrap">
 			<view class="title">
-				<image class="img" :src="imgSrc+'public/jifen_jilu.png'" mode=""></image>
+				<image lazy-load class="img" :src="imgSrc+'public/jifen_jilu.png'" mode=""></image>
 				<view>积分记录</view>
 			</view>
 			<view class="itenamemWrap" v-for="(item , index) in list" :key="index">

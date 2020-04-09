@@ -14,7 +14,7 @@
 					<view class="title">货物状态</view>
 				</view>
 				<view class="right">{{currentStatusGoodsWord?currentStatusGoodsWord:'请选择'}}</view>
-				<image class="img" src="../../static/public/arrow.png" mode=""></image>
+				<image lazy-load class="img" src="../../static/public/arrow.png" mode=""></image>
 			</view>
 			<view class="chooiseItem"  @tap="refundReson">
 				<view class="leftWrap">
@@ -25,15 +25,15 @@
 					</view>
 				</view>
 				<view class="right">{{currentReturnResonWord?currentReturnResonWord:'请选择'}}</view>
-				<image class="img" src="../../static/public/arrow.png" mode=""></image>
+				<image lazy-load class="img" src="../../static/public/arrow.png" mode=""></image>
 			</view>
 		</view>
 		<view class="uploadCertificate">
 			<view class="title">上传凭证</view>
 			<view class="imageWrap">
 				<view class="imgWrap" v-for="(item,index) in chooseImg" :key="index">
-					<image class="img" :src="item" mode=""></image>
-					<image src="../../static/public/redFalse.png" class="img redfalseimg" @tap="delCurrentUploadImg(index)"></image>
+					<image lazy-load class="img" :src="item" mode=""></image>
+					<image lazy-load src="../../static/public/redFalse.png" class="img redfalseimg" @tap="delCurrentUploadImg(index)"></image>
 				</view>
 				<!-- 图片以上是循环，图片以下是上传按钮的图片 -->
 				<image class="uploadimg" src="../../static/public/addpic.png" @tap="chooseImges" mode=""></image>
@@ -48,7 +48,7 @@
 		<!-- 货物状态模态框 -->
 		<uni-popup ref="addCartPopup" type="bottom">
 			<view class="productSpecificationsModelContent">
-				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="goodsStatus(false)"></image>
+				<image lazy-load class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="goodsStatus(false)"></image>
 				<view class="title">货物状态</view>
 				 <radio-group @change="goodsStatusChange">
 					<label class="radio" v-for="(item ,index) in goodsStatusArray" :key="index">
@@ -61,7 +61,7 @@
 		<!-- 退款原因模态框 -->
 		<uni-popup ref="returnMoneyReason" type="bottom">
 			<view class="productSpecificationsModelContent">
-				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="refundReson(false)"></image>
+				<image lazy-load class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="refundReson(false)"></image>
 				<view class="title">退款原因</view>
 				 <radio-group class="radioGroup" @change="returnReasonChange">
 					<label class="radio" v-for="(item ,index) in returnReasonArray" :key="index">
@@ -116,6 +116,7 @@
 		onLoad(options) {
 			options.word == 'notReturnGoods' ? this.notReturnGoods = false : this.notReturnGoods = true,
 			this.orderid = options.id
+			console.log(this.orderid)
 			this.getData()
 		},
 		onShow() {
@@ -202,18 +203,7 @@
 					}
 				});
 			},
-			subRefund(){
-				// console.log(this.chooseImg)
-				// const url = dev+'util.uploader.upload&file=file'
-				// uni.uploadFile({
-				//     url: url, //仅为示例，非真实的接口地址
-				//     filePath: this.chooseImg[0],
-				//     name: 'file',
-				//     success: (uploadFileRes) => {
-				//         console.log(uploadFileRes.data);
-				//     }
-				// });
-				
+			subRefund(){				
 				const submitImg = []
 				const that = this
 				// 循环异步，后期更换
@@ -229,7 +219,7 @@
 							submitImg.push(JSON.parse(uploadFileRes.data).files[0].url)
 							if(index == this.chooseImg.length-1){
 								const data = {}
-								data.orderid= that.id
+								data.orderid= that.orderid
 								data.images= submitImg
 								data.price= that.orderInfo.price
 								data.reason= that.currentReturnResonWord
@@ -263,17 +253,6 @@
 					});
 				})
 				
-				
-				
-				
-				// uni.uploadFile({
-				//     url: url, //仅为示例，非真实的接口地址
-				//     files: this.chooseImg,
-				//     name: 'file',
-				//     success: (uploadFileRes) => {
-				//         console.log(uploadFileRes.data);
-				//     }
-				// });
 			}
 		}
 	}

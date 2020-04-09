@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="itemWrap" v-for="(item , index) in list" :key="index">
-			<image class="avatar" :src="item.avatar" mode=""></image>
+			<image lazy-load class="avatar" :src="item.avatar" mode=""></image>
 			<view class="name">{{item.nickname}}</view>
 			<view class="date">{{item.agenttime}}</view>
 		</view>

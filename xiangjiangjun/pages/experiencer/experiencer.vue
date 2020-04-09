@@ -5,7 +5,7 @@
 			<button class="btn">邀请好友注册</button>
 			<view class="man">
 				<view class="item" v-for="(item, index) in userList" :key="index">
-					<image :src="item.avatar" class="img"></image>
+					<image lazy-load :src="item.avatar" class="img"></image>
 					<view>{{item.nickname}}</view>
 				</view>
 			</view>
@@ -58,7 +58,7 @@
 				</view>
 			</view>
 			<view class="qrcodeWrap" v-if="isQualify && currentTab == 1">
-				<image src="../../static/public/adress1.png" class="img"></image>
+				<image lazy-load src="../../static/public/adress1.png" class="img"></image>
 				<view class="word">商家扫码核销</view>
 			</view>
 			<view class="qrcodeWrap" v-if="isQualify && currentTab == 2">

@@ -2,7 +2,7 @@
 	<view>
 		<view class="header">
 			<input class="ipt" type="text" value="" @input="find" placeholder="请输入你想要搜索的内容" />
-			<image src="/static/public/fdj1.png" class="img"></image>
+			<image lazy-load src="/static/public/fdj1.png" class="img"></image>
 		</view>
 		<!-- <view v-if="update"> -->
 			<category

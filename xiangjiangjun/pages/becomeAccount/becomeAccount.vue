@@ -1,12 +1,12 @@
 <template>
 	<view>
 		<view class="header">
-			<image :src="imgSrc+'public/huiyuan_img_bj.png'" class="img"></image>
+			<image lazy-load :src="imgSrc+'public/huiyuan_img_bj.png'" class="img"></image>
 			<view class="price">￥{{vipdetail.ordermoney}}</view>
 			<view class="word">开通 {{vipdetail.levelname}} 只需</view>
 		</view>
 		<view class="c-title">
-			<image class="img" src="../../static/public/huiyuan_shuoming.png" mode=""></image>
+			<image lazy-load class="img" src="../../static/public/huiyuan_shuoming.png" mode=""></image>
 			<view class="word">会员权益明细说明</view>
 		</view>
 		<view>

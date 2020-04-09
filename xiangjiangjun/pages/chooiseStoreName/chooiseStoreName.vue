@@ -3,7 +3,7 @@
 		<view class="headerWrap">
 			<view class="header">
 				<input class="ipt" type="text" value="" placeholder="搜索您要找的门店名称" />
-				<image :src="imgSrc+'public/fdj1.png'" class="img"></image>
+				<image lazy-load :src="imgSrc+'public/fdj1.png'" class="img"></image>
 			</view>
 		</view>
 		<view class="listWrap" v-for="(item ,index) in list" :key="index">

@@ -2,7 +2,7 @@
 	<view>
 		<view class="itemMenu" v-for="(item ,index) in lists.list" :key="item.id">	
 			<radio class="itemRadio" color="#ff9000" :value="item.id" @tap="radioChange(item.id)" :checked="item.selected==1 ? true : false" />
-			<image class="img" :src="item.thumb"></image>
+			<image lazy-load class="img" :src="item.thumb"></image>
 			<view class="info">
 				<view class="infoTop">
 					<view class="title">{{item.title}}</view>
@@ -15,7 +15,7 @@
 				<input class="num" type="text" v-model="item.total" :id="index" @confirm="choose" />
 				<view class="add" @tap="addNum(index)">+</view>
 			</view>
-			<image class="delete" :src="imgSrc+'public/delete.png'" @tap="delNum(index,true)"></image>
+			<image lazy-load class="delete" :src="imgSrc+'public/delete.png'" @tap="delNum(index,true)"></image>
 		</view>
 		
 		<view style="height: 98rpx;"></view>

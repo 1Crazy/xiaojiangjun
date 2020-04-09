@@ -2,10 +2,10 @@
 	<view>
 		<view class="header">
 			<view class="word">买家已支付成功</view>
-			<image :src="imgSrc+'paysuccess/headerBg.png'" class="img"></image>
+			<image lazy-load :src="imgSrc+'paysuccess/headerBg.png'" class="img"></image>
 		</view>
 		<view class="addressWrap">
-			<image class="img" :src="imgSrc+'public/adress1.png'" mode=""></image>
+			<image lazy-load class="img" :src="imgSrc+'public/adress1.png'" mode=""></image>
 			<view class="addressInfo">
 				<view><text class="name">柚子007</text><text class="phone">13540738352</text></view>
 				<view class="address">四川省成都市成华区保和街道云顶山路兴城佳苑2期B区</view>
@@ -31,21 +31,21 @@
 		</view>
 		<view class="qrcodeWrap">
 			<view class="word">到店核销二维码</view>
-			<image class="img" :src="qrcode"></image>
+			<image lazy-load class="img" :src="qrcode"></image>
 		</view>
 		<view class="guessYourLike">
 			<view class="word">猜你喜欢</view>
-			<image class="img img-l" :src="imgSrc+'paysuccess/zhifu_biaoti_l.png'"></image>
-			<image class="img img-r" :src="imgSrc+'paysuccess/zhifu_biaoti_r.png'"></image>
+			<image lazy-load class="img img-l" :src="imgSrc+'paysuccess/zhifu_biaoti_l.png'"></image>
+			<image lazy-load class="img img-r" :src="imgSrc+'paysuccess/zhifu_biaoti_r.png'"></image>
 		</view>
 		<!-- 列表详情 -->
 		<view class="bggreay">
 			<view class="listwrap"  v-for="(item ,index) in listwrap" :key="index" @tap="gotoProductInfo(item.id)">
-				 <image class="img" :src='item.thumb'></image>
+				 <image lazy-load class="img" :src='item.thumb'></image>
 				 <view class="rightbox">
 					 <view class="title">{{item.title}}</view>
 					 <view class="shorttitle">{{item.shorttitle}}</view>
-					 <image :src="imgSrc+'index/add.png'" class="addimg"></image>
+					 <image lazy-load :src="imgSrc+'index/add.png'" class="addimg"></image>
 					 <view class="price">
 						 <view class="currentPrice">￥ {{item.marketprice}}</view>
 						 <view class="originalPrice">￥ {{item.productprice}}</view>

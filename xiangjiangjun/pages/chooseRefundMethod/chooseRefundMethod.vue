@@ -10,20 +10,20 @@
 		</view>
 		<view class="content">
 			<view class="listItem" @tap="gotoReturnRefund('notReturnGoods')">
-				<image class="img" src="../../static/public/ic_tuikuan.png" mode=""></image>
+				<image lazy-load class="img" src="../../static/public/ic_tuikuan.png" mode=""></image>
 				<view class="center">
 					<view class="txt1">我要退款(无需退货)</view>
 					<view class="txt2">没收到货，或与商家协商同意不用退货只退款</view>
 				</view>
-				<image class="arrow" src="../../static/public/arrow.png" mode=""></image>
+				<image lazy-load class="arrow" src="../../static/public/arrow.png" mode=""></image>
 			</view>
 			<view class="listItem" @tap="gotoReturnRefund()">
-				<image class="img" src="../../static/public/ic_tuihuo.png" mode=""></image>
+				<image lazy-load class="img" src="../../static/public/ic_tuihuo.png" mode=""></image>
 				<view class="center">
 					<view  class="txt1">我要退货退款</view>
 					<view  class="txt2">已收到货，需要退还收到的货物</view>
 				</view>
-				<image class="arrow" src="../../static/public/arrow.png" mode=""></image>
+				<image lazy-load class="arrow" src="../../static/public/arrow.png" mode=""></image>
 			</view>
 		</view>
 		

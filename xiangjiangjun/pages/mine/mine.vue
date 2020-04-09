@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="header">
-			<image class="avatar" :src="userInfo.avatar" mode=""></image>
+			<image lazy-load class="avatar" :src="userInfo.avatar" mode=""></image>
 			<view class="name">{{userInfo.nickname}}</view>
 			<view class="vip" @tap="gotoAccount">会员  ></view>
 		</view>
@@ -12,23 +12,23 @@
 			</view>
 			<view class="content">
 				<view class="item" @tap="gotoAllOrder(0)">
-					<image :src="imgSrc+'mine/list1.png'" class="img"></image>
+					<image lazy-load :src="imgSrc+'mine/list1.png'" class="img"></image>
 					<view class="word">待支付</view>
 				</view>
 				<view class="item" @tap="gotoAllOrder(1)">
-					<image :src="imgSrc+'mine/list2.png'" class="img"></image>
+					<image lazy-load :src="imgSrc+'mine/list2.png'" class="img"></image>
 					<view class="word">待发货</view>
 				</view>
 				<view class="item" @tap="gotoAllOrder(2)">
-					<image :src="imgSrc+'mine/list3.png'" class="img"></image>
+					<image lazy-load :src="imgSrc+'mine/list3.png'" class="img"></image>
 					<view class="word">待收货</view>
 				</view>
 				<view class="item" @tap="gotoAllOrder(3)">
-					<image :src="imgSrc+'mine/list4.png'" class="img"></image>
+					<image lazy-load :src="imgSrc+'mine/list4.png'" class="img"></image>
 					<view class="word">已完成</view>
 				</view>
 				<view class="item" @tap="gotoAllOrder(4)">
-					<image :src="imgSrc+'mine/list5.png'" class="img"></image>
+					<image lazy-load :src="imgSrc+'mine/list5.png'" class="img"></image>
 					<view class="word">退款售后</view>
 				</view>
 			</view>
@@ -41,43 +41,43 @@
 			</view>
 			<view class="content">
 				<view class="item">
-					<image :src="imgSrc+'mine/list1.png'" class="img"></image>
+					<image lazy-load :src="imgSrc+'mine/list1.png'" class="img"></image>
 					<view class="word">待支付</view>
 				</view>
 				<view class="item">
-					<image :src="imgSrc+'mine/list6.png'" class="img"></image>
+					<image lazy-load :src="imgSrc+'mine/list6.png'" class="img"></image>
 					<view class="word">待消费</view>
 				</view>
 				<view class="item">
-					<image :src="imgSrc+'mine/list4.png'" class="img"></image>
+					<image lazy-load :src="imgSrc+'mine/list4.png'" class="img"></image>
 					<view class="word">已完成</view>
 				</view>
 				<view class="item">
-					<image :src="imgSrc+'mine/list5.png'" class="img"></image>
+					<image lazy-load :src="imgSrc+'mine/list5.png'" class="img"></image>
 					<view class="word">退款售后</view>
 				</view>
 			</view>
 		</view>
 		<view class="listItem" @tap="gotoAddressManagement">
-			<image class="img" :src="imgSrc+'mine/item1.png'"></image>
+			<image lazy-load class="img" :src="imgSrc+'mine/item1.png'"></image>
 			<view class="word">地址管理</view>
-			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
+			<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
 		<view class="listItem" @tap="gotoExperiencer">
-			<image class="img" :src="imgSrc+'mine/item2.png'"></image>
+			<image lazy-load class="img" :src="imgSrc+'mine/item2.png'"></image>
 			<view class="word">体验者</view>
-			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
+			<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
 		<view class="listItem" @tap="gotoMineCoupon">
-			<image class="img" :src="imgSrc+'mine/item3.png'"></image>
+			<image lazy-load class="img" :src="imgSrc+'mine/item3.png'"></image>
 			<view class="word">优惠券</view>
-			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
+			<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
 		
 		<view class="listItem" @tap="gotoCooperation">
-			<image class="img" :src="imgSrc+'public/hezuo.png'"></image>
+			<image lazy-load class="img" :src="imgSrc+'public/hezuo.png'"></image>
 			<view class="word">合作加盟</view>
-			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
+			<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
 		
 		<center-popup title="提示" content="登录后即可操作?" cancelBtn="返回首页" ref="togglePopupChild" @cancelBtn="cancelLogin" @centerPopupSureBtn="islogin()"></center-popup>

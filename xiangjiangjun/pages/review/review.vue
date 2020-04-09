@@ -6,19 +6,19 @@
 		<view class="content">
 			<view class="ct-header">
 				<view class="title">星级评价：</view>
-				<image v-for="(item , index) in starArray" :key="index" :src="imgSrc+'public/'+item" class="star" @tap="changeStar(index)"></image>
+				<image lazy-load v-for="(item , index) in starArray" :key="index" :src="imgSrc+'public/'+item" class="star" @tap="changeStar(index)"></image>
 			</view>
 			<view class="txtareaWrap">
-				<image src="../../static/public/pen.png" class="img"></image>
+				<image lazy-load src="../../static/public/pen.png" class="img"></image>
 				<textarea @input="changeTextAreaContent" :value="reviewContent" placeholder="点评一下吧,您的意见很重要哦~" class="txtarea" />
 			</view>
 			<view class="picWrap">
 				<view class="imgWrap" v-for="(item,index) in uploadImg" :key="index">
-					<image class="img" :src="item" mode=""></image>
-					<image src="../../static/public/redFalse.png" class="img redfalseimg" @tap="delCurrentUploadImg(index)"></image>
+					<image lazy-load class="img" :src="item" mode=""></image>
+					<image lazy-load src="../../static/public/redFalse.png" class="img redfalseimg" @tap="delCurrentUploadImg(index)"></image>
 				</view>
 				<!-- 图片以上是循环，图片以下是上传按钮的图片 -->
-				<image class="uploadimg" src="../../static/public/addpic.png" @tap="uploadImage" mode=""></image>
+				<image lazy-load class="uploadimg" src="../../static/public/addpic.png" @tap="uploadImage" mode=""></image>
 			</view>
 		</view>
 		<button class="wordBtn" @tap="publishReview">发表评论</button>

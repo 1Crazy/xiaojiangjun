@@ -7,7 +7,7 @@
 		<view class="swiperWrap">
 			<swiper :current="current" @change="swiperChange" class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
 				<swiper-item  v-for="(item ,index) in goods.thumbs" :key="index">
-					<image class='img' :src="item" mode=""></image>
+					<image lazy-load class='img' :src="item" mode=""></image>
 				</swiper-item>
 			</swiper>
 			<view class="num">{{current+1}}/{{goods.thumbs.length}}</view>
@@ -25,7 +25,7 @@
 		</view>
 		<view class="nav" @tap="LogisticsInfoModel(true)">
 			<view>物流说明</view>
-			<image :src="imgSrc+'public/arrow.png'" class="symbol"></image>
+			<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
 		<!-- 详情 -->
 		<view class="info">
@@ -38,13 +38,13 @@
 			</view>
 			<view :class="tab == 2 ? 'comment': 'hide'"  v-for="(item ,index) in commentList" :key="index">
 				<view class="commentHeader">
-					<image class="avatar" :src="item.headimgurl"></image>
+					<image lazy-load class="avatar" :src="item.headimgurl"></image>
 					<view class="name">{{item.nickname}}</view>
-					<image :class="item.level>=1 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.level>=2 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.level>=3 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.level>=4 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.level>=5 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.level>=1 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.level>=2 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.level>=3 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.level>=4 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.level>=5 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
 					<view class="date">{{item.createtime}}</view>
 				</view>
 				<view class="commentContent">{{item.content}}</view>
@@ -57,15 +57,15 @@
 		<!-- 底部 -->
 		<view class="footer">
 			<view class="wrap" @tap="gotoIndex()">
-				<image :src="imgSrc+'public/xiangqing_huishouye.png'" ></image>
+				<image lazy-load :src="imgSrc+'public/xiangqing_huishouye.png'" ></image>
 				<view>首页</view>
 			</view>
 			<view class="wrap center" @tap="shareFc()" >
-				<image :src="imgSrc+'public/xiagnqiang_fenxiang.png'"></image>
+				<image lazy-load :src="imgSrc+'public/xiagnqiang_fenxiang.png'"></image>
 				<view>分享</view>
 			</view>
 			<button open-type="contact" class="wrap" style="margin-right: 44rpx;height:80rpx;">
-				<image :src="imgSrc+'public/xiangqing_kefu.png'"></image>
+				<image lazy-load :src="imgSrc+'public/xiangqing_kefu.png'"></image>
 				<view style="margin-top: 24rpx;">客服</view>
 			</button>
 			<button class="btn addCart" @tap="addCartModel(true,1)">加入购物车</button>
@@ -74,7 +74,7 @@
 		<!-- 物流说明弹框 -->
 		<uni-popup ref="popup" type="bottom">
 			<view class="logisticsInfoModelContent">
-				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="LogisticsInfoModel(false)"></image>
+				<image lazy-load class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="LogisticsInfoModel(false)"></image>
 				<view class="h-title">物流说明</view>
 				<view class="step" v-for="(item , index) in delivery" :key="index">
 					<view class="num">{{index+1}}</view>
@@ -85,9 +85,9 @@
 		<!-- 加入购物车商品规格选择模态框 -->
 		<uni-popup ref="addCartPopup" type="bottom">
 			<view class="productSpecificationsModelContent">
-				<image class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="addCartModel(false)"></image>
+				<image lazy-load class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="addCartModel(false)"></image>
 				<view class="headerModelContent">
-					<image class="img" :src="goods.thumb"></image>
+					<image lazy-load class="img" :src="goods.thumb"></image>
 					<view class="rightBox">
 						<view class="r-title">{{goods.title}}</view>
 						<view class="r-info">净含量：{{goods.weight}}克</view>

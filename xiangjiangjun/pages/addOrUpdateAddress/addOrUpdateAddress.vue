@@ -17,7 +17,7 @@
 					{{addrss.province}}{{addrss.city}}{{addrss.area}}
 				</view>
 			</picker>
-			<image class="img" :src="imgSrc+'public/arrow.png'" mode=""></image>
+			<image lazy-load class="img" :src="imgSrc+'public/arrow.png'" mode=""></image>
 		</view>
 		<view class="iptWrap">
 			<view class="name">详细地址</view>

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="header">
-			<image class="img" :src="storeInfo.logo"></image>
+			<image lazy-load class="img" :src="storeInfo.logo"></image>
 			<view class="dor-title">主营服务</view>
 			<view class="h-content">
 				<view v-for="(item ,index) in storeInfo.store_services" :key="index">{{item.service_name}}</view>
@@ -9,21 +9,21 @@
 		</view>
 		<view class="timeWrap">
 			<view class="item">
-				<image src="../../static/public/shop3.png" mode="" class="img img1"></image>
+				<image lazy-load src="../../static/public/shop3.png" mode="" class="img img1"></image>
 				<text class="txt1">营业时间:</text>
 				<text class="txt2">{{storeInfo.saletime}}</text>
 			</view>
 			<view class="item">
-				<image src="../../static/public/shop1.png" mode="" class="img img1"></image>
+				<image lazy-load src="../../static/public/shop1.png" mode="" class="img img1"></image>
 				<text class="txt1">联系电话:</text>
 				<text class="txt2">{{storeInfo.tel}}</text>
 				<button class="btn" @tap="markPhoneCall()">一键拨打</button>
 			</view>
 			<view class="item">
-				<image src="../../static/public/shop2.png" mode="" class="img img1"></image>
+				<image lazy-load src="../../static/public/shop2.png" mode="" class="img img1"></image>
 				<text class="txt1">店铺地址:</text>
 				<text class="txt2">{{storeInfo.city}}{{storeInfo.area}}{{storeInfo.address}}</text>
-				<image src="../../static/public/arrow.png" class="arrowImg"></image>
+				<image lazy-load src="../../static/public/arrow.png" class="arrowImg"></image>
 			</view>
 		</view>
 		<!-- 详情 -->
@@ -37,18 +37,18 @@
 			</view>
 			<view :class="tab == 2 ? 'comment': 'hide'"  v-for="(item ,index) in commentList" :key="index">
 				<view class="commentHeader">
-					<image class="avatar" :src="item.avatar"></image>
+					<image lazy-load class="avatar" :src="item.avatar"></image>
 					<view class="name">{{item.name}}</view>
-					<image :class="item.star>=1 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.star>=2 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.star>=3 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.star>=4 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
-					<image :class="item.star>=5 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.star>=1 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.star>=2 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.star>=3 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.star>=4 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.star>=5 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
 					<view class="date">{{item.date}}</view>
 				</view>
 				<view class="commentContent">{{item.content}}</view>
 				<view :class="item.commentPic.length>0?'commentPic':'hide'">
-					<image :src="itemPic" class="pic" v-for="(itemPic ,index) in item.commentPic" :key="index"></image>
+					<image lazy-load :src="itemPic" class="pic" v-for="(itemPic ,index) in item.commentPic" :key="index"></image>
 				</view>
 			</view>
 		</view>
