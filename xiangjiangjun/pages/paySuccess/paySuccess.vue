@@ -27,7 +27,7 @@
 			</view>
 		</view>
 		<view class="btnWrap">
-			<button>申请退款</button>
+			<button @tap="gotoAllOrder">查看订单</button>
 		</view>
 		<view class="qrcodeWrap">
 			<view class="word">到店核销二维码</view>
@@ -78,6 +78,11 @@
 			};
 		},
 		methods: {
+			gotoAllOrder(){
+				uni.navigateTo({
+					url: `/pages/allOrder/allOrder?status=1`
+				})	
+			},
 			gotoProductInfo(info){
 				uni.navigateTo({
 					url: `/pages/productInfo/productInfo?id=${info}`
