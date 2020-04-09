@@ -66,7 +66,7 @@
 				chooselist:[] ,//当前分类子菜单列表
 				page:1,
 				serchName: '',
-				choTit:false
+				choTit:false,
 			}
 		},
 		onLoad(options) {
@@ -112,13 +112,13 @@
 			},
 			getLocation(){
 				const that = this;
-				wx.getLocation({
+				uni.getLocation({
 					type: 'gcj02 ',
 					success (res) {
 						that.longitude = res.longitude
 						that.latitude = res.latitude
 						// that.getStores();
-						that.getStores(that.serchName);
+						that.getStores(that.serchName,that.cutDorStoreSortNum);
 					}
 				})
 			},
@@ -137,7 +137,7 @@
 				).then((res)=>{
 					console.log(res)
 					
-					if(this.choTit){
+					if(this.page == 1){
 						this.liststores = res.data.list
 						this.choTit = false
 					}else{
