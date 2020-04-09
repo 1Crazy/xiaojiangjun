@@ -7,8 +7,8 @@
 		<view class="addressWrap">
 			<image class="img" :src="imgSrc+'public/adress1.png'" mode=""></image>
 			<view class="addressInfo">
-				<view><text class="name">柚子007</text><text class="phone">13540738352</text></view>
-				<view class="address">四川省成都市成华区保和街道云顶山路兴城佳苑2期B区</view>
+				<view><text class="name">{{address.carrier_realname}}</text><text class="phone">{{address.carrier_mobile}}</text></view>
+				<view class="address">{{address.address}}</view>
 			</view>
 		</view>
 		<view class="c-info">
@@ -64,14 +64,17 @@
 		components:{
 			productTitle,
 		},
-		onLoad() {
+		onLoad(e) {
 			this.getData()
+			this.getOrderInfo(e.id)
 		},
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				qrcode: `${this.$store.state.imgSrc}index/listpic1.png`,
-				listwrap:[]
+				listwrap:[],
+				address:[],
+				goods:[]
 			};
 		},
 		methods: {
@@ -79,6 +82,53 @@
 				uni.navigateTo({
 					url: `/pages/productInfo/productInfo?id=${info}`
 				})
+			},
+			getOrderInfo(id){
+				Request(
+					'order.pay.complete',
+					{
+						id:id,
+						type:'wechat'
+					}
+				).then((res)=>{
+					// 成功方法
+					this.address =res.data.carrier 
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+				
+				
+				Request(
+					'verify.qrcode',
+					{
+						id:id,
+					}
+				).then((res)=>{
+					console.log(res)
+					this.qrcode = res.data.url
+					// 成功方法
+					// this.address =res.data.carrier 
+				})
+				.catch((res)=>{
+					// 失败方法
+				}) 
+				 
+				Request(
+					'order.detail',
+					{
+						id:id,
+					}
+				).then((res)=>{
+					this.goods = res.data.goods
+					// 成功方法
+					// this.address =res.data.carrier 
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+				
+				
 			},
 			getData(){
 				Request(
