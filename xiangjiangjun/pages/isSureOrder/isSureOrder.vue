@@ -189,42 +189,42 @@
 						})
 						.then((res)=>{
 							console.log(res)
-							// //微信
-							// wx.requestPayment({
-							//   timeStamp: res.timeStamp,
-							//   nonceStr: res.nonceStr,
-							//   package: res.package,
-							//   signType: 'MD5',
-							//   paySign: res.paySign,
-							//   success (res) {
-							// 	console.log(res)
-							// 	if(res.errMsg=="requestPayment:ok"){
-							// 		uni.navigateTo({
-							// 			url: '/pages/paySuccess/paySuccess?id='+that.id
-							// 		})
-							// 	}
-							//   },
-							//   fail (res) { }
-							// })
-							
-							
-							//余额
-							Request(
-								'order.pay.complete',
-								{
-									id:this.orderid,
-									type:'credit',
-									comefrom:'wxapp'
-								},
-								"POST",
-								'application/x-www-form-urlencoded'
-							).then((res)=>{
-								// this.orderid = res.data.orderid
+							//微信
+							wx.requestPayment({
+							  timeStamp: res.timeStamp,
+							  nonceStr: res.nonceStr,
+							  package: res.package,
+							  signType: 'MD5',
+							  paySign: res.paySign,
+							  success (res) {
 								console.log(res)
+								if(res.errMsg=="requestPayment:ok"){
+									uni.navigateTo({
+										url: '/pages/paySuccess/paySuccess?id='+that.orderid
+									})
+								}
+							  },
+							  fail (res) { }
 							})
-							.catch((res)=>{
-								// 失败方法
-							})
+							
+							
+							// //余额
+							// Request(
+							// 	'order.pay.complete',
+							// 	{
+							// 		id:this.orderid,
+							// 		type:'credit',
+							// 		comefrom:'wxapp'
+							// 	},
+							// 	"POST",
+							// 	'application/x-www-form-urlencoded'
+							// ).then((res)=>{
+							// 	// this.orderid = res.data.orderid
+							// 	console.log(res)
+							// })
+							// .catch((res)=>{
+							// 	// 失败方法
+							// })
 						})
 						.catch((res)=>{
 							// 失败方法
