@@ -62,18 +62,24 @@ function getCurrentTime() {
   return keep // 20160614134947
 }
 const payUrl = dev
-const Request = (url, data, method = 'GET', title = '加载中', baseUrl = dev , dataType = 'json') => {
+const Request = (url, data, method = 'GET' , head = 'application/json', title = '加载中', baseUrl = dev , dataType = 'json') => {
   let src = ''
+  if(!data){
+	  data = {}
+  }
   if (baseUrl == local) {
     src = localData.local(url)
   }else{
     src = `${baseUrl}${url}`
   }
-  if (uni.getStorageSync('userInfo').token) {
-    data.token = uni.getStorageSync('userInfo').token
+  // if (uni.getStorageSync('userInfo').token) {
+  //   data.token = uni.getStorageSync('userInfo').token
+  // }
+  data.timestamp = new Date().valueOf()
+	  
+  if (url != 'wxapp.update_info'){
+	  data.openid = 'sns_wa_o2iWn5Dqvh1NHnN_bjPpi8pKphWs'   // test
   }
-  // data.timetemp = new Date().valueOf()
-  // data.clientType = 'shijiangCloud'
   // data.sign = ''
   uni.showLoading({
     title,
@@ -86,6 +92,9 @@ const Request = (url, data, method = 'GET', title = '加载中', baseUrl = dev ,
       method,
       dataType,
       responseType: 'text',
+	  header: {
+		'content-type': head //自定义请求头信息
+	  },
       success: function (res) {
         resolve(res)
       },
@@ -170,4 +179,5 @@ module.exports = {
   setKey,
   getCurrentTime,
   payUrl,
+  dev
 }

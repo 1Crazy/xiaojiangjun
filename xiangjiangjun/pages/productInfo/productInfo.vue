@@ -1,83 +1,123 @@
 <template>
 	<view>
-		
-<!-- 		<button type="primary" @tap="shareFc()">生成海报</button> -->
 		<view class="hideCanvasView">
 			<canvas class="hideCanvas" canvas-id="default_PosterCanvasId" :style="{width: (poster.width||0) + 'px', height: (poster.height||0) + 'px'}"></canvas>
 		</view>
 		<!-- 内容 -->
 		<view class="swiperWrap">
 			<swiper :current="current" @change="swiperChange" class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-				<swiper-item  v-for="(item ,index) in swiper" :key="index">
-					<image class='img' :src="item.img" mode=""></image>
+				<swiper-item  v-for="(item ,index) in goods.thumbs" :key="index">
+					<image lazy-load class='img' :src="item" mode=""></image>
 				</swiper-item>
 			</swiper>
-			<view class="num">{{current+1}}/{{swiper.length}}</view>
+			<view class="num">{{current+1}}/{{goods.thumbs.length}}</view>
 		</view>
 		<view class="content">
-			<view class="title">马驰宝汽车机油正品全合成5W-40德国进口奔驰宝马奥迪大众本田4L</view>
-			<view class="description">全合成机油</view>
+			<view class="title">{{goods.title}}</view>
+			<view class="description">{{goods.shorttitle}}</view>
 			<view class="bottom">
 				<view class="price">
-					<view class="currentPrice">￥488</view>
-					<view class="originalPrice">￥608</view>
+					<view class="currentPrice">￥{{goods.marketprice}}</view>
+					<view class="originalPrice">￥{{goods.productprice}}</view>
 				</view>
-				<view class="count">销量：1999</view>
+				<view class="count">销量：{{goods.sales}}</view>
 			</view>
 		</view>
-		<view class="nav">
+		<view class="nav" @tap="LogisticsInfoModel(true)">
 			<view>物流说明</view>
-			<image src="../../static/public/arrow.png" class="symbol"></image>
+			<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
 		</view>
 		<!-- 详情 -->
 		<view class="info">
 			<view class="navwrap">
-				<view :class="tab == 1 ? 'active': ''" @click="changeTab(1)">商品详情</view>
-				<view :class="tab == 2 ? 'active': ''" @click="changeTab(2)">用户评价</view>
+				<view :class="tab == 1 ? 'active': ''" @tap="changeTab(1)">商品详情</view>
+				<view :class="tab == 2 ? 'active': ''" @tap="changeTab(2)">用户评价</view>
 			</view>
 			<view :class="tab == 1 ? 'productInfo': 'hide'">
-				<view class="article">抗氧化性能最好，即使用周期最长，减少了废旧机油排放。 fuel-burn系数低，即油门反应高，节省了燃油消耗环保低碳。</view>
-				<image class="img1" src="../../static/index/picnav3.png" style="margin-top: 40rpx;margin-bottom: 93rpx;"></image>
-				<image class="img2" src="../../static/index/picnav3.png"></image>
+				<view v-html = "goods.content"></view>
 			</view>
 			<view :class="tab == 2 ? 'comment': 'hide'"  v-for="(item ,index) in commentList" :key="index">
 				<view class="commentHeader">
-					<image class="avatar" :src="item.avatar"></image>
-					<view class="name">{{item.name}}</view>
-					<image :class="item.star>=1 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
-					<image :class="item.star>=2 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
-					<image :class="item.star>=3 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
-					<image :class="item.star>=4 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
-					<image :class="item.star>=5 ? 'star': 'hide'" src="/static/productInfo/star.png" mode=""></image>
-					<view class="date">{{item.date}}</view>
+					<image lazy-load class="avatar" :src="item.headimgurl"></image>
+					<view class="name">{{item.nickname}}</view>
+					<image lazy-load :class="item.level>=1 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.level>=2 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.level>=3 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.level>=4 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<image lazy-load :class="item.level>=5 ? 'star': 'hide'" :src="imgSrc+'productInfo/star.png'" mode=""></image>
+					<view class="date">{{item.createtime}}</view>
 				</view>
 				<view class="commentContent">{{item.content}}</view>
-				<view :class="item.commentPic.length>0?'commentPic':'hide'">
-					<image :src="itemPic" class="pic" v-for="(itemPic ,index) in item.commentPic" :key="index"></image>
+				<view :class="item.images.length>0?'commentPic':'hide'">
+					<image lazy-load :src="itemPic" class="pic" v-for="(itemPic ,index) in item.images" :key="index"></image>
 				</view>
 			</view>
 		</view>
 		<view style="height: 100rpx;"></view>
 		<!-- 底部 -->
 		<view class="footer">
-			<view class="wrap">
-				<image src="../../static/public/xiangqing_huishouye.png" ></image>
+			<view class="wrap" @tap="gotoIndex()">
+				<image lazy-load :src="imgSrc+'public/xiangqing_huishouye.png'" ></image>
 				<view>首页</view>
 			</view>
 			<view class="wrap center" @tap="shareFc()" >
-				<image src="../../static/public/xiagnqiang_fenxiang.png"></image>
+				<image lazy-load :src="imgSrc+'public/xiagnqiang_fenxiang.png'"></image>
 				<view>分享</view>
 			</view>
-			<view class="wrap" style="margin-right: 44rpx;">
-				<image src="../../static/public/xiangqing_kefu.png"></image>
-				<view>客服</view>
-			</view>
-			<button class="addCart">加入购物车</button>
-			<button class="buy">立刻购买</button>
+			<button open-type="contact" class="wrap" style="margin-right: 44rpx;height:80rpx;">
+				<image lazy-load :src="imgSrc+'public/xiangqing_kefu.png'"></image>
+				<view style="margin-top: 24rpx;">客服</view>
+			</button>
+			<button class="btn addCart" @tap="addCartModel(true,1)">加入购物车</button>
+			<button class="btn buy" @tap="addCartModel(true,2)">立刻购买</button>
 		</view>
-		
-		
-		
+		<!-- 物流说明弹框 -->
+		<uni-popup ref="popup" type="bottom">
+			<view class="logisticsInfoModelContent">
+				<image lazy-load class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="LogisticsInfoModel(false)"></image>
+				<view class="h-title">物流说明</view>
+				<view class="step" v-for="(item , index) in delivery" :key="index">
+					<view class="num">{{index+1}}</view>
+					<view class="model-content">{{item}}</view>
+				</view>
+			</view>
+		</uni-popup>
+		<!-- 加入购物车商品规格选择模态框 -->
+		<uni-popup ref="addCartPopup" type="bottom">
+			<view class="productSpecificationsModelContent">
+				<image lazy-load class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="addCartModel(false)"></image>
+				<view class="headerModelContent">
+					<image lazy-load class="img" :src="goods.thumb"></image>
+					<view class="rightBox">
+						<view class="r-title">{{goods.title}}</view>
+						<view class="r-info">净含量：{{goods.weight}}克</view>
+						<view class="r-num">库存：{{goods.total}}{{goods.unit}}</view>
+					</view>
+				</view>
+				<view class="centerModelContent">
+					<view class="c-header">
+						<view class="price">￥{{goods.marketprice}}</view>
+						<!-- <view class="hy-price">会员价:￥420</view> -->
+						<view class="num">销量：{{goods.sales}}</view>
+					</view>
+					<view class="c-bottom">
+						<view class="c-b-word">购买数量</view>
+						<view class="r-wrap">
+							<button class="symbol" @tap="delNum()">-</button>
+							<input class="ipt" type="text" v-model="productNum" />
+							<button class="symbol" @tap="addNum()">+</button>
+						</view>
+					</view>
+					<view class="c-bottom-bottom">
+						<view class="c-b-title">选择规格：</view>
+						<view class="btn-wrap">
+							<button type="default" :class="specificationIndex==index ? 'active-btn btn ' : 'btn'" v-for="(item ,index) in picker" :key="index" @tap="changeActiveBtn(index)">{{item.title}}</button>				
+						</view>
+					</view>
+				</view>
+				<button class="submitBtn" @tap="submitBtn()">提交</button>
+			</view>
+		</uni-popup>
 		<!-- 海报 -->
 		<view class="flex_row_c_c modalView" :class="qrShow?'show':''" @tap="hideQr()">
 			<view class="flex_column" style="width: 750rpx;height: 852rpx;position: fixed;bottom: 132rpx;left: 0;">
@@ -86,17 +126,17 @@
 					<!-- <view style="height: 268rpx;width: 750rpx;background-color: white;"></view> -->
 				</view>
 				<view class="flex_row marginTop2vh">
-					<view @tap.prevent.stop="share()" style="display: flex;align-items: center;">
-						<image src="/static/productInfo/fenxiang_weixin.png" class="canvasImage"></image>
+					<button open-type="share" @tap.prevent.stop="share()" style="display: flex;align-items: center;background: white;">
+						<image :src="imgSrc+'productInfo/fenxiang_weixin.png'" class="canvasImage"></image>
 						<view>微信好友</view>
-					</view>
+					</button>
 					<view @tap.prevent.stop="saveImage()" style="display: flex;align-items: center;">
-						<image src="/static/productInfo/fenxiang_pengyouquan.png" class="canvasImage"></image>
+						<image :src="imgSrc+'productInfo/fenxiang_pengyouquan.png'" class="canvasImage"></image>
 						<view>朋友圈</view>
+						<button class="canvas-btn">保存图片</button>
 					</view>
 				</view>
 			</view>
-			<button class="canvas-btn">保存图片</button>
 		</view>
 	</view>
 </template>
@@ -106,44 +146,53 @@
 	import {
 		getSharePoster
 	} from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/QS-SharePoster.js';
-	
+	import {uniPopup} from '../../components/uni/uni-popup/uni-popup.vue'
 	import './index.scss'
+	import { Request } from '../../public/utils.js'
+	
 	export default {
+		components: {uniPopup},
 		data() {
 			return {
+				imgSrc: this.$store.state.imgSrc,
 				swiper: [{
-					img: '../../static/productInfo/banner1.png'
+					img: `${this.$store.state.imgSrc}productInfo/banner1.png`
 				}, {
-					img: '../../static/productInfo/banner2.png'
+					img: `${this.$store.state.imgSrc}productInfo/banner2.png`
 				}],
 				current: 0,
+				modelType: 1, // 1是加入购物车的,2是支付的
 				tab: 1,//商品详情1，用户评价2
-				commentList: [
-					{
-						avatar: '../../static/index/add.png',
-						name: '张先生',
-						star: 2,
-						date: '2019-12-25',
-						content: '机油收到了，已经购买了几次了，值得信赖的商家，还是一如既往的好，和实体店购买的一样，实惠质量也非常不错！！！！',
-						commentPic: ['../../static/index/listpic1.png','../../static/index/listpic1.png','../../static/index/listpic1.png']
-					},
-					{
-						avatar: '../../static/index/add.png',
-						name: 'x先生',
-						star: 3,
-						date: '2019-11-25',
-						content: 'xxxxxxxx！！！',
-						commentPic: []
-					},
+				commentList: [],
+				/**
+				 * 选择规格数据
+				 */
+				specificationList: [
+					'我是规格1',
+					'我是规格',
+					'我是规格3',
+					'我是规格4',
 				],
+				productNum: 1,
+				specificationIndex: null,
 				/**
 				 * 海报绘制相关变量
 				 */
 				poster: {},
 				qrShow: false,
 				canvasId: 'default_PosterCanvasId',
+				goods: [],
+				goodscontent: "",
+				compage:1,
+				picker:[],
+				pickerChoose:'',
+				delivery:[]//物流说明
 				//
 			}
+		},
+		onLoad(e) {
+			this.id = e.id;
+			this.getGoodDetail(e.id);
 		},
 		methods: {
 			swiperChange (e) {
@@ -152,6 +201,132 @@
 			//改变tab值
 			changeTab(num){
 				this.tab=num
+			},
+			getGoodDetail(id){
+				Request(
+					'goods.get_detail',
+					{
+						id:id
+					}
+				).then((res)=>{
+					// console.log(res.data.goods)
+					this.goods = res.data.goods
+					this.delivery = res.data.deliverys.delivery_msg
+					this.getComment(id)
+					this.getPicker(id)
+					// 成功方法
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			getComment(id){
+				Request(
+					'goods.get_comment_list',
+					{
+						id:id,
+						level:'all',
+						page:this.compage
+					}
+				).then((res)=>{
+					console.log(res.data)
+					this.commentList = res.data.list
+					// 成功方法
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			getPicker(id){
+				Request(
+					'goods.get_picker',
+					{
+						id:id
+					}
+				).then((res)=>{
+					console.log(res.data)
+					this.picker = res.data.options
+					// 成功方法
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			addToCart(id,num){
+				if(this.pickerChoose=='' && this.picker.length!=0){
+					_app.showToast('请选择规格');
+					return false
+					// this.$refs.addCartPopup.open()
+				}else{
+					Request(
+						'member.cart.add',
+						{
+							id:id,
+							total:num,
+							optionid:this.pickerChoose
+						}
+					).then((res)=>{
+						// 成功方法
+						if(res.data.error==0){
+							_app.showToast('添加成功');
+						}
+						// uni.navigateTo({
+						// 	url: '/pages/isSureOrder/isSureOrder'
+						// })
+					})
+					.catch((res)=>{
+						// 失败方法
+					})
+				}
+			},
+			//物流说明模态框
+			LogisticsInfoModel(bool){
+				bool ? this.$refs.popup.open() : this.$refs.popup.close()
+			},
+			// 商品加入购物车弹出模态框
+			addCartModel(bool,num){
+				this.modelType = num
+				bool ? this.$refs.addCartPopup.open() : this.$refs.addCartPopup.close()
+			},
+			//返回首页
+			gotoIndex(){
+				uni.reLaunch({
+					url: '/pages/index/index'
+				})
+			},
+			// 改变当前规格参数值
+			changeActiveBtn(index){
+				this.specificationIndex = index
+				this.pickerChoose = this.picker[index]['id']
+				console.log(this.pickerChoose)
+			},
+			delNum(){
+				if (this.productNum > 1) {
+					this.productNum--
+				}
+			},
+			addNum(){
+				if (this.productNum < 200) {
+					this.productNum++
+				}
+			},
+			// 提交
+			submitBtn(){
+				// this.$refs.addCartPopup.close()
+				const info =  this.id
+				if(this.modelType==1){
+					this.addToCart(info,this.productNum)
+				}else{
+					if(this.pickerChoose=='' && this.picker.length!=0){
+						_app.showToast('请选择规格');
+						return false
+						// this.$refs.addCartPopup.open()
+					}else{
+						uni.navigateTo({
+							url: '/pages/isSureOrder/isSureOrder?id='+info+'&num='+this.productNum+'&optionid='+this.pickerChoose
+						})
+					}
+				}
 			},
 			/**
 			 * 绘制海报
@@ -188,7 +363,7 @@
 									rs([
 										{
 											type: 'image',
-											url: '/static/productInfo/banner1.png',
+											url: this.goods.thumb,
 											alpha: 1,
 											dx: 30,
 											dy: 30,
@@ -202,7 +377,7 @@
 										},
 										{
 											type: 'image',
-											url: '/static/productInfo/banner2.png',
+											url: this.goods.thumb,//小程序二维码
 											alpha: 1,
 											dx: 30,
 											dy: 1020,
@@ -217,7 +392,7 @@
 										{
 											type: 'text',
 											fontStyle: 'normal',
-											text: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
+											text: this.goods.title,
 											size: 30,
 											color: 'black',
 											alpha: 1,
@@ -243,7 +418,7 @@
 										{
 											type: 'text',
 											fontStyle: 'normal',
-											text: '￥366',
+											text: this.goods.marketprice,
 											size: 36,
 											color: '#ff9000',
 											alpha: 1,
@@ -335,7 +510,7 @@
 					// #ifdef APP-PLUS
 					_app.getShare(false, false, 2, '', '', '', this.poster.finalPath, false, false);
 					// #endif
-			
+					
 					// #ifndef APP-PLUS
 					_app.showToast('分享了');
 					// #endif
@@ -542,7 +717,7 @@ page{
 			normal;
 		border-radius: 0rpx 39rpx 39rpx 0rpx;
 	}
-	button{
+	.btn{
 		font-family: PingFang-SC-Medium;
 		font-size: 30rpx;
 		font-weight: normal;

@@ -12,7 +12,7 @@
 			<view class="nav-right" :style="'background-color:'+rightBackgroundColor">
 				<scroll-view scroll-y :scroll-top="scrollTop" @scroll="scroll" :style="'height:'+height+'px'" scroll-with-animation>
 					<view class="nav-right-item" v-for="(item,index2) in subCategoryList" :key="index2" @click="categoryClickSub(item)">
-						<image :src="item[imgSrc]" :style="'width:'+rightImgWidth+';height:'+rightImgHeight+';border-radius:'+rightImgBorderRadius" />
+						<image :src="item[imgSrc]" :style="'width:'+rightImgWidth+';height:'+rightImgHeight+';border-radius:'+rightImgBorderRadius+';border:'+ borderStyle" />
 						<view>{{item[label]}}</view>
 					</view>
 				</scroll-view>
@@ -38,6 +38,10 @@
 			}
 		},
 		props: {
+			update: {
+				type: Boolean,
+				default: false
+			},
 			//主分类激活索引
 			defaultActive: {
 				type: Number,
@@ -92,6 +96,10 @@
 			rightImgBorderRadius:{
 				type: String,
 				default: '100%'
+			},
+			borderStyle: {
+				type: String,
+				default: 'none'
 			}
 		},
 		methods: {

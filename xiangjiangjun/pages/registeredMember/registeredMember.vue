@@ -8,9 +8,11 @@
 	export default {
 		data() {
 			return {
-				
-			};
-		}
+				imgSrc: this.$store.state.imgSrc,
+			}
+		},
+		onLoad() {
+		},
 	}
 </script>
 

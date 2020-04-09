@@ -1,9 +1,53 @@
 <script>
+	import {
+		mapMutations
+	} from 'vuex';
+	import { Request } from 'public/utils.js'
 	export default {
+		methods: {
+			...mapMutations(['login'])
+		},
 		onLaunch: function() {
-			console.log('App Launch')
+			
+			uni.login({
+				provider: 'weixin',
+					success: function (res) {
+						// console.log(res);
+						if (res.code){
+							// uni.setStorageSync('login_code', res.code)
+							
+							Request(
+								'wxapp.login', 
+								{
+									code:res.code,
+									comefrom:'wxapp'
+								},
+								'POST',
+								'application/x-www-form-urlencoded'	
+							)
+							.then((res)=>{
+								// this.$store.state.hasLogin = true,
+								uni.setStorageSync('openid', res.data.openid)
+							})
+							.catch((res)=>{
+							    // 失败方法
+							})
+							
+						}
+					}
+			});
+			// const code = uni.getStorageSync('login_code')
+			
+			
+			let userInfo = uni.getStorageSync('userInfo') || '';
+			if(userInfo.id){
+				//更新登陆状态
+				this.login(userInfo,true);
+			}
+			
 		},
 		onShow: function() {
+			
 			console.log('App Show')
 		},
 		onHide: function() {
@@ -17,6 +61,11 @@
 	button{
 		padding: 0;
 		margin: 0;
+		background: white;
+		line-height: 0;
+	}
+	button::after{
+		display: none;
 	}
 	.hide{
 		display: none;
@@ -25,11 +74,3 @@
 		display: block;
 	}
 </style>
-<script>
-	/**
-	 * vuex管理登陆状态，具体可以参考官方登陆模板示例
-	 */
-	import {
-		mapMutations
-	} from 'vuex';
-</script>

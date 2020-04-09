@@ -2,61 +2,61 @@
 	<view>
 		<view class="header">
 			<view class="left">
-				<image class="address" src="../../static/public/adress1.png"></image>
-				<view>成都 ></view>
+				<image lazy-load class="img" :src="imgSrc+'public/adress1.png'"></image>
+				<view class="address">成都 ></view>
 			</view>
 			<view class="right">
-				<image class="fdj" src="../../static/public/fdj1.png"></image>
+				<image lazy-load class="fdj" :src="imgSrc+'public/fdj1.png'"></image>
 				<input class="ipt" type="text" placeholder="输入关键字搜索内容">
 			</view>
 		</view>
 		<!-- 轮播 -->
-		<uni-swiper-dot :info="info" :current="current" field="content" :mode="mode" Color="#fff" selectedBackgroundColor="#ffffff">
+		<uni-swiper-dot :info="info" :current="current" field="content" :mode="mode" selectedBackgroundColor="#ffffff">
 		    <swiper autoplay class="swiper-box" @change="change">
 		        <swiper-item v-for="(item ,index) in info" :key="index">
 		            <view class="swiper-item">
-		                <image class="img" :src='item.img'></image>
+		                <image lazy-load class="img" :src='item'></image>
 		            </view>
 		        </swiper-item>
 		    </swiper>
 		</uni-swiper-dot>
 		<!-- 导航 -->
 		<view class="nav">
-			<view v-for="(item ,index) in nav" :key="index">
-				<image class="img" :src="item.img"></image>
+			<view v-for="(item ,index) in nav" :key="index" @tap="gotoDor(item.word)">
+				<image lazy-load class="img" :src="item.img"></image>
 				<view class="word">{{item.word}}</view>
 			</view>
 		</view>
 		<!-- 体验区 -->
 		<view class="tyq">
 			<view class="box" v-for="(item ,index) in tyq" :key="index">
-				<image class="img" :src="item.img">
+				<image lazy-load class="img" :src="item.img">
 				<view class="word">{{item.word}}</view>
 			</view>
 		</view>
 		<!-- 图片 -->
 		<view class="picnav">
-			<image class="img img1" src="../../static/index/picnav1.png"></image>
-			<image class="img img2" src="../../static/index/picnav2.png"></image>
-			<image class="img img3" src="../../static/index/picnav3.png"></image>
-			<image class="img img4" src="../../static/index/picnav4.png"></image>
+			<image lazy-load class="img img1" :src="ad[0]"></image>
+			<image lazy-load class="img img2" :src="ad[1]"></image>
+			<image lazy-load class="img img3" :src="ad[2]"></image>
+			<image lazy-load class="img img4" :src="ad[3]"></image>
 		</view>
 		<!-- 商品列表 -->
 		<view class='nav-word'>
 			<view class="word">商品列表    </view>
-			<image class="img" src='../../static/public/arrow.png'></image>
+			<image lazy-load class="img" :src="imgSrc+'public/arrow.png'"></image>
 		</view>
 		<!-- 列表详情 -->
 		<view class="bggreay">
-			<view class="listwrap"  v-for="(item ,index) in listwrap" :key="index" @click="gotoProductInfo(item)">
-				 <image class="img" :src='item.img'></image>
+			<view class="listwrap"  v-for="(item ,index) in listwrap" :key="index" @tap="gotoProductInfo(item.id)">
+				 <image lazy-load class="img" :src='item.thumb'></image>
 				 <view class="rightbox">
 					 <view class="title">{{item.title}}</view>
-					 <view class="shorttitle">{{item.shortitle}}</view>
-					 <image src="../../static/index/add.png" class="addimg"></image>
+					 <view class="shorttitle">{{item.shorttitle}}</view>
+					 <image lazy-load :src="imgSrc+'index/add.png'" class="addimg"></image>
 					 <view class="price">
-						 <view class="currentPrice">￥ 1366</view>
-						 <view class="originalPrice">￥ 1848</view>
+						 <view class="currentPrice">￥ {{item.marketprice}}</view>
+						 <view class="originalPrice">￥ {{item.productprice}}</view>
 					 </view>
 				 </view>
 			</view>
@@ -65,45 +65,53 @@
 </template>
 
 <script>
-	import uniSwiperDot from "@/components/uni-swiper-dot/uni-swiper-dot.vue"
+	import {
+		mapState
+	} from 'vuex';
+	import uniSwiperDot from "@/components/uni/uni-swiper-dot/uni-swiper-dot.vue"
+	import { Request } from "../../public/utils.js"
 	export default {
 		components: {
 			uniSwiperDot,
 		},
 		data() {
 			return {
+				imgSrc: this.$store.state.imgSrc,
 				title: '首页',
-				info: [{
-					img: '../../static/index/banner.png'
-				}, {
-					img: '../../static/index/banner.png'
-				}, {
-					img: '../../static/index/banner.png'
-				}],
+				info: [
+				// 	{
+				// 	img: '../../static/index/banner.png'
+				// }, {
+				// 	img: '../../static/index/banner.png'
+				// }, {
+				// 	img: '../../static/index/banner.png'
+				// },
+				],
 				current: 0,
 				mode: 'round',
+				ad:[],
 				//nav
 				nav:[
 					{
-						img: '../../static/index/nav1.png',
+						img: `${this.$store.state.imgSrc}/index/nav1.png`,
 						word: '快修快保'
 					},
 					{
-						img: '../../static/index/nav2.png',
+						img:`${this.$store.state.imgSrc}/index/nav2.png`,
 						word: '汽车美容'
 					},
 					{
-						img: '../../static/index/nav3.png',
+						img: `${this.$store.state.imgSrc}/index/nav3.png`,
 						word: '道路救援'
 					}
 				],
 				tyq:[
 					{
-						img: '../../static/index/tyq2.png',
+						img: `${this.$store.state.imgSrc}/index/tyq2.png`,
 						word: '保险客户体验区'
 					},
 					{
-						img: '../../static/index/tyq1.png',
+						img: `${this.$store.state.imgSrc}/index/tyq1.png`,
 						word: '更多体验'
 					},
 				],
@@ -126,16 +134,53 @@
 				]
 			}
 		},
+		computed:{
+			...mapState(["userInfo"])
+		},
 		onLoad() {
-
+			const that = this;
+			wx.getLocation({
+				type: 'gcj02 ',
+				success (res) {
+					that.longitude = res.longitude
+					that.latitude = res.latitude
+				}
+			})
+		},
+		onShow() {
+			const that = this;
+			Request(
+				'index.get_data'			
+			).then((res)=>{
+				console.log(res)
+				that.info = res.data.data.info
+				that.listwrap = res.data.data.goods
+				that.ad = res.data.data.ad
+				// 成功方法
+			})
+			.catch((res)=>{
+				// 失败方法
+			}) 
 		},
 		methods: {
 			change(e) {
 				this.current = e.detail.current;
 			},
+			gotoDor(word){
+				if (typeof this.userInfo.groupid != 'string') {
+					uni.showToast({
+						title: '该功能暂未对汽修厂开放',
+						icon: 'none'
+					})
+				}else{
+					uni.reLaunch({
+						url: `/pages/dor/dor?services=${word}`
+					})
+				}
+			},
 			gotoProductInfo(info){
 				uni.navigateTo({
-					url: `/pages/productInfo/productInfo?info=${info}`
+					url: `/pages/productInfo/productInfo?id=${info}`
 				})
 			}
 		}
@@ -152,15 +197,18 @@
 		padding: 20rpx;
 		.left{
 			display: flex;
-			.address{
+			align-items: center;
+			.img{
 				width:40rpx;
 				height: 40rpx;
+				margin-right: 13rpx;
+			}
+			.address{
 				font-family: PingFang-SC-Medium;
 				font-size: 36rpx;
 				font-weight: normal;
 				font-stretch: normal;
 				color: #333333;
-				margin-right: 13rpx;
 			}
 		}
 		.right{
@@ -178,7 +226,7 @@
 				font-stretch: normal;
 				line-height: 56rpx;
 				color: #999999;
-				padding-right: 30rpx 78rpx;
+				padding-right: 30rpx;
 				padding-left: 78rpx;
 				box-sizing: border-box;
 			}
@@ -326,6 +374,7 @@
 		.img{
 			width: 200rpx;
 			height: 200rpx;
+			border: 1px solid #e3e3e3;
 		}
 		.rightbox{
 			width: 482rpx;

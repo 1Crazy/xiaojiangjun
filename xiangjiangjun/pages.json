@@ -7,11 +7,6 @@
 			}
 		}
 		,{
-		    "path" : "pages/productInfo/productInfo",
-		    "style" : {
-				"navigationBarTitleText": "商品详情"
-			}
-		},{
 		    "path" : "pages/mine/mine",
 		    "style" : {
 				"navigationBarTitleText": "我的",
@@ -19,21 +14,141 @@
 				"navigationBarTextStyle":"white"
 			}
 		},{
-		    "path" : "pages/dor/dor",
+		    "path" : "pages/review/review",
 		    "style" : {
-				"navigationBarTitleText": "门店/商家"
-			}
+		    	"navigationBarTitleText": "商品评价"
+		    }
 		},{
+		    "path" : "pages/cooperation/cooperation",
+		    "style" : {
+				"navigationBarTitleText": "合作加盟",
+				"navigationBarBackgroundColor": "#50ce13",
+				"navigationBarTextStyle":"white"
+			}
+		}
+		,{
 		    "path" : "pages/cart/cart",
 		    "style" : {
 				"navigationBarTitleText": "购物车"
 			}
+		}
+		,{
+		    "path" : "pages/dorInfo/dorInfo",
+		    "style" : {
+				"navigationBarTitleText": "门店详情"
+		    }
+		},{
+		    "path" : "pages/becomeAccount/becomeAccount",
+		    "style" : {
+		    	"navigationBarTitleText": "成为会员"
+		    }
+		},{
+		    "path" : "pages/dor/dor",
+		    "style" : {
+				"navigationBarTitleText": "门店/商家"
+			},
+			"enablePullDownRefresh":true
+		},{
+		    "path" : "pages/chooseRefundMethod/chooseRefundMethod",
+		    "style" : {
+		    	"navigationBarTitleText": "选择服务类型"
+		    }
+		}
+		,{
+		    "path" : "pages/returnRefund/returnRefund",
+		    "style" : {
+		    	"navigationBarTitleText": "申请退款"
+		    }
+		}
+		,{
+		    "path" : "pages/experiencer/experiencer",
+		    "style" : {
+		    	"navigationBarTitleText": "体验者",
+				"navigationBarBackgroundColor": "#50ce13",
+				"navigationBarTextStyle":"white"
+			}
+		},{
+		    "path" : "pages/mineIntegral/mineIntegral",
+		    "style" : {
+				"navigationBarTitleText": "我的积分"
+		    },
+			"enablePullDownRefresh":true
+		},{
+		    "path" : "pages/account/account",
+		    "style" : {
+		    	"navigationBarTitleText": "会员"
+		    }
+		},{
+		    "path" : "pages/allOrder/allOrder",
+		    "style" : {
+		    	"navigationBarTitleText": "商品订单"
+		    }
+		},{
+		    "path" : "pages/paySuccess/paySuccess",
+		    "style" : {
+		    	"navigationBarTitleText": "支付成功",
+				"navigationBarBackgroundColor": "#48c909",
+				"navigationBarTextStyle":"white"
+		    }
+		},{
+		    "path" : "pages/addOrUpdateAddress/addOrUpdateAddress",
+		    "style" : {
+		    	"navigationBarTitleText": "添加地址"
+		    }
+		},{
+		    "path" : "pages/addressManagement/addressManagement",
+		    "style" : {
+				"navigationBarTitleText": "地址管理"
+			}
+		}
+		,{
+		    "path" : "pages/isSureOrder/isSureOrder",
+		    "style" : {
+		    	"navigationBarTitleText": "确认订单"
+		    }
+		},{
+		    "path" : "pages/chooiseStoreName/chooiseStoreName",
+		    "style" : {
+				"navigationBarTitleText": "附近门店"
+			},
+			"enablePullDownRefresh":true
 		},{
 		    "path" : "pages/category/category",
 		    "style" : {
 				"navigationBarTitleText": "分类"
 			}
-		}
+		},{
+		    "path" : "pages/productInfo/productInfo",
+		    "style" : {
+				"navigationBarTitleText": "商品详情"
+			}
+		},{
+            "path" : "pages/registerAccount/registerAccount",
+            "style" : {
+            	"navigationBarTitleText": "注册成为会员"
+            }
+        }
+        ,{
+            "path" : "pages/updatePersonalInfomation/updatePersonalInfomation",
+            "style" : {
+            	"navigationBarTitleText": "个人信息完善"
+            }
+        }
+        ,{
+            "path" : "pages/mineInvite/mineInvite",
+            "style" : {
+            	"navigationBarTitleText": "名下邀请客户",
+				"enablePullDownRefresh":true
+            }
+			
+        }
+        ,{
+            "path" : "pages/mingCoupon/mingCoupon",
+            "style" : {
+				"navigationBarTitleText": "我的会员"
+           }
+        }
+        
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
