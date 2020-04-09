@@ -51,7 +51,7 @@
 				<view class="leftWord">可用560个积分抵用5.60元</view>
 				<radio value="r1" :checked="false" class="radio"/>
 			</view> -->
-			<view class="y-h-q">
+			<!-- <view class="y-h-q">
 				<view>
 					<text class="txt1">优惠券：</text>
 					<text class="txt2">满300减10元</text>
@@ -60,7 +60,7 @@
 					<text class="txt3">-￥10</text>
 					<image lazy-load :src="imgSrc+'public/arrow.png'"></image>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<view style="height: 116rpx;"></view>
 		<view class="b-footer">

@@ -105,7 +105,7 @@
 				Request(
 					'member.cart.get_cart'
 				).then((res)=>{
-					console.log(res)
+					console.log(res,'reresresrs')
 					// 成功方法
 					this.lists = res.data
 					

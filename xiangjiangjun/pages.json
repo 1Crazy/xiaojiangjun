@@ -149,6 +149,18 @@
            }
         }
         
+        ,{
+            "path" : "pages/tyInfo/tyInfo",
+            "style" : {
+				"navigationBarTitleText": "保险客户体验"
+			}
+        }
+        ,{
+            "path" : "pages/moreTyList/moreTyList",
+            "style" : {
+				"navigationBarTitleText": "更多体验"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -29,7 +29,7 @@
 		</view>
 		<!-- 体验区 -->
 		<view class="tyq">
-			<view class="box" v-for="(item ,index) in tyq" :key="index">
+			<view class="box" v-for="(item ,index) in tyq" :key="index" @tap="gotoTy(index)">
 				<image lazy-load class="img" :src="item.img">
 				<view class="word">{{item.word}}</view>
 			</view>
@@ -160,6 +160,14 @@
 			}) 
 		},
 		methods: {
+			// 去体验区页面，0是保险客户体验区，1是更多体验
+			gotoTy(num){
+				let url = ''
+				num == 0 ? url = '/pages/tyInfo/tyInfo' : url = '/pages/moreTyList/moreTyList'
+				uni.navigateTo({
+					url
+				})
+			},
 			change(e) {
 				this.current = e.detail.current;
 			},
