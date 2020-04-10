@@ -269,6 +269,8 @@
 						// 成功方法
 						if(res.data.error==0){
 							_app.showToast('添加成功');
+						}else{
+							_app.showToast(res.data.message);
 						}
 						// uni.navigateTo({
 						// 	url: '/pages/isSureOrder/isSureOrder'

@@ -5,14 +5,18 @@
 			<uni-list>
 			    <uni-list-item title="到店自提" :thumb="imgSrc+'public/shop-icon.png'" @click="gotoDorPages"></uni-list-item>
 			</uni-list>
-			<view class="storeName" v-if="isStoreName">成都市高新区环球店</view>
+			<view class="storeName" v-if="isStoreName">{{storeName}}</view>
+			
+			<view v-if="!onlyStore">
+			
 			<uni-list>
 			    <uni-list-item title="快递邮寄" :show-arrow="false" notHighLight @tap="gotoAddressManagement" :thumb="imgSrc+'public/adress1.png'"></uni-list-item>
 			</uni-list>
 			<uni-list v-if="!orderInfo.address.realname">
 				<uni-list-item title="添加收货地址" :show-arrow="false" notHighLight></uni-list-item>
 			</uni-list>
-			<view class="address-info" v-if="orderInfo.address.realname" @tap="gotoAddressManagement">
+			
+			<view class="address-info" v-if="orderInfo.address.realname && isAdress" @tap="gotoAddressManagement">
 				<view class="top">
 					<view class="name">{{orderInfo.address.realname}}</view>
 					<view class="phone">{{orderInfo.address.mobile}}</view>
@@ -20,6 +24,8 @@
 				<uni-list>
 					<uni-list-item notHighLight :title="orderInfo.address.city+orderInfo.address.area+orderInfo.address.address"></uni-list-item>
 				</uni-list>
+			</view>
+			
 			</view>
 		</view>
 		<view class="c-info" v-for="(item , index) in goods" :key="index">
@@ -96,10 +102,12 @@
 				goods:[],
 				chooseAddress:'',
 				chooseStore:'',
+				storeName:'请选择门店',//选择的门店名
 				aa:'',
 				bb:'',
 				checkToPay:false,
 				fromOrder:false,//是否来自订单
+				onlyStore:false//只能上门自提
 			};
 		},
 		onLoad(options) {
@@ -216,41 +224,43 @@
 				.then((res)=>{
 					console.log(res)
 					//微信
-					wx.requestPayment({
-					  timeStamp: res.timeStamp,
-					  nonceStr: res.nonceStr,
-					  package: res.package,
-					  signType: 'MD5',
-					  paySign: res.paySign,
-					  success (res) {
-						console.log(res)
-						if(res.errMsg=="requestPayment:ok"){
-							uni.navigateTo({
-								url: '/pages/paySuccess/paySuccess?id='+that.orderid
-							})
-						}
-					  },
-					  fail (res) { }
-					})
-					
-					
-					// //余额
-					// Request(
-					// 	'order.pay.complete',
-					// 	{
-					// 		id:this.orderid,
-					// 		type:'credit',
-					// 		comefrom:'wxapp'
-					// 	},
-					// 	"POST",
-					// 	'application/x-www-form-urlencoded'
-					// ).then((res)=>{
-					// 	// this.orderid = res.data.orderid
+					// wx.requestPayment({
+					//   timeStamp: res.timeStamp,
+					//   nonceStr: res.nonceStr,
+					//   package: res.package,
+					//   signType: 'MD5',
+					//   paySign: res.paySign,
+					//   success (res) {
 					// 	console.log(res)
+					// 	if(res.errMsg=="requestPayment:ok"){
+					// 		uni.navigateTo({
+					// 			url: '/pages/paySuccess/paySuccess?id='+that.orderid
+					// 		})
+					// 	}
+					//   },
+					//   fail (res) { }
 					// })
-					// .catch((res)=>{
-					// 	// 失败方法
-					// })
+					
+					
+					//余额
+					Request(
+						'order.pay.complete',
+						{
+							id:this.orderid,
+							type:'credit',
+							comefrom:'wxapp'
+						},
+						"POST",
+						'application/x-www-form-urlencoded'
+					).then((res)=>{
+						// this.orderid = res.data.orderid
+						uni.navigateTo({
+							url: '/pages/paySuccess/paySuccess?id='+that.orderid
+						})			
+					})
+					.catch((res)=>{
+						// 失败方法
+					})
 				})
 				.catch((res)=>{
 					// 失败方法
@@ -272,6 +282,13 @@
 					this.orderInfo = res.data
 					this.chooseAddress = res.data.address.id ? res.data.address.id : ''
 					this.goods = res.data.goods[0]['goods']
+					
+					for(var i=0 ; i<this.goods.length;i++){
+						console.log(this.goods[i]['type'])
+						if(this.goods[i]['type']==2){
+							this.onlyStore =true
+						}
+					}
 					
 					// console.log(this.chooseAddress,this.chooseAddress == '')
 					if(this.chooseAddress != ''){

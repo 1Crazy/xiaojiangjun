@@ -37,7 +37,7 @@
 		<view class="orderlist">
 			<view class="title">
 				<view class="leftTitle">服务订单</view>
-				<view class="rightTitle" @tap="gotoAllOrder(0)">查看全部订单 ></view>
+				<view class="rightTitle" @tap="gotoAllOrder(0,false)">查看全部订单 ></view>
 			</view>
 			<view class="content">
 				<view class="item">
@@ -124,9 +124,9 @@
 					url: '/pages/addressManagement/addressManagement'
 				})
 			},
-			gotoAllOrder(num){
+			gotoAllOrder(num,isgoods=true){
 				uni.navigateTo({
-					url: '/pages/allOrder/allOrder?status='+num
+					url: '/pages/allOrder/allOrder?status='+num+'&isgoods='+isgoods
 				})
 			},
 			gotoAccount(){

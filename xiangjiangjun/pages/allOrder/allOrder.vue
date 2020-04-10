@@ -6,13 +6,13 @@
 				<view class="line"></view>
 			</view>
 			<view @tap="changeTab(1)" :class="navIndex == 1 ? 'itemWrap active': ''">
-				<view class="word">待发货</view>
+				<view class="word">{{isgoods == 'true' ? "待发货":"待销费"}}</view>
 				<view class="line"></view>
 			</view>
-			<view @tap="changeTab(2)" :class="navIndex == 2 ? 'itemWrap active': ''">
+			<view @tap="changeTab(2)" v-if="isgoods == 'true'" :class="navIndex == 2 ? 'itemWrap active': ''">
 				<view class="word">待收货</view>
 				<view class="line"></view>
-			</view>
+			</view> 
 			<view @tap="changeTab(3)" :class="navIndex == 3 ? 'itemWrap active': ''">
 				<view class="word">已完成</view>
 				<view class="line"></view>
@@ -38,6 +38,7 @@
 			</view>
 			<view class="btnWrap">
 				<button v-if="navIndex==0" @tap="cancelOrder(item.id)">取消订单</button>
+				<button v-if="navIndex==1 && isgoods == 'false'" class="activeBtn">要使用</button>
 				<button v-if="navIndex==3">删除订单</button>
 				<button v-if="navIndex==0" class="activeBtn" @tap="gotoPay(item)">去支付</button>
 				<button v-if="navIndex==2" class="activeBtn" @tap="finishOrder(item.id)">确认收货</button>
@@ -65,12 +66,22 @@
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				navIndex: 0,
-				orderList: []
+				orderList: [],
+				isgoods:true//是普通订单 false服务订单
 			};
 		},
 		onLoad(e) {
-			console.log(e)
+			console.log(e,'lllll')
 			this.navIndex = e.status
+			this.isgoods = e.isgoods
+			
+			
+			let title = ''
+			e.isgoods == 'true'  ? title = '商品订单' : title = '服务订单'
+			uni.setNavigationBarTitle({
+			    title
+			});
+			
 			// this.getData(e.status)
 		},
 		onShow() {
@@ -86,7 +97,8 @@
 					'order.get_list',
 					{
 						page:1,
-						status:type
+						status:type,
+						isgoods: this.isgoods
 					}
 				)
 				.then((res)=>{
