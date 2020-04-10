@@ -2,16 +2,16 @@
 <template>
 	<view>
 		<view class="header">
-			<image lazy-load class="img" :src="storeInfo.logo"></image>
+			<image lazy-load class="img" :src="banner"></image>
 		</view>
 		<!-- 详情 -->
 		<view class="info">
 			<view class="navwrap">
 				<!-- 690rpx -->
-				<view :class="tab == 1 ? 'active': ''" @tap="changeTab(1)">商品详情</view>
+				<view class="active">详情</view>
 			</view>
-			<view :class="tab == 1 ? 'productInfo': 'hide'">
-				<view class="article">{{storeInfo.desc}}</view>
+			<view :class="productInfo">
+				<view class="article">{{desc}}</view>
 			</view>
 		</view>
 	</view>
@@ -21,7 +21,9 @@
 	export default {
 		data() {
 			return {
-				
+				imgSrc: this.$store.state.imgSrc,
+				banner: `${this.$store.state.imgSrc}productInfo/banner1.png`,
+				desc: '详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情'
 			};
 		}
 	}
