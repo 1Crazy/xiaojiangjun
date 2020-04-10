@@ -1,29 +1,44 @@
 <template>
 	<view>
 		<view class="itemWrap">
+			<view class="name">商户名称:</view>
+			<input class="ipt" type="text" v-model="cooperationInfo.merchaname" placeholder="请输入商户名称">
+		</view>
+		<view class="itemWrap">
 			<view class="name">姓名:</view>
-			<input class="ipt" type="text" v-model="cooperationInfo.name" placeholder="请输入姓名">
+			<input class="ipt" type="text" v-model="cooperationInfo.realname" placeholder="请输入姓名">
 		</view>
 		<view class="itemWrap">
 			<view class="name">电话号码:</view>
-			<input class="ipt" type="text" v-model="cooperationInfo.mobil" placeholder="请输入电话号码">
+			<input class="ipt" type="text" v-model="cooperationInfo.mobile" placeholder="请输入电话号码">
 		</view>
-		<view class="itemWrap">
+		<!-- <view class="itemWrap">
 			<view class="name">类型:</view>
-			<!-- <input class="ipt" type="text" placeholder="请输入主营产品/服务"> -->
 			<picker class="ipt" @change="bindPickerChange" :value="index" :range="array">
 				<view>{{index == null ? '请输入主营产品/服务' : array[index]}}</view>
 			</picker>
-		</view>
+		</view> -->
 		<view class="itemWrap">
-			<view class="name">主营产品/服务:</view>
-			<input class="ipt" type="text" v-model="cooperationInfo.service" placeholder="请输入类型">
+			<view class="name">主营项目/服务:</view>
+			<input class="ipt" type="text" v-model="cooperationInfo.salecate" placeholder="请输入类型">
+		</view>
+		
+		<!-- <view class="itemWrap">
+			<view class="name">地址:</view>
+			<input class="ipt" type="text" v-model="cooperationInfo.address" placeholder="地址">
+		</view> -->
+		
+		<view class="itemWrap">
+			<view class="name">用户名:</view>
+			<input class="ipt" type="text" v-model="cooperationInfo.uname" placeholder="用户名">
 		</view>
 		
 		<view class="itemWrap">
-			<view class="name">地址:</view>
-			<input class="ipt" type="text" v-model="cooperationInfo.address" placeholder="地址">
+			<view class="name">密码:</view>
+			<input class="ipt" type="password" v-model="cooperationInfo.upass" placeholder="密码">
 		</view>
+		<view style="height: 120rpx;"></view>
+		
 		<button class="btn" @tap="sumbit()">提交</button>
 	</view>
 </template>
@@ -34,14 +49,15 @@
 	export default {
 		data() {
 			return {
-				array: ['汽修厂家','汽配厂家'],
+				array: ['普通用户','汽修厂家','汽配厂家'],
 				index: 0,
 				cooperationInfo:{
-					name:"",
-					mobil:"",
-					type:"",
-					service:"",
-					address:""
+					merchaname :"",
+					salecate :"",
+					realname :"",
+					mobile :"",
+					uname:"",
+					upass:""
 				}
 			};
 		},
@@ -52,25 +68,31 @@
 			},
 			sumbit(){
 				console.log(this.cooperationInfo)
-				if(!VerifyPhoneNumber(this.cooperationInfo.mobil)){
+				if(!VerifyPhoneNumber(this.cooperationInfo.mobile)){
 					_app.showToast('电话格式不正确')
-				}else{
+				}else if(this.cooperationInfo.salecate=='' || this.cooperationInfo.realname=='' || this.cooperationInfo.mobile=='' || this.cooperationInfo.uname=='' || this.cooperationInfo.upass==''){
+					_app.showToast('请完善信息')
+				}
+				else{
 					Request(
-						'member.signCooperation',
+						'changce.merch.apply',
 						{
-							name:this.cooperationInfo.name,
-							tel:this.cooperationInfo.mobil,
-							type:this.cooperationInfo.type,
-							service:this.cooperationInfo.service,
-							address:this.cooperationInfo.address
-						}
+							merchname :this.cooperationInfo.merchaname,
+							salecate :this.cooperationInfo.salecate,
+							realname :this.cooperationInfo.realname,
+							mobile :this.cooperationInfo.mobile,
+							uname:this.cooperationInfo.uname,
+							upass:this.cooperationInfo.upass
+						},
+						"POST",
+						"application/x-www-form-urlencoded"
 					)
 					.then((res)=>{
 						console.log(res)
-						if(res.data.error==0){
+						if(res.data.status==1){
 							_app.showToast('提交成功');
 						}else{
-							_app.showToast('网络出现问题,请稍后再试');
+							_app.showToast(res.data.message);
 						}
 					})
 					.catch((res)=>{
