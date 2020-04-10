@@ -11,7 +11,7 @@
 				<view class="distance">{{item.distance}}km</view>
 				<view class="storeName">{{item.storename}}</view>
 			</view>
-			<button type="default" class="btn" @tap="chooseStore(item.id)">确定</button>
+			<button type="default" class="btn" @tap="chooseStore(index)">确定</button>
 		</view>
 		
 		<button v-if="nomore" type="default" class="lookMore" @tap="moreData()">查看更多</button>
@@ -91,13 +91,16 @@
 					// 失败方法
 				})
 			},
-			chooseStore(id){
-				// console.log(id)
+			chooseStore(index){
+				
+				
+				console.log(this.list[index])
 				var pages = getCurrentPages();
 				// var nowPage = pages[pages.length -1]
 				var prevPage = pages[pages.length - 2];  
-				prevPage.$vm.chooseStore = id 
+				prevPage.$vm.chooseStore = this.list[index]['id'] 
 				prevPage.$vm.chooseAddress = ''
+				prevPage.$vm.storeName = this.list[index]['address']+this.list[index]['storename']+'店',
 				prevPage.$vm.checkToPay = true
 				prevPage.$vm.isStoreName = true
 				prevPage.$vm.isAdress = false

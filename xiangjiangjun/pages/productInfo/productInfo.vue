@@ -108,7 +108,7 @@
 							<button class="symbol" @tap="addNum()">+</button>
 						</view>
 					</view>
-					<view class="c-bottom-bottom">
+					<view class="c-bottom-bottom"  v-if="picker.length != 0">
 						<view class="c-b-title">选择规格：</view>
 						<view class="btn-wrap">
 							<button type="default" :class="specificationIndex==index ? 'active-btn btn ' : 'btn'" v-for="(item ,index) in picker" :key="index" @tap="changeActiveBtn(index)">{{item.title}}</button>				
@@ -269,6 +269,8 @@
 						// 成功方法
 						if(res.data.error==0){
 							_app.showToast('添加成功');
+						}else{
+							_app.showToast(res.data.message);
 						}
 						// uni.navigateTo({
 						// 	url: '/pages/isSureOrder/isSureOrder'
@@ -651,6 +653,8 @@ page{
 		text-align: left;
 	}
 	.productInfo{
+		overflow-x: hidden;
+		padding: 0 20rpx;
 		.img1{
 			width: 707rpx;
 			height: 559rpx;

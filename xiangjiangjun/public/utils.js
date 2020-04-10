@@ -1,4 +1,4 @@
-const dev = 'http://xiaojiangjun.cduxj.com/app/ewei_shopv2_api.php?i=2&r=' // 修改接口请求地址
+import { dev } from './config.js'
 const prodev = ''
 const local = 'local'
 const formatTime = date => {
@@ -149,9 +149,11 @@ const Totast = (title='请稍等', icon = 'none', duration = 1000) => {
  * 验证
  */
 const VerifyPhoneNumber = str => /^1\d{10}$/.test(str)
+const VerifyEmptyWord = str =>  /\S/.test(str) // 非空验证
 const VerifyIdentityCard = str => /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(str)
 const VerifyMoney = str => /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/.test(str)
-const VerifyPositive = str => /^[0-9]+$/.test(str) 
+const VerifyPositive = str => /^[0-9]+$/.test(str)
+
 /**
  * 数组查重
  */
@@ -174,6 +176,7 @@ module.exports = {
   VerifyMoney,
   CheckRepeat,
   VerifyPositive,
+  VerifyEmptyWord,
   DeleteModal,
   Totast,
   getKey,

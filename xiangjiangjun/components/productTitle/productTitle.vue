@@ -6,7 +6,7 @@
 				<view class="r-title"  v-if="title">{{title}}</view>
 				<view class="r-shortTitle" v-if="shortTitle">{{shortTitle}}</view>
 				<view class="r-info" v-if="details">{{details}}</view>
-				<view class="r-price" v-if="price"><text :style="'color:'+priceColor">￥{{price}}</text><text class="delPrice">￥{{originPrice}}</text></view>
+				<view class="r-price" v-if="price"><text :style="'color:'+priceColor">￥{{price}}</text><text class="delPrice" v-if="originPrice">￥{{originPrice}}</text></view>
 				<view class="r-num"  v-if="stock" >{{stock}}</view>
 				<view class="num" v-if="num">X{{num}}</view>
 			</view>

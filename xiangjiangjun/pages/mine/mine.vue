@@ -37,22 +37,22 @@
 		<view class="orderlist">
 			<view class="title">
 				<view class="leftTitle">服务订单</view>
-				<view class="rightTitle" @tap="gotoAllOrder(0)">查看全部订单 ></view>
+				<view class="rightTitle" @tap="gotoAllOrder(0,false)">查看全部订单 ></view>
 			</view>
 			<view class="content">
-				<view class="item">
+				<view class="item" @tap="gotoAllOrder(0,false)">
 					<image lazy-load :src="imgSrc+'mine/list1.png'" class="img"></image>
 					<view class="word">待支付</view>
 				</view>
-				<view class="item">
+				<view class="item" @tap="gotoAllOrder(1,false)">
 					<image lazy-load :src="imgSrc+'mine/list6.png'" class="img"></image>
 					<view class="word">待消费</view>
 				</view>
-				<view class="item">
+				<view class="item" @tap="gotoAllOrder(3,false)">
 					<image lazy-load :src="imgSrc+'mine/list4.png'" class="img"></image>
 					<view class="word">已完成</view>
 				</view>
-				<view class="item">
+				<view class="item" @tap="gotoAllOrder(4,false)">
 					<image lazy-load :src="imgSrc+'mine/list5.png'" class="img"></image>
 					<view class="word">退款售后</view>
 				</view>
@@ -124,9 +124,9 @@
 					url: '/pages/addressManagement/addressManagement'
 				})
 			},
-			gotoAllOrder(num){
+			gotoAllOrder(num,isgoods=true){
 				uni.navigateTo({
-					url: '/pages/allOrder/allOrder?status='+num
+					url: '/pages/allOrder/allOrder?status='+num+'&isgoods='+isgoods
 				})
 			},
 			gotoAccount(){

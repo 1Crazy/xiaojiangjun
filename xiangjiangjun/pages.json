@@ -7,6 +7,13 @@
 			}
 		}
 		,{
+		    "path" : "pages/paySuccess/paySuccess",
+		    "style" : {
+		    	"navigationBarTitleText": "支付成功",
+				"navigationBarBackgroundColor": "#48c909",
+				"navigationBarTextStyle":"white"
+		    }
+		},{
 		    "path" : "pages/mine/mine",
 		    "style" : {
 				"navigationBarTitleText": "我的",
@@ -84,13 +91,6 @@
 		    	"navigationBarTitleText": "商品订单"
 		    }
 		},{
-		    "path" : "pages/paySuccess/paySuccess",
-		    "style" : {
-		    	"navigationBarTitleText": "支付成功",
-				"navigationBarBackgroundColor": "#48c909",
-				"navigationBarTextStyle":"white"
-		    }
-		},{
 		    "path" : "pages/addOrUpdateAddress/addOrUpdateAddress",
 		    "style" : {
 		    	"navigationBarTitleText": "添加地址"
@@ -149,6 +149,24 @@
            }
         }
         
+        ,{
+            "path" : "pages/tyInfo/tyInfo",
+            "style" : {
+				"navigationBarTitleText": "保险客户体验"
+			}
+        }
+        ,{
+            "path" : "pages/moreTyList/moreTyList",
+            "style" : {
+				"navigationBarTitleText": "更多体验"
+			}
+        }
+        ,{
+            "path" : "pages/submitTy/submitTy",
+            "style" : {
+            	"navigationBarTitleText": "申请体验"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

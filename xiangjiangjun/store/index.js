@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import {imgAddress} from '../public/config.js'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
 		// imgSrc: '../../static/',
-		imgSrc: 'http://xiaojiangjun.cduxj.com/attachment/images/',
+		imgSrc: `${imgAddress}/attachment/images/`,
 		hasLogin: false,
 		userInfo: {},
 	},

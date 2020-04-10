@@ -63,6 +63,7 @@
 						curr.selected = 0
 						return curr
 					})
+					this.upGoodsChecked('all',0)
 				}
 				this.lists = lists
 				this.allSelectChecked ?  this.allSelectChecked = false : this.allSelectChecked = true
@@ -105,7 +106,7 @@
 				Request(
 					'member.cart.get_cart'
 				).then((res)=>{
-					console.log(res)
+					console.log(res,'reresresrs')
 					// 成功方法
 					this.lists = res.data
 					
