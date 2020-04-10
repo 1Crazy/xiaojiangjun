@@ -14,6 +14,7 @@
 				<view class="article">{{desc}}</view>
 			</view>
 		</view>
+		<button class="submitBtn">提交详情</button>
 	</view>
 </template>
 
@@ -83,7 +84,7 @@
 		padding: 30rpx 0;
 		justify-content: center;
 		.active{
-			background-color: #47c807;
+			background-color: #D70830;
 			color: white;
 		}
 		view{
@@ -114,5 +115,14 @@
 		}
 	}
 	
+}
+.submitBtn{
+	position: fixed;
+	background-color: #47c807;
+	width:750rpx;
+	bottom: 0;
+	height: 100rpx;
+	line-height: 100rpx;
+	color: white;
 }
 </style>
