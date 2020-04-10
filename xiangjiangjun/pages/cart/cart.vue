@@ -63,6 +63,7 @@
 						curr.selected = 0
 						return curr
 					})
+					this.upGoodsChecked('all',0)
 				}
 				this.lists = lists
 				this.allSelectChecked ?  this.allSelectChecked = false : this.allSelectChecked = true
