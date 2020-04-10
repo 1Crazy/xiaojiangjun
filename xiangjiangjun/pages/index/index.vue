@@ -163,7 +163,7 @@
 			// 去体验区页面，0是保险客户体验区，1是更多体验
 			gotoTy(num){
 				let url = ''
-				num == 0 ? url = '/pages/tyInfo/tyInfo' : url = '/pages/moreTyList/moreTyList'
+				num == 0 ? url = '/pages/tyInfo/tyInfo?static=one' : url = '/pages/moreTyList/moreTyList?static=all'
 				uni.navigateTo({
 					url
 				})

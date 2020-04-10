@@ -17,6 +17,7 @@
 <script>
 	import _app from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js';
 	import { Request,VerifyPhoneNumber } from '../../public/utils.js'
+	import { VerifyEmptyWord } from '../../public/utils.js'
 	export default {
 		data() {
 			return {
@@ -33,7 +34,6 @@
 		},
 		methods: {
 			sendSms(){
-				console.log(this.mobile)
 				if(!VerifyPhoneNumber(this.mobile)){
 					_app.showToast('手机号有误')
 				}else{
@@ -54,14 +54,15 @@
 				}
 			},
 			sumbit(){
-				if(!VerifyPhoneNumber(this.mobile)){
+				if (!VerifyEmptyWord(this.name)){
+					_app.showToast('请填写姓名')
+					return
+				}
+				else if(!VerifyPhoneNumber(this.mobile)){
 					_app.showToast('手机号有误')
 					return
-				}else if(this.code.length==0){
+				}else if(this.code.length != 5 ){
 					_app.showToast('验证码错误')
-					return
-				}else if(this.name.length==0){
-					_app.showToast('请填写姓名')
 					return
 				}else{
 					Request(
@@ -75,6 +76,9 @@
 					.then((res)=>{
 						if(res.data.error==0){
 							_app.showToast('提交成功,请耐心等待审核')
+							setTimeout(function() {
+								uni.navigateBack({})
+							}, 2000);
 						}else{
 							_app.showToast(res.data.message)
 						}

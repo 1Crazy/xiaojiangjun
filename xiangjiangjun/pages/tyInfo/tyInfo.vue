@@ -14,19 +14,54 @@
 				<view class="article">{{desc}}</view>
 			</view>
 		</view>
-		<button class="submitBtn">提交详情</button>
+		<button class="submitBtn" @tap="submitInfo">提交详情</button>
 	</view>
 </template>
 
 <script>
+	import {Request} from '../../public/utils.js'
 	export default {
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				banner: `${this.$store.state.imgSrc}productInfo/banner1.png`,
-				desc: '详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情'
+				desc: '',
 			};
-		}
+		},
+		onLoad(options){
+			console.log(options,'options')
+			options.id ? this.getInfo(options.id,true) : this.getInfo(options.static)
+		},
+		methods:{
+			getInfo(param,bool){
+				const data = {}
+				if (bool){
+					data.id = param
+				}else{
+					data.static = param
+				}
+				Request(
+					'index.experience_zone',
+					data
+				)
+				.then((res)=>{
+					console.log(res,'res')
+					if (res.data.error == 0) {
+						this.banner = res.data.info.images
+						uni.setNavigationBarTitle({
+						    title: res.data.info.title
+						});
+						this.desc = res.data.info.detail
+					}
+				})
+				.catch((res)=>{
+					
+				})
+			},
+			submitInfo(){
+				
+			},
+		},
 	}
 </script>
 
