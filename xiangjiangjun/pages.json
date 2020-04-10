@@ -161,6 +161,12 @@
 				"navigationBarTitleText": "更多体验"
 			}
         }
+        ,{
+            "path" : "pages/submitTy/submitTy",
+            "style" : {
+            	"navigationBarTitleText": "申请体验"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

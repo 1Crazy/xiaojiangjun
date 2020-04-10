@@ -14,7 +14,7 @@
 				<view class="article">{{desc}}</view>
 			</view>
 		</view>
-		<button class="submitBtn" @tap="submitInfo">提交详情</button>
+		<button class="submitBtn" @tap="submitInfo">申请体验</button>
 	</view>
 </template>
 
@@ -26,6 +26,7 @@
 				imgSrc: this.$store.state.imgSrc,
 				banner: `${this.$store.state.imgSrc}productInfo/banner1.png`,
 				desc: '',
+				id: null
 			};
 		},
 		onLoad(options){
@@ -51,6 +52,7 @@
 						uni.setNavigationBarTitle({
 						    title: res.data.info.title
 						});
+						this.id = res.data.info.id
 						this.desc = res.data.info.detail
 					}
 				})
@@ -59,7 +61,9 @@
 				})
 			},
 			submitInfo(){
-				
+				uni.navigateTo({
+					url: `/pages/submitTy/submitTy?id=${this.id}`
+				})
 			},
 		},
 	}
