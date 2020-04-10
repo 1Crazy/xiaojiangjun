@@ -45,7 +45,7 @@
 			<view class="totalPrice">
 				<text class="txt1">共{{item.total}}件商品</text>
 				<text class="txt2">合计：</text>
-				<text class="txt3">￥{{item.marketprice*item.total}}</text>
+				<text class="txt3">￥{{fromOrder ? item.price*item.total :item.marketprice*item.total}}</text>
 			</view>
 			<!-- <view class="integral">
 				<view class="leftWord">可用560个积分抵用5.60元</view>
@@ -66,9 +66,9 @@
 		<view class="b-footer">
 			<view class="txtWrap">
 				<view class="txt1">合计</view>
-				<view class="txt2">￥{{orderInfo.realprice}}</view>
+				<view class="txt2">￥{{fromOrder ? orderInfo.order.price : orderInfo.realprice}}</view>
 			</view>
-			<button type="default" class="btn" @tap="pay">立即支付</button>
+			<button type="default" class="btn" @tap="fromOrder ? zfOrder() : pay()">立即支付</button>
 		</view>
 	</view>
 </template>
@@ -98,14 +98,22 @@
 				chooseStore:'',
 				aa:'',
 				bb:'',
-				checkToPay:false
+				checkToPay:false,
+				fromOrder:false,//是否来自订单
 			};
 		},
 		onLoad(options) {
-			this.id = options.id;
-			this.num = options.num;
-			this.optionid = options.optionid;
-			this.getData(this.id,this.num,this.optionid);
+			if(options.type){//有值代表全部订单中点击去支付
+				console.log('a')
+				this.fromOrder = true
+				this.getOrderDetail(options.id);
+			}else{
+				this.id = options.id;
+				this.num = options.num;
+				this.optionid = options.optionid;
+				this.getData(this.id,this.num,this.optionid);
+			}
+			
 		},
 		onShow(e) {
 			// console.log(this.chooseAddress)
@@ -175,60 +183,17 @@
 						}
 					).then((res)=>{
 						this.orderid = res.data.orderid
+						console.log(res.data.error) 
+						if(res.data.error != '0' ){
+							_app.showToast(res.data.message)
+							return false
+						}
+						return true
 					})
 					.then((res)=>{
-						Request(
-							'order.pay',
-							{
-								id:this.orderid,
-								comefrom:'wxapp'
-							}
-						).then((res)=>{
-							console.log(res)
-							return res.data.wechat.payinfo
-						})
-						.then((res)=>{
-							console.log(res)
-							//微信
-							wx.requestPayment({
-							  timeStamp: res.timeStamp,
-							  nonceStr: res.nonceStr,
-							  package: res.package,
-							  signType: 'MD5',
-							  paySign: res.paySign,
-							  success (res) {
-								console.log(res)
-								if(res.errMsg=="requestPayment:ok"){
-									uni.navigateTo({
-										url: '/pages/paySuccess/paySuccess?id='+that.orderid
-									})
-								}
-							  },
-							  fail (res) { }
-							})
-							
-							
-							// //余额
-							// Request(
-							// 	'order.pay.complete',
-							// 	{
-							// 		id:this.orderid,
-							// 		type:'credit',
-							// 		comefrom:'wxapp'
-							// 	},
-							// 	"POST",
-							// 	'application/x-www-form-urlencoded'
-							// ).then((res)=>{
-							// 	// this.orderid = res.data.orderid
-							// 	console.log(res)
-							// })
-							// .catch((res)=>{
-							// 	// 失败方法
-							// })
-						})
-						.catch((res)=>{
-							// 失败方法
-						})
+						if(res){
+							this.zfOrder()
+						}
 					})
 					.catch((res)=>{
 						// 失败方法
@@ -236,6 +201,60 @@
 				}else{
 					_app.showToast('请选择到店自提或者快递地址')
 				}	
+			},
+			zfOrder(){//支付方法
+				Request(
+					'order.pay',
+					{
+						id:this.orderid,
+						comefrom:'wxapp'
+					}
+				).then((res)=>{
+					console.log(res)
+					return res.data.wechat.payinfo
+				})
+				.then((res)=>{
+					console.log(res)
+					//微信
+					wx.requestPayment({
+					  timeStamp: res.timeStamp,
+					  nonceStr: res.nonceStr,
+					  package: res.package,
+					  signType: 'MD5',
+					  paySign: res.paySign,
+					  success (res) {
+						console.log(res)
+						if(res.errMsg=="requestPayment:ok"){
+							uni.navigateTo({
+								url: '/pages/paySuccess/paySuccess?id='+that.orderid
+							})
+						}
+					  },
+					  fail (res) { }
+					})
+					
+					
+					// //余额
+					// Request(
+					// 	'order.pay.complete',
+					// 	{
+					// 		id:this.orderid,
+					// 		type:'credit',
+					// 		comefrom:'wxapp'
+					// 	},
+					// 	"POST",
+					// 	'application/x-www-form-urlencoded'
+					// ).then((res)=>{
+					// 	// this.orderid = res.data.orderid
+					// 	console.log(res)
+					// })
+					// .catch((res)=>{
+					// 	// 失败方法
+					// })
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
 			},
 			getData(id='',num='',optionid=''){
 				Request(
@@ -281,6 +300,25 @@
 					console.log(res)
 					this.getData()
 					// 成功方法
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			},
+			getOrderDetail(id){
+				this.orderid = id
+				Request(
+					'order.detail',
+					{
+						id:id,
+					}
+				).then((res)=>{
+					this.orderInfo = res.data
+					this.chooseAddress = res.data.address.id ? res.data.address.id : ''
+					this.goods = res.data.goods
+					if(this.chooseAddress != ''){
+						this.checkToPay = true
+					}
 				})
 				.catch((res)=>{
 					// 失败方法

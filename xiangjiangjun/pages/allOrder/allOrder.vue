@@ -147,7 +147,7 @@
 			},
 			gotoPay(item){
 				uni.navigateTo({
-					url: '/pages/isSureOrder/isSureOrder?id='+item.id+'&num='+item.total+'&optionid='+item.pickerChoose
+					url: '/pages/isSureOrder/isSureOrder?id='+item.id+'&type=topay'
 				})
 			}
 		}
