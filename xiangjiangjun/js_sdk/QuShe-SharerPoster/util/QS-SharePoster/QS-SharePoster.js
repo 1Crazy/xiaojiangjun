@@ -53,7 +53,8 @@ function returnPromise(obj) {
 	} = obj;
 	return new Promise(async (rs, rj) => {
 		try {
-			_app.showLoading('正在准备海报数据');
+			// _app.showLoading('正在准备海报数据');
+			_app.showLoading('正在加载图片')
 			if (!Context) {
 				_app.log('没有画布对象,创建画布对象');
 				Context = uni.createCanvasContext(posterCanvasId, (_this || null));
@@ -234,7 +235,7 @@ function drawShareImage(obj) { //绘制海报方法
 	drawDelayTime = drawDelayTime !== undefined ? drawDelayTime : 100;
 	return new Promise((rs, rj) => {
 		try {
-			_app.showLoading('正在绘制海报');
+			_app.showLoading('正在加载图片');
 			_app.log('背景对象:' + JSON.stringify(bgObj));
 			if (bgObj && bgObj.path) {
 				_app.log('背景有图片路径');
@@ -297,10 +298,11 @@ function drawShareImage(obj) { //绘制海报方法
 					}
 				}
 			}
-			_app.showLoading('绘制中')
+			// _app.showLoading('绘制中')
+			_app.showLoading('正在加载图片')
 			setTimeout(() => {
 				Context.draw((typeof(reserve) == 'boolean' ? reserve : false), function(){
-					_app.showLoading('正在输出图片');
+					// _app.showLoading('正在输出图片');
 					let setObj = setCanvasToTempFilePath || {};
 					if (setObj && typeof(setObj) == 'function')
 						setObj = setCanvasToTempFilePath(bgObj, type);

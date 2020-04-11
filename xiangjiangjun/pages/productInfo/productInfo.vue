@@ -6,8 +6,8 @@
 		<!-- 内容 -->
 		<view class="swiperWrap">
 			<swiper :current="current" @change="swiperChange" class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-				<swiper-item  v-for="(item ,index) in goods.thumbs" :key="index">
-					<image lazy-load class='img' :src="item" mode=""></image>
+				<swiper-item v-for="(item ,index) in goods.thumbs" :key="index">
+					<image @tap="_previewImage(goods.thumbs,index)" lazy-load class='img' :src="item" mode=""></image>
 				</swiper-item>
 			</swiper>
 			<view class="num">{{current+1}}/{{goods.thumbs.length}}</view>
@@ -49,7 +49,7 @@
 				</view>
 				<view class="commentContent">{{item.content}}</view>
 				<view :class="item.images.length>0?'commentPic':'hide'">
-					<image lazy-load :src="itemPic" class="pic" v-for="(itemPic ,index) in item.images" :key="index"></image>
+					<image @tap="_previewImage(item.images,idx)" lazy-load :src="itemPic" class="pic" v-for="(itemPic ,idx) in item.images" :key="idx"></image>
 				</view>
 			</view>
 		</view>
@@ -148,7 +148,7 @@
 	} from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/QS-SharePoster.js';
 	import {uniPopup} from '../../components/uni/uni-popup/uni-popup.vue'
 	import './index.scss'
-	import { Request } from '../../public/utils.js'
+	import { Request, _previewImage } from '../../public/utils.js'
 	
 	export default {
 		components: {uniPopup},
@@ -195,6 +195,7 @@
 			this.getGoodDetail(e.id);
 		},
 		methods: {
+			_previewImage,
 			swiperChange (e) {
 				this.current=e.detail.current
 			},

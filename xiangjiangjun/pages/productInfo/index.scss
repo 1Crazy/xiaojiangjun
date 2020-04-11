@@ -50,12 +50,13 @@
 		}
 		.commentPic{
 			display: flex;
-			justify-content: space-between;
+			justify-content: flex-start;
 			flex-wrap: wrap;
 			.pic{
 				width: 223rpx;
 				height: 223rpx;
 				margin-top: 20rpx;
+				margin-right: 10rpx;
 			}
 		}
 	}

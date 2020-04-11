@@ -19,7 +19,7 @@
 				<text class="txt2">{{storeInfo.tel}}</text>
 				<button class="btn" @tap="markPhoneCall()">一键拨打</button>
 			</view>
-			<view class="item">
+			<view class="item" @tap="openMap(storeInfo.lat,storeInfo.lng)">
 				<image lazy-load src="../../static/public/shop2.png" mode="" class="img img1"></image>
 				<text class="txt1">店铺地址:</text>
 				<text class="txt2">{{storeInfo.city}}{{storeInfo.area}}{{storeInfo.address}}</text>
@@ -29,8 +29,8 @@
 		<!-- 详情 -->
 		<view class="info">
 			<view class="navwrap">
-				<view :class="tab == 1 ? 'active': ''" @tap="changeTab(1)">商品详情</view>
-				<view :class="tab == 2 ? 'active': ''" @tap="changeTab(2)">用户评价</view>
+				<view class="active">服务详情</view>
+				<!-- <view :class="tab == 2 ? 'active': ''" @tap="changeTab(2)">用户评价</view> -->
 			</view>
 			<view :class="tab == 1 ? 'productInfo': 'hide'">
 				<view class="article">{{storeInfo.desc}}</view>
@@ -48,7 +48,7 @@
 				</view>
 				<view class="commentContent">{{item.content}}</view>
 				<view :class="item.commentPic.length>0?'commentPic':'hide'">
-					<image lazy-load :src="itemPic" class="pic" v-for="(itemPic ,index) in item.commentPic" :key="index"></image>
+					<image @tap="_previewImage(item.commentPic,idx)" lazy-load :src="itemPic" class="pic" v-for="(itemPic ,idx) in item.commentPic" :key="idx"></image>
 				</view>
 			</view>
 		</view>
@@ -58,13 +58,15 @@
 
 <script>
 	import './index.scss'
-	import {Request} from '../../public/utils.js'
+	import {Request,_previewImage,openMap} from '../../public/utils.js'
 	export default {
 		data() {
 			return {
 				serviceTypeBtn: ['车身美容','内部美容','漆面处理','漆面处理','洗车','贴膜','打蜡'],
 				imgSrc: this.$store.state.imgSrc,
 				current: 0,
+				// latitude:null,
+				// longitude:null,
 				tab: 1,//商品详情1，用户评价2
 				commentList: [
 					{
@@ -73,7 +75,7 @@
 						star: 2,
 						date: '2019-12-25',
 						content: '机油收到了，已经购买了几次了，值得信赖的商家，还是一如既往的好，和实体店购买的一样，实惠质量也非常不错！！！！',
-						commentPic: ['../../static/public/adress1.png','../../static/public/adress1.png','../../static/public/adress1.png']
+						commentPic: ['http://xiaojiangjun.cduxj.com/attachment/images/2/2020/04/GNq1cQQIvNW2NfI11a32Gc4n46OCWN.jpg','http://xiaojiangjun.cduxj.com/attachment/images/2/2020/01/hffoFt9fmo3Q17SmxQ55M1OY7fQ5Q6.jpg','http://xiaojiangjun.cduxj.com/attachment/images/2/2020/04/GNq1cQQIvNW2NfI11a32Gc4n46OCWN.jpg']
 					},
 					{
 						avatar: '../../static/public/adress1.png',
@@ -81,7 +83,7 @@
 						star: 3,
 						date: '2019-11-25',
 						content: 'xxxxxxxx！！！',
-						commentPic: []
+						commentPic: ['http://xiaojiangjun.cduxj.com/attachment/images/2/2020/04/GNq1cQQIvNW2NfI11a32Gc4n46OCWN.jpg','http://xiaojiangjun.cduxj.com/attachment/images/2/2020/01/hffoFt9fmo3Q17SmxQ55M1OY7fQ5Q6.jpg','http://xiaojiangjun.cduxj.com/attachment/images/2/2020/04/GNq1cQQIvNW2NfI11a32Gc4n46OCWN.jpg']
 					},
 				],
 				storeInfo:[]
@@ -94,6 +96,8 @@
 			
 		},
 		methods:{
+			_previewImage,
+			openMap,
 			//改变tab值
 			changeTab(num){
 				this.tab=num
@@ -256,7 +260,7 @@ page{
 			color: white;
 		}
 		view{
-			width: 345rpx;
+			width: 690rpx;
 			height: 80rpx;
 			background-color: #f2f2f2;
 			line-height: 80rpx;
@@ -336,11 +340,13 @@ page{
 			}
 			.commentPic{
 				display: flex;
-				justify-content: space-between;
+				justify-content: flex-start;
+				flex-wrap: wrap;
 				.pic{
 					width: 223rpx;
 					height: 223rpx;
 					margin-top: 20rpx;
+					margin-right: 10rpx;
 				}
 			}
 		}
