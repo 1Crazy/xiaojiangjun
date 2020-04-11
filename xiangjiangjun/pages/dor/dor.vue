@@ -194,9 +194,9 @@
 </script>
 
 <style lang="scss">
-	page{
-		background-color: #f6f6f6;
-	}
+page{
+	background-color: #f6f6f6;
+}
 .headerWrap{
 	background-color: white;
 	padding: 20rpx;

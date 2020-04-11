@@ -104,7 +104,7 @@
 				prevPage.$vm.checkToPay = true
 				prevPage.$vm.isStoreName = true
 				prevPage.$vm.isAdress = false
-				
+				prevPage.$vm.orderInfo.address = false
 				uni.navigateBack();
 			},
 		}

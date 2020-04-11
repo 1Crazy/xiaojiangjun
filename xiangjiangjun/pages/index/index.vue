@@ -120,21 +120,21 @@
 					},
 				],
 				listwrap:[
-					{
-						img: '../../static/index/listpic1.png',
-						title: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
-						shortitle: '我是短标题'
-					},
-					{
-						img: '../../static/index/listpic1.png',
-						title: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
-						shortitle: '我是短标题'
-					},
-					{
-						img: '../../static/index/listpic1.png',
-						title: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
-						shortitle: '我是短标题'
-					}
+					// {
+					// 	img: '../../static/index/listpic1.png',
+					// 	title: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
+					// 	shortitle: '我是短标题'
+					// },
+					// {
+					// 	img: '../../static/index/listpic1.png',
+					// 	title: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
+					// 	shortitle: '我是短标题'
+					// },
+					// {
+					// 	img: '../../static/index/listpic1.png',
+					// 	title: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
+					// 	shortitle: '我是短标题'
+					// }
 				]
 			}
 		},
