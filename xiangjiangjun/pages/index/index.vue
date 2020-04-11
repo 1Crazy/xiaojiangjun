@@ -7,7 +7,7 @@
 			</view>
 			<view class="right">
 				<image lazy-load class="fdj" :src="imgSrc+'public/fdj1.png'"></image>
-				<input class="ipt" type="text" placeholder="输入关键字搜索内容">
+				<view class="ipt" type="text" @tap="gotoSearch">输入关键字搜索内容</view>
 			</view>
 		</view>
 		<!-- 轮播 -->
@@ -67,7 +67,8 @@
 <script>
 	import QQMapWX from '../../public/qqmap-wx-jssdk.js'
 	import {
-		mapState
+		mapState,
+		mapMutations
 	} from 'vuex';
 	import uniSwiperDot from "@/components/uni/uni-swiper-dot/uni-swiper-dot.vue"
 	import { Request } from "../../public/utils.js"
@@ -92,7 +93,6 @@
 				],
 				current: 0,
 				mode: 'round',
-				cityName: '',
 				ad:[],
 				//nav
 				nav:[
@@ -139,27 +139,35 @@
 			}
 		},
 		computed:{
-			...mapState(["userInfo"])
+			...mapState(["userInfo","cityName"]),
 		},
 		onLoad() {
 			this._location()
 		},
 		onShow() {
-			const that = this;
-			Request(
-				'index.get_data'			
-			).then((res)=>{
-				console.log(res)
-				that.info = res.data.data.info
-				that.listwrap = res.data.data.goods
-				that.ad = res.data.data.ad
-				// 成功方法
-			})
-			.catch((res)=>{
-				// 失败方法
-			}) 
+			
 		},
 		methods: {
+			...mapMutations(['getCityName']),
+			getList(){
+				Request(
+					'index.get_data',
+					{
+						cityWord: this.cityName
+					}
+				).then((res)=>{
+					console.log(res)
+					if (res.data.error == 0) {
+						this.info = res.data.data.info
+						this.listwrap = res.data.data.goods
+						this.ad = res.data.data.ad
+					}
+					// 成功方法
+				})
+				.catch((res)=>{
+					// 失败方法
+				}) 
+			},
 			// 去体验区页面，0是保险客户体验区，1是更多体验
 			gotoTy(num){
 				let url = ''
@@ -208,7 +216,6 @@
 				})
 			},
 			_location(){
-				console.log(232323)
 				const that = this
 				uni.getLocation({
 					type: 'gcj02 ',
@@ -220,8 +227,9 @@
 								latitude: that.latitude,
 								longitude: that.longitude
 							},
-							success: function(res) {//成功后的回调
-								that.cityName = res.result.address_component.city
+							success: function(res) {	
+								that.getCityName(res.result.address_component.city)
+								that.getList()
 							},
 							fail: function(error) {
 								console.error(error);
@@ -255,6 +263,11 @@
 							})
 						}
 					}
+				})
+			},
+			gotoSearch(){
+				uni.navigateTo({
+					url: '/pages/search/search'
 				})
 			}
 		}

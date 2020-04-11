@@ -9,6 +9,7 @@ const store = new Vuex.Store({
 		imgSrc: `${imgAddress}/attachment/images/`,
 		hasLogin: false,
 		userInfo: {},
+		cityName: '',
 	},
 	mutations: {
 		login(state, provider,notShowModel) {
@@ -33,6 +34,9 @@ const store = new Vuex.Store({
 			uni.removeStorage({  
                 key: 'userInfo'  
             })
+		},
+		getCityName(state,name){
+			state.cityName = name
 		}
 	},
 	actions: {
