@@ -14,14 +14,17 @@
 				<view class="item" @tap="gotoAllOrder(0)">
 					<image lazy-load :src="imgSrc+'mine/list1.png'" class="img"></image>
 					<view class="word">待支付</view>
+					<view class="num" v-if="productOrder[0]>0">{{productOrder[0]>99 ? '···' : productOrder[0]}}</view>
 				</view>
 				<view class="item" @tap="gotoAllOrder(1)">
 					<image lazy-load :src="imgSrc+'mine/list2.png'" class="img"></image>
 					<view class="word">待发货</view>
+					<view class="num" v-if="productOrder[1]>0">{{productOrder[1]>99 ? "···" : productOrder[1]}}</view>
 				</view>
 				<view class="item" @tap="gotoAllOrder(2)">
 					<image lazy-load :src="imgSrc+'mine/list3.png'" class="img"></image>
 					<view class="word">待收货</view>
+					<view class="num" v-if="productOrder[2]>0">{{productOrder[2]>99 ? "···" : productOrder[2]}}</view>
 				</view>
 				<view class="item" @tap="gotoAllOrder(3)">
 					<image lazy-load :src="imgSrc+'mine/list4.png'" class="img"></image>
@@ -30,6 +33,7 @@
 				<view class="item" @tap="gotoAllOrder(4)">
 					<image lazy-load :src="imgSrc+'mine/list5.png'" class="img"></image>
 					<view class="word">退款售后</view>
+					<view class="num" style="right:-12rpx" v-if="productOrder[4]>0">{{productOrder[4]>99 ? "···" : productOrder[4]}}</view>
 				</view>
 			</view>
 		</view>
@@ -98,6 +102,7 @@
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				productOrder: [0,0,0,0,0]
 			}
 		},
 		onLoad(e) {
@@ -111,7 +116,7 @@
 			if (!this.hasLogin) {
 				this.showLoginModel()
 			}else{
-				
+				this.loadOrderNum()
 			}
 		},
 		computed:{
@@ -187,6 +192,7 @@
 						    // 成功方法
 							if (res.data.code == 1){
 								that.login(res.data.member)
+								that.loadOrderNum()
 							}else{
 								that.$refs.togglePopupChild.togglePopup()
 							}
@@ -201,6 +207,21 @@
 			cancelLogin(){
 				uni.reLaunch({
 					url: '/pages/index/index'
+				})
+			},
+			loadOrderNum(){
+				Request(
+					'member'
+				)
+				.then((res)=>{
+				    // 成功方法
+					if (res.data.error == 0) {
+						const {order_0,order_1,order_2,order_4} = res.data.statics
+						this.productOrder = [order_0,order_1,order_2,0,order_4]
+					}
+				})
+				.catch((res)=>{
+				    // 失败方法
 				})
 			}
 		}
@@ -285,6 +306,7 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+			position: relative;
 			.img{
 				width: 50rpx;
 				height: 40rpx;
@@ -296,6 +318,24 @@
 				font-stretch: normal;
 				color: #666666;
 				margin-top: 28rpx;
+			}
+			.num{
+				position: absolute;
+				width: 32rpx;
+				height: 32rpx;
+				background-color: #ff9000;
+				font-family: PingFang-SC-Medium;
+				font-size: 24rpx;
+				font-weight: normal;
+				font-stretch: normal;
+				line-height: 32rpx;
+				letter-spacing: 0rpx;
+				color: #ffffff;
+				top: -15rpx;
+				right: -20rpx;
+				text-align: center;
+				border-radius: 50%;
+				padding: 1px;
 			}
 		}
 	}
