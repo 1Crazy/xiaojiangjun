@@ -57,7 +57,8 @@
 					// 	title: 'YBM/意奔玛空调滤清YMB3140007空调滤芯空调滤芯',
 					// 	shortitle: '我是短标题'
 					// }
-				]
+				],
+				page:1
 			};
 		},
 		computed:{
@@ -67,19 +68,23 @@
 			this.getList()
 		},
 		methods:{
-			getList(){
+			getList(searchName=''){
 				Request(
 					'index.get_data',
 					{
 						cityWord: this.cityName,
-						keyWord: this.searchName
+						keyWord: searchName,
+						page:this.page
 					}
 				).then((res)=>{
 					console.log(res)
 					if (res.data.error == 0) {
-						this.info = res.data.data.info
-						this.listwrap = res.data.data.goods
-						this.ad = res.data.data.ad
+						
+						if(this.page==1){
+							this.listwrap = res.data.data.goods
+						}else{
+							this.listwrap = this.listwrap.concat(res.data.data.goods)
+						}
 					}
 					// 成功方法
 				})
@@ -87,8 +92,21 @@
 					// 失败方法
 				}) 
 			},
-			find(){
-				this.getList()
+			find(e){
+				this.getList(e.detail.value)
+			},
+			// 上拉加载，拉到底部触发
+			onReachBottom() {
+			  this.page = this.page+1
+			  this.getData()
+			},
+			onPullDownRefresh() {
+				this.page = 1;
+				this.list = [];
+				this.getData()
+			    setTimeout(function () {
+			        uni.stopPullDownRefresh();
+			    }, 1000);
 			}
 		},
 	}

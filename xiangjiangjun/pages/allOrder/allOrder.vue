@@ -38,7 +38,7 @@
 			</view>
 			<view class="btnWrap">
 				<button v-if="navIndex==0" @tap="cancelOrder(item.id)">取消订单</button>
-				<button v-if="navIndex==1 && isgoods == 'false'" class="activeBtn">要使用</button>
+				<button v-if="navIndex==1 && isgoods == 'false'" class="activeBtn" @tap="refundReson(true)" >要使用</button>
 				<button v-if="navIndex==3">删除订单</button>
 				<button v-if="navIndex==0" class="activeBtn" @tap="gotoPay(item)">去支付</button>
 				<button v-if="navIndex==2" class="activeBtn" @tap="finishOrder(item.id)">确认收货</button>
@@ -48,6 +48,10 @@
 			</view>
 		</view>
 		
+		<uni-popup ref="returnMoneyReason" type="center">
+				<image lazy-load class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="refundReson(false)"></image>
+		</uni-popup>
+		
 		<view class="noDataBg" v-if="orderList.length==0">
 			<image lazy-load class="noDataImg" :src="imgSrc+'public/img_kongbaiye.png'" mode="" />
 			<view class="word">暂还没有订单哦~</view>
@@ -56,11 +60,13 @@
 </template>
 
 <script>
+	import {uniPopup} from '../../components/uni/uni-popup/uni-popup.vue'
 	import productTitle from '@/components/productTitle/productTitle.vue'
 	import { Request } from '../../public/utils.js'
 	export default {
 		components: {
-			productTitle
+			productTitle,
+			uniPopup
 		},
 		data() {
 			return {
@@ -91,6 +97,9 @@
 			changeTab(index){
 				this.navIndex = index
 				this.getData(index)
+			},
+			refundReson(bool){
+				bool ? this.$refs.returnMoneyReason.open() : this.$refs.returnMoneyReason.close()
 			},
 			getData(type){
 				Request(

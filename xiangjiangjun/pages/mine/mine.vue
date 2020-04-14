@@ -47,18 +47,22 @@
 				<view class="item" @tap="gotoAllOrder(0,false)">
 					<image lazy-load :src="imgSrc+'mine/list1.png'" class="img"></image>
 					<view class="word">待支付</view>
+					<view class="num" style="right:-12rpx" v-if="serviceOrder[0]>0">{{serviceOrder[0]>99 ? "···" : serviceOrder[0]}}</view>
 				</view>
 				<view class="item" @tap="gotoAllOrder(1,false)">
 					<image lazy-load :src="imgSrc+'mine/list6.png'" class="img"></image>
 					<view class="word">待消费</view>
+					<view class="num" style="right:-12rpx" v-if="serviceOrder[1]>0">{{serviceOrder[1]>99 ? "···" : serviceOrder[1]}}</view>
 				</view>
 				<view class="item" @tap="gotoAllOrder(3,false)">
 					<image lazy-load :src="imgSrc+'mine/list4.png'" class="img"></image>
 					<view class="word">已完成</view>
+					<view class="num" style="right:-12rpx" v-if="serviceOrder[2]>0">{{serviceOrder[2]>99 ? "···" : serviceOrder[2]}}</view>
 				</view>
 				<view class="item" @tap="gotoAllOrder(4,false)">
 					<image lazy-load :src="imgSrc+'mine/list5.png'" class="img"></image>
 					<view class="word">退款售后</view>
+					<view class="num" style="right:-12rpx" v-if="serviceOrder[3]>0">{{serviceOrder[3]>99 ? "···" : serviceOrder[3]}}</view>
 				</view>
 			</view>
 		</view>
@@ -102,7 +106,8 @@
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
-				productOrder: [0,0,0,0,0]
+				productOrder: [0,0,0,0,0],
+				serviceOrder:[1,1,1,1]
 			}
 		},
 		onLoad(e) {
