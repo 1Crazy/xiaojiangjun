@@ -152,7 +152,7 @@
 				imgSrc: this.$store.state.imgSrc,
 				productOrder: [0,0,0,0,0],
 				serviceOrder:[1,1,1,1],
-				isCommonUser: false,
+				isCommonUser: true,
 			}
 		},
 		onLoad(e) {

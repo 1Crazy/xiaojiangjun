@@ -219,7 +219,7 @@
 							submitImg.push(JSON.parse(uploadFileRes.data).files[0].url)
 							if(index == this.chooseImg.length-1){
 								const data = {}
-								data.orderid= that.orderid
+								data.id= that.orderid
 								data.images= submitImg
 								data.price= that.orderInfo.price
 								data.reason= that.currentReturnResonWord
@@ -230,7 +230,8 @@
 								Request(
 									'order.refund.submit',
 									data,
-									'POST'
+									'POST',
+									'application/x-www-form-urlencoded'
 								)
 								.then((res)=>{
 									uni.showToast({

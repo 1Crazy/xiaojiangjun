@@ -2,7 +2,7 @@
 	<view>
 		<view class="header">
 			<view class="headerWord">邀请5人注册商城账号可获得体验者资格</view>
-			<button class="btn">邀请好友注册</button>
+			<button class="btn" @tap="share()">邀请好友注册</button>
 			<view class="man">
 				<view class="item" v-for="(item, index) in userList" :key="index">
 					<image lazy-load :src="item.avatar" class="img"></image>
@@ -114,6 +114,10 @@
 				})
 			},
 			sumbit(){
+				
+			},
+			share(){
+				console.log('aaa');
 				
 			}
 		}

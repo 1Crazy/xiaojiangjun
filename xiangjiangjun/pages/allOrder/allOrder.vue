@@ -38,7 +38,7 @@
 			</view>
 			<view class="btnWrap">
 				<button v-if="navIndex==0" @tap="cancelOrder(item.id)">取消订单</button>
-				<button v-if="navIndex==1 && isgoods == 'false'" class="activeBtn" @tap="refundReson(true)" >要使用</button>
+				<button v-if="navIndex==1 && isgoods == 'false'" class="activeBtn" @tap="refundReson(item.id,true)" >要使用</button>
 				<button v-if="navIndex==3">删除订单</button>
 				<button v-if="navIndex==0" class="activeBtn" @tap="gotoPay(item)">去支付</button>
 				<button v-if="navIndex==2" class="activeBtn" @tap="finishOrder(item.id)">确认收货</button>
@@ -49,11 +49,11 @@
 		</view>
 		
 		<uni-popup ref="returnMoneyReason" type="center">
-				<image lazy-load class="closeImg" :src="imgSrc+'public/goumai_guanbi.png'" @tap="refundReson(false)"></image>
+				<image lazy-load mode="aspectFill" style="width: 500rpx;height: 500rpx;" class="closeImg" :src=qrCode @tap="refundReson(0,false)"></image>
 		</uni-popup>
 		
 		<view class="noDataBg" v-if="orderList.length==0">
-			<image lazy-load class="noDataImg" :src="imgSrc+'public/img_kongbaiye.png'" mode="" />
+			<image lazy-load class="noDataImg" :src=qrCode mode="" />
 			<view class="word">暂还没有订单哦~</view>
 		</view>
 	</view>
@@ -73,7 +73,8 @@
 				imgSrc: this.$store.state.imgSrc,
 				navIndex: 0,
 				orderList: [],
-				isgoods:true//是普通订单 false服务订单
+				isgoods:true,//是普通订单 false服务订单
+				qrCode: "http://xiaojiangjun.cduxj.com/addons/ewei_shopv2/data/poster_wxapp/goods/2/6bd3d2e0b7c2623977f74d1c2a3b5818.png?v=1.0"
 			};
 		},
 		onLoad(e) {
@@ -98,8 +99,29 @@
 				this.navIndex = index
 				this.getData(index)
 			},
-			refundReson(bool){
-				bool ? this.$refs.returnMoneyReason.open() : this.$refs.returnMoneyReason.close()
+			refundReson(id,bool){
+				console.log(id)
+				
+				if(bool){
+					Request(
+						'order.get_Qcode',
+						{
+							id:id
+						}
+					)
+					.then((res)=>{
+						console.log(res)
+						// 成功方法
+						this.qrCode = res.data.Qcode
+						this.$refs.returnMoneyReason.open()
+					})
+					.catch((res)=>{
+						// 失败方法
+					})
+				}else{
+					this.$refs.returnMoneyReason.close()
+				}
+				
 			},
 			getData(type){
 				Request(

@@ -2,36 +2,35 @@
 <template>
 	<view>
 		<view class="header">
-			<view class="word1">订单号：163531564684</view>
-			<view class="word2">到店自提:自提地址成都高新店</view>
+			<view class="word1">订单号：{{orderDetail.order.ordersn}}</view>
+			<view class="word2">到店自提:{{orderDetail.store.city}}{{orderDetail.store.area}}{{orderDetail.store.address}}</view>
 		</view>
-		<view class="c-info">
-			<product-title
-				:img="imgSrc+'public/addpic.png'"
-				title="马驰宝汽车机油正品全合成5W-40德国进口奔驰宝马奥迪大众本田4L马驰宝汽车机油正品全合成5W-40德国进口奔驰宝马奥迪大众本田4L"
-				:details="'规格：'+'5W-40'+'克'"
-				:stock="'价格：'+'￥466'+'件'"
-				:num="2"
+		<view class="c-info" v-for="(item,index) in orderDetail.goods" :key="index" >
+			<product-title 
+				:img=item.thumb
+				:title=item.title
+				:details="'规格：'+item.optionname"
+				:num=item.total
 			></product-title>
-			<view class="c-bottom">
+			<!-- <view class="c-bottom">
 				<view class="c-b-word">产品规格</view>
 				<view class="r-wrap-c">我是规格</view>
-			</view>
+			</view> -->
 			<view class="totalPrice">
-				<text class="txt1">共2件商品</text>
+				<text class="txt1">共{{item.total}}件商品</text>
 				<text class="txt2">合计：</text>
-				<text class="txt3">￥: 976</text>
+				<text class="txt3">￥: {{item.price}}</text>
 			</view>
-			<view class="hx-num">
-				核销码：NAJ123
+			<view class="hx-num" v-for="(item,index) in orderDetail.order.verifyinfo" :key="index" >
+				核销码：{{item.verifycode}}
 			</view>
 		</view>
 		<view class="b-footer">
 			<view class="txtWrap">
 				<view class="txt1">合计</view>
-				<view class="txt2">￥960.4</view>
+				<view class="txt2">￥{{orderDetail.order.price}}</view>
 			</view>
-			<button type="default" class="btn">核销</button>
+			<button type="default" class="btn" @tap="hx()">核销</button>
 		</view>
 		
 	</view>
@@ -40,6 +39,7 @@
 <script>
 	import productTitle from '@/components/productTitle/productTitle.vue'
 	import { Request } from '../../public/utils.js'
+	import _app from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js';
 	export default {
 		components: {
 			productTitle
@@ -47,7 +47,63 @@
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				orderDetail:[{
+					order:[{
+						ordersn:'',
+						price:''
+					}],
+					store:[{
+						city:'',
+						area:'',
+						address:''
+					}],						
+				}],
+				orderid:""
 			};
+		},
+		onLoad(e) {
+			
+			const scene = decodeURIComponent(e.scene)
+			var strs= new Array();
+			strs = scene.split('=');
+			this.orderid = strs[1];
+			this.getData()
+		},
+		methods:{
+			getData(){
+				Request(
+					'order.detail',
+					{
+						id:this.orderid
+					}
+				)
+				.then((res)=>{
+					this.orderDetail = res.data
+				})
+				.catch((res)=>{
+					
+				})
+			},
+			hx(){
+				Request(
+					'order.subhx',
+					{
+						id:this.orderid
+					}
+				)
+				.then((res)=>{
+					if(res.data.status == '0'){
+						_app.showToast(res.data.result.message)
+					}else{
+						uni.reLaunch({
+							url:'/pages/mine/mine'
+						})
+					}
+				})
+				.catch((res)=>{
+					
+				})
+			}
 		}
 	}
 </script>
