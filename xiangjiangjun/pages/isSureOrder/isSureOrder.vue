@@ -34,6 +34,7 @@
 				:title="item.title"
 				:details="'净含量：'+item.weight+'克'"
 				:stock="'库存：'+item.kucun+'件'"
+				:num="2"
 			></product-title>
 			<view class="c-bottom" v-if="item.optiontitle">
 				<view class="c-b-word">产品规格</view>

@@ -1,92 +1,135 @@
 <template>
 	<view>
-		<view class="header">
-			<image lazy-load class="avatar" :src="userInfo.avatar" mode=""></image>
-			<view class="name">{{userInfo.nickname}}</view>
-			<view class="vip" @tap="gotoAccount">会员  ></view>
-		</view>
-		<view class="orderlist">
-			<view class="title">
-				<view class="leftTitle">商品订单</view>
-				<view class="rightTitle" @tap="gotoAllOrder(0)">查看全部订单 ></view>
+		<!-- 普通用户 -->
+		<view v-if="isCommonUser">
+			<view class="header">
+				<image lazy-load class="avatar" :src="userInfo.avatar" mode=""></image>
+				<view class="name">{{userInfo.nickname}}</view>
+				<view class="vip" @tap="gotoAccount">会员  ></view>
 			</view>
-			<view class="content">
-				<view class="item" @tap="gotoAllOrder(0)">
-					<image lazy-load :src="imgSrc+'mine/list1.png'" class="img"></image>
-					<view class="word">待支付</view>
-					<view class="num" v-if="productOrder[0]>0">{{productOrder[0]>99 ? '···' : productOrder[0]}}</view>
+			<view class="orderlist">
+				<view class="title">
+					<view class="leftTitle">商品订单</view>
+					<view class="rightTitle" @tap="gotoAllOrder(0)">查看全部订单 ></view>
 				</view>
-				<view class="item" @tap="gotoAllOrder(1)">
-					<image lazy-load :src="imgSrc+'mine/list2.png'" class="img"></image>
+				<view class="content">
+					<view class="item" @tap="gotoAllOrder(0)">
+						<image lazy-load :src="imgSrc+'mine/list1.png'" class="img"></image>
+						<view class="word">待支付</view>
+						<view class="num" v-if="productOrder[0]>0">{{productOrder[0]>99 ? '···' : productOrder[0]}}</view>
+					</view>
+					<view class="item" @tap="gotoAllOrder(1)">
+						<image lazy-load :src="imgSrc+'mine/list2.png'" class="img"></image>
+						<view class="word">待发货</view>
+						<view class="num" v-if="productOrder[1]>0">{{productOrder[1]>99 ? "···" : productOrder[1]}}</view>
+					</view>
+					<view class="item" @tap="gotoAllOrder(2)">
+						<image lazy-load :src="imgSrc+'mine/list3.png'" class="img"></image>
+						<view class="word">待收货</view>
+						<view class="num" v-if="productOrder[2]>0">{{productOrder[2]>99 ? "···" : productOrder[2]}}</view>
+					</view>
+					<view class="item" @tap="gotoAllOrder(3)">
+						<image lazy-load :src="imgSrc+'mine/list4.png'" class="img"></image>
+						<view class="word">已完成</view>
+					</view>
+					<view class="item" @tap="gotoAllOrder(4)">
+						<image lazy-load :src="imgSrc+'mine/list5.png'" class="img"></image>
+						<view class="word">退款售后</view>
+						<view class="num" style="right:-12rpx" v-if="productOrder[4]>0">{{productOrder[4]>99 ? "···" : productOrder[4]}}</view>
+					</view>
+				</view>
+			</view>
+			
+			<view class="orderlist">
+				<view class="title">
+					<view class="leftTitle">服务订单</view>
+					<view class="rightTitle" @tap="gotoAllOrder(0,false)">查看全部订单 ></view>
+				</view>
+				<view class="content">
+					<view class="item" @tap="gotoAllOrder(0,false)">
+						<image lazy-load :src="imgSrc+'mine/list1.png'" class="img"></image>
+						<view class="word">待支付</view>
+						<view class="num" style="right:-12rpx" v-if="serviceOrder[0]>0">{{serviceOrder[0]>99 ? "···" : serviceOrder[0]}}</view>
+					</view>
+					<view class="item" @tap="gotoAllOrder(1,false)">
+						<image lazy-load :src="imgSrc+'mine/list6.png'" class="img"></image>
+						<view class="word">待消费</view>
+						<view class="num" style="right:-12rpx" v-if="serviceOrder[1]>0">{{serviceOrder[1]>99 ? "···" : serviceOrder[1]}}</view>
+					</view>
+					<view class="item" @tap="gotoAllOrder(3,false)">
+						<image lazy-load :src="imgSrc+'mine/list4.png'" class="img"></image>
+						<view class="word">已完成</view>
+						<view class="num" style="right:-12rpx" v-if="serviceOrder[2]>0">{{serviceOrder[2]>99 ? "···" : serviceOrder[2]}}</view>
+					</view>
+					<view class="item" @tap="gotoAllOrder(4,false)">
+						<image lazy-load :src="imgSrc+'mine/list5.png'" class="img"></image>
+						<view class="word">退款售后</view>
+						<view class="num" style="right:-12rpx" v-if="serviceOrder[3]>0">{{serviceOrder[3]>99 ? "···" : serviceOrder[3]}}</view>
+					</view>
+				</view>
+			</view>
+			<view class="listItem" @tap="gotoAddressManagement">
+				<image lazy-load class="img" :src="imgSrc+'mine/item1.png'"></image>
+				<view class="word">地址管理</view>
+				<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
+			</view>
+			<view class="listItem" @tap="gotoExperiencer">
+				<image lazy-load class="img" :src="imgSrc+'mine/item2.png'"></image>
+				<view class="word">体验者</view>
+				<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
+			</view>
+			<view class="listItem" @tap="gotoMineCoupon">
+				<image lazy-load class="img" :src="imgSrc+'mine/item3.png'"></image>
+				<view class="word">优惠券</view>
+				<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
+			</view>
+			
+			<view class="listItem" @tap="gotoCooperation">
+				<image lazy-load class="img" :src="imgSrc+'public/hezuo.png'"></image>
+				<view class="word">合作加盟</view>
+				<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
+			</view> 
+		</view>
+		
+		<!-- 汽配厂家 -->
+		<view v-if="!isCommonUser">
+			<view class="qp-header">
+				<image src="../../static/public/dor-S.png" class="avatar"></image>
+				<view class="name" @tap="updateShopName">
+					<view>店铺名称</view>
+					<image src="../../static/public/ic_compile.png" class="update-name-img"></image>
+				</view>
+				<view class="money-wrap">
+					<view>提现</view>
+					<view @tap="gotoIncomeDetails">收益明细</view>
+				</view>
+			</view>
+			
+			<view class="qb-order">
+				<view class="item">
+					<image src="../../static/public/ic_daifahuo.png"></image>
 					<view class="word">待发货</view>
-					<view class="num" v-if="productOrder[1]>0">{{productOrder[1]>99 ? "···" : productOrder[1]}}</view>
+					<view class="num">3</view>
 				</view>
-				<view class="item" @tap="gotoAllOrder(2)">
-					<image lazy-load :src="imgSrc+'mine/list3.png'" class="img"></image>
+				<view class="item">
+					<image src="../../static/public/ic_daishouhuo.png"></image>
 					<view class="word">待收货</view>
-					<view class="num" v-if="productOrder[2]>0">{{productOrder[2]>99 ? "···" : productOrder[2]}}</view>
+					<view class="num">3</view>
 				</view>
-				<view class="item" @tap="gotoAllOrder(3)">
-					<image lazy-load :src="imgSrc+'mine/list4.png'" class="img"></image>
+				<view class="item">
+					<image src="../../static/public/ic_yiwancheng.png"></image>
 					<view class="word">已完成</view>
+					<view class="num num1">3</view>
 				</view>
-				<view class="item" @tap="gotoAllOrder(4)">
-					<image lazy-load :src="imgSrc+'mine/list5.png'" class="img"></image>
-					<view class="word">退款售后</view>
-					<view class="num" style="right:-12rpx" v-if="productOrder[4]>0">{{productOrder[4]>99 ? "···" : productOrder[4]}}</view>
+				<view class="item">
+					<image src="../../static/public/ic_tuihuo2.png"></image>
+					<view class="word">退货/退款</view>
+					<view class="num num1">3</view>
 				</view>
 			</view>
+			<button class="qb-hexiao-btn">扫码核销</button>
 		</view>
 		
-		<view class="orderlist">
-			<view class="title">
-				<view class="leftTitle">服务订单</view>
-				<view class="rightTitle" @tap="gotoAllOrder(0,false)">查看全部订单 ></view>
-			</view>
-			<view class="content">
-				<view class="item" @tap="gotoAllOrder(0,false)">
-					<image lazy-load :src="imgSrc+'mine/list1.png'" class="img"></image>
-					<view class="word">待支付</view>
-					<view class="num" style="right:-12rpx" v-if="serviceOrder[0]>0">{{serviceOrder[0]>99 ? "···" : serviceOrder[0]}}</view>
-				</view>
-				<view class="item" @tap="gotoAllOrder(1,false)">
-					<image lazy-load :src="imgSrc+'mine/list6.png'" class="img"></image>
-					<view class="word">待消费</view>
-					<view class="num" style="right:-12rpx" v-if="serviceOrder[1]>0">{{serviceOrder[1]>99 ? "···" : serviceOrder[1]}}</view>
-				</view>
-				<view class="item" @tap="gotoAllOrder(3,false)">
-					<image lazy-load :src="imgSrc+'mine/list4.png'" class="img"></image>
-					<view class="word">已完成</view>
-					<view class="num" style="right:-12rpx" v-if="serviceOrder[2]>0">{{serviceOrder[2]>99 ? "···" : serviceOrder[2]}}</view>
-				</view>
-				<view class="item" @tap="gotoAllOrder(4,false)">
-					<image lazy-load :src="imgSrc+'mine/list5.png'" class="img"></image>
-					<view class="word">退款售后</view>
-					<view class="num" style="right:-12rpx" v-if="serviceOrder[3]>0">{{serviceOrder[3]>99 ? "···" : serviceOrder[3]}}</view>
-				</view>
-			</view>
-		</view>
-		<view class="listItem" @tap="gotoAddressManagement">
-			<image lazy-load class="img" :src="imgSrc+'mine/item1.png'"></image>
-			<view class="word">地址管理</view>
-			<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
-		</view>
-		<view class="listItem" @tap="gotoExperiencer">
-			<image lazy-load class="img" :src="imgSrc+'mine/item2.png'"></image>
-			<view class="word">体验者</view>
-			<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
-		</view>
-		<view class="listItem" @tap="gotoMineCoupon">
-			<image lazy-load class="img" :src="imgSrc+'mine/item3.png'"></image>
-			<view class="word">优惠券</view>
-			<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
-		</view>
-		
-		<view class="listItem" @tap="gotoCooperation">
-			<image lazy-load class="img" :src="imgSrc+'public/hezuo.png'"></image>
-			<view class="word">合作加盟</view>
-			<image lazy-load :src="imgSrc+'public/arrow.png'" class="symbol"></image>
-		</view>
 		
 		<center-popup title="提示" content="登录后即可操作?" cancelBtn="返回首页" ref="togglePopupChild" @cancelBtn="cancelLogin" @centerPopupSureBtn="islogin()"></center-popup>
 	</view>
@@ -99,6 +142,7 @@
 	} from 'vuex';
 	import { Request } from '../../public/utils.js'
 	import centerPopup from '@/components/centerPopup/centerPopup.vue'
+	import './qp.scss'
 	export default {
 		components: {
 			centerPopup,
@@ -107,7 +151,8 @@
 			return {
 				imgSrc: this.$store.state.imgSrc,
 				productOrder: [0,0,0,0,0],
-				serviceOrder:[1,1,1,1]
+				serviceOrder:[1,1,1,1],
+				isCommonUser: false,
 			}
 		},
 		onLoad(e) {
@@ -129,6 +174,11 @@
 		},
 		methods: {
 			...mapMutations(['login']),
+			gotoIncomeDetails(){
+				uni.navigateTo({
+					url: '/pages/incomeDetails/incomeDetails'
+				})
+			},
 			gotoAddressManagement(){
 				uni.navigateTo({
 					url: '/pages/addressManagement/addressManagement'
@@ -228,6 +278,9 @@
 				.catch((res)=>{
 				    // 失败方法
 				})
+			},
+			updateShopName(){
+				
 			}
 		}
 	}

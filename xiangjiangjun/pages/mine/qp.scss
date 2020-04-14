@@ -1,0 +1,145 @@
+.qp-header{
+	width: 750rpx;
+	height: 300rpx;
+	background-color: #48c909;
+	padding-top: 32rpx;
+	box-sizing: border-box;
+	position: relative;
+	.avatar{
+		width: 120rpx;
+		height: 120rpx;
+		background-color: #ffffff;
+		border: solid 3rpx #ffffff;
+		display: block;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+	.name{
+		display: flex;
+		margin: 0 auto;
+		margin-top: 29rpx;
+		align-items: center;
+		justify-content: center;
+		font-family: PingFang-SC-Bold;
+		font-size: 32rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		line-height: 40rpx;
+		letter-spacing: 0rpx;
+		color: #ffffff;
+		.update-name-img{
+			width: 28rpx;
+			height: 28rpx;
+		}
+	}
+	.money-wrap{
+		position: absolute;
+		bottom: -60rpx;
+		width: 690rpx;
+		height: 120rpx;
+		background-color: #ffffff;
+		border-radius: 10rpx;
+		font-family: PingFang-SC-Medium;
+		font-size: 28rpx;
+		font-weight: normal;
+		font-stretch: normal;
+		line-height: 40rpx;
+		letter-spacing: 0rpx;
+		color: #333333;
+		left:30rpx;
+		display: flex;
+		align-items: center;
+		view{
+			width: 345rpx;
+			box-sizing: border-box;
+			text-align: center;
+			&:first-child{
+				border-right: 1px solid #e3e3e3;
+			}
+		}
+	}
+}
+.qb-order{
+	width: 690rpx;
+	height: 462rpx;
+	background-color: #ffffff;
+	border-radius: 10rpx;
+	padding: 39rpx 0;
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 87rpx;
+	.item{
+		width: 345rpx;
+		box-sizing: border-box;
+		position: relative;
+		&:first-child{
+			border-right: 1px solid #e3e3e3;
+			border-bottom: 1px solid #e3e3e3;
+		}
+		&:nth-child(2){
+			border-bottom: 1px solid #e3e3e3;
+		}
+		&:nth-child(3){
+			border-right: 1px solid #e3e3e3;
+			image{
+				margin-top: 39rpx;
+			}
+		}
+		&:nth-child(4){
+			image{
+				margin-top: 39rpx;
+			}
+		}
+		image{
+			width: 100rpx;
+			height: 100rpx;
+			background-color: #f2f2f2;
+			margin: 0 auto;
+			display: block;
+			border-radius: 50%;
+		}
+		.word{
+			margin-top: 29rpx;
+			text-align: center;
+		}
+		.num{
+			position: absolute;
+			right: 100rpx;
+			top: 0;
+			width: 32rpx;
+			height: 32rpx;
+			background-color: #ff9000;
+			font-family: PingFang-SC-Medium;
+			font-size: 24rpx;
+			font-weight: normal;
+			font-stretch: normal;
+			line-height: 36rpx;
+			letter-spacing: 0rpx;
+			color: #ffffff;
+			text-align: center;
+			line-height: 32rpx;
+			border-radius: 50%;
+			padding: 2rpx;
+		}
+		.num1{
+			top: 40rpx;
+		}
+	}
+}
+
+.qb-hexiao-btn{
+	width: 690rpx;
+	height: 88rpx;
+	background-color: #48c909;
+	border-radius: 44rpx;
+	font-family: PingFang-SC-Bold;
+	font-size: 30rpx;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 88rpx;
+	letter-spacing: 0rpx;
+	color: #ffffff;
+	margin: 0 auto;
+	margin-top: 100rpx;
+}
