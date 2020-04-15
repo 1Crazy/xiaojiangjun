@@ -1,41 +1,19 @@
 <!-- 收益明细页面 -->
 <template>
 	<view>
-		<view class="itemWrap">
-			<image lazy-load class="avatar" src="../../static/public/addpic.png" mode=""></image>
+		<view class="itemWrap" v-for="(item,index) in list" :key='index'>
+			<!-- <image lazy-load class="avatar" src="../../static/public/addpic.png" mode=""></image> -->
 			<view class="center">
-				<view class="nickName">用户昵称</view>
-				<view class="orderWord">订单号：13561638316532</view>
-				<view class="time">2020-04-07  12:06</view>
+				<!-- <view class="nickName">用户昵称</view> -->
+				
+				
+				<view class="orderWord" v-if="item.rechargetype == 'wxapp'">余额支付</view>
+				<view class="orderWord" v-if="item.rechargetype == 'exchange' || item.rechargetype == 'system'">后台充值</view>
+				<view class="orderWord" v-if="item.rechargetype == 'wechat'">微信支付</view>
+				<view class="orderWord" v-if="item.type == '1'">提现</view>
+				<view class="time">{{item.createtime}}</view>
 			</view>
-			<view class="price">+1080</view>
-		</view>
-		<view class="itemWrap">
-			<image lazy-load class="avatar" src="../../static/public/addpic.png" mode=""></image>
-			<view class="center">
-				<view class="nickName">用户昵称</view>
-				<view class="orderWord">订单号：13561638316532</view>
-				<view class="time">2020-04-07  12:06</view>
-			</view>
-			<view class="price">+1080</view>
-		</view>
-		<view class="itemWrap">
-			<image lazy-load class="avatar" src="../../static/public/addpic.png" mode=""></image>
-			<view class="center">
-				<view class="nickName">用户昵称</view>
-				<view class="orderWord">订单号：13561638316532</view>
-				<view class="time">2020-04-07  12:06</view>
-			</view>
-			<view class="price">+1080</view>
-		</view>
-		<view class="itemWrap">
-			<image lazy-load class="avatar" src="../../static/public/addpic.png" mode=""></image>
-			<view class="center">
-				<view class="nickName">用户昵称</view>
-				<view class="orderWord">订单号：13561638316532</view>
-				<view class="time">2020-04-07  12:06</view>
-			</view>
-			<view class="price">+1080</view>
+			<view class="price">{{item.money}}</view>
 		</view>
 	</view>
 </template>
@@ -46,7 +24,47 @@
 		data() {
 			return {
 				imgSrc: this.$store.state.imgSrc,
+				page:1,
+				list:[]
 			};
+		},
+		onLoad() {
+			this.getData()
+		},
+		// 上拉加载，拉到底部触发
+		onReachBottom() {
+		  // console.log('aa')
+		  this.page = this.page+1
+		  this.getData()
+		},
+		onPullDownRefresh() {
+			this.page = 1;
+			this.list = [];
+			this.getData()
+		    setTimeout(function () {
+		        uni.stopPullDownRefresh();
+		    }, 1000);
+		},
+		methods:{
+			getData(){
+				Request(
+					'member.log.get_listall',
+					{
+						page:this.page
+					}
+				).then((res)=>{
+					console.log(res)
+					if(this.page==1){
+						this.list = res.data.list
+					}else{
+						this.list = this.list.concat(res.data.list)
+					}
+					// 成功方法
+				})
+				.catch((res)=>{
+					// 失败方法
+				})
+			}
 		}
 	}
 </script>

@@ -1,10 +1,17 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
 		    "path" : "pages/incomeDetails/incomeDetails",
 		    "style" : {
 		    	"navigationBarTitleText": "收益明细"
-		    }
+		    },
+			"enablePullDownRefresh":true
 		},{
 		    "path" : "pages/hxIsSureOrder/hxIsSureOrder",
 		    "style" : {
@@ -22,11 +29,6 @@
 		    "style" : {
 		    	"navigationBarTitleText": "确认订单"
 		    }
-		},{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "首页"
-			}
 		}
 		,{
 		    "path" : "pages/paySuccess/paySuccess",

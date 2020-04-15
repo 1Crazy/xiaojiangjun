@@ -273,6 +273,7 @@
 					if (res.data.error == 0) {
 						const {order_0,order_1,order_2,order_4} = res.data.statics
 						this.productOrder = [order_0,order_1,order_2,0,order_4]
+						this.serviceOrder = [res.data.service.order_0,res.data.service.order_1,res.data.service.order_4]
 					}
 				})
 				.catch((res)=>{
