@@ -62,7 +62,7 @@
 				<view class="y-h-q">
 					<view>
 						<text class="txt1">优惠券：</text>
-						<text class="txt2">满300减10元</text>
+						<text class="txt2">couponList</text>
 					</view>
 					<view>
 						<text class="txt3">-￥10</text>
@@ -229,43 +229,43 @@
 				.then((res)=>{
 					console.log(res)
 					//微信
-					wx.requestPayment({
-					  timeStamp: res.timeStamp,
-					  nonceStr: res.nonceStr,
-					  package: res.package,
-					  signType: 'MD5',
-					  paySign: res.paySign,
-					  success (res) {
-						console.log(res)
-						if(res.errMsg=="requestPayment:ok"){
-							uni.navigateTo({
-								url: '/pages/paySuccess/paySuccess?id='+that.orderid
-							})
-						}
-					  },
-					  fail (res) { }
-					})
+					// wx.requestPayment({
+					//   timeStamp: res.timeStamp,
+					//   nonceStr: res.nonceStr,
+					//   package: res.package,
+					//   signType: 'MD5',
+					//   paySign: res.paySign,
+					//   success (res) {
+					// 	console.log(res)
+					// 	if(res.errMsg=="requestPayment:ok"){
+					// 		uni.navigateTo({
+					// 			url: '/pages/paySuccess/paySuccess?id='+that.orderid
+					// 		})
+					// 	}
+					//   },
+					//   fail (res) { }
+					// })
 					
 					
 					//余额
-					// Request(
-					// 	'order.pay.complete',
-					// 	{
-					// 		id:this.orderid,
-					// 		type:'credit',
-					// 		comefrom:'wxapp'
-					// 	},
-					// 	"POST",
-					// 	'application/x-www-form-urlencoded'
-					// ).then((res)=>{
-					// 	// this.orderid = res.data.orderid
-					// 	uni.navigateTo({
-					// 		url: '/pages/paySuccess/paySuccess?id='+that.orderid
-					// 	})			
-					// })
-					// .catch((res)=>{
-					// 	// 失败方法
-					// })
+					Request(
+						'order.pay.complete',
+						{
+							id:this.orderid,
+							type:'credit',
+							comefrom:'wxapp'
+						},
+						"POST",
+						'application/x-www-form-urlencoded'
+					).then((res)=>{
+						// this.orderid = res.data.orderid
+						uni.navigateTo({
+							url: '/pages/paySuccess/paySuccess?id='+that.orderid
+						})			
+					})
+					.catch((res)=>{
+						// 失败方法
+					})
 				})
 				.catch((res)=>{
 					// 失败方法
@@ -303,6 +303,19 @@
 				})
 				.catch((res)=>{
 					// 失败方法
+				})
+				
+				Request(
+					'sale.coupon.my.getlist',
+					{
+						page:this.page
+					}
+				)
+				.then((res)=>{
+					this.couponList = res.data.list
+				})
+				.catch((res)=>{
+					
 				})
 			},
 			updataOrder(){

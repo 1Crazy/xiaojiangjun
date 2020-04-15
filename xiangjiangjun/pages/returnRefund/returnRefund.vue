@@ -216,7 +216,7 @@
 							'user': 'test'
 						},
 						success: (uploadFileRes) => {
-							submitImg.push(JSON.parse(uploadFileRes.data).files[0].url)
+							submitImg.push(JSON.parse(uploadFileRes.data).files[0].filename)
 							if(index == this.chooseImg.length-1){
 								const data = {}
 								data.id= that.orderid
