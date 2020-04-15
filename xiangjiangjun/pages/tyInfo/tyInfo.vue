@@ -20,6 +20,10 @@
 
 <script>
 	import {Request} from '../../public/utils.js'
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -33,9 +37,16 @@
 			console.log(options,'options')
 			options.id ? this.getInfo(options.id,true) : this.getInfo(options.static)
 		},
+		computed:{
+			...mapState(["userInfo","cityName"]),
+		},
 		methods:{
+			...mapMutations(['getCityName']),
 			getInfo(param,bool){
-				const data = {}
+				console.log(this.cityName)
+				const data = {
+					city:this.cityName
+				}
 				if (bool){
 					data.id = param
 				}else{

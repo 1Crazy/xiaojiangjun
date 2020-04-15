@@ -2,7 +2,7 @@
 	<view>
 		<view class="header">
 			<view class="headerWord">邀请5人注册商城账号可获得体验者资格</view>
-			<button class="btn" @tap="share()">邀请好友注册</button>
+			<button class="btn" open-type='share'>邀请好友注册</button>
 			<view class="man">
 				<view class="item" v-for="(item, index) in userList" :key="index">
 					<image lazy-load :src="item.avatar" class="img"></image>
@@ -48,7 +48,7 @@
 		</view>
 		<view class="qualifyWrap" v-if="isQualify">
 			<view class="nav">
-				<view :class="isQualify && currentTab==1 ?  'word active' : 'word'" @tap="cutTab(1)">
+				<view v-if="userList.length > 4" :class="isQualify && currentTab==1 ?  'word active' : 'word'" @tap="cutTab(1)">
 					核销
 					<view class="line"></view>
 				</view>
@@ -58,7 +58,7 @@
 				</view>
 			</view>
 			<view class="qrcodeWrap" v-if="isQualify && currentTab == 1">
-				<image lazy-load src="../../static/public/adress1.png" class="img"></image>
+				<image lazy-load :src=qr class="img"></image>
 				<view class="word">商家扫码核销</view>
 			</view>
 			<view class="qrcodeWrap" v-if="isQualify && currentTab == 2">
@@ -77,6 +77,7 @@
 <script>
 	import './index.scss'
 	import { Request } from '../../public/utils.js'
+	import _app from '../../js_sdk/QuShe-SharerPoster/util/QS-SharePoster/app.js';
 	export default {
 		data() {
 			return {
@@ -84,14 +85,35 @@
 				isQualify: true,
 				currentTab: 2,
 				userList:[],
-				exLog:[]
+				exLog:[],
+				qr:'',
+				member:''
 			};
 		},
 		onLoad(e) {
 			// this.getData();
+			const scene = decodeURIComponent(e.scene)
+			var strs= new Array();
+			strs = scene.split('=');
+			this.member = strs[1];
+			if(this.member){
+				console.log('核销')
+				this.hx(this.member)
+				
+			}else{
+				console.log('aa')
+			}
+			
 		},
 		onShow(e) {
 			this.getData();
+		},
+		onShareAppMessage() {
+		   return {
+		         title: '一起来体验',
+		         desc: '',
+		         path: '/page/experiencer/experiencer?id=12' // 路径，传递参数到指定页面。
+		    }
 		},
 		methods:{
 			cutTab(num){
@@ -104,8 +126,12 @@
 				.then((res)=>{
 					this.userList = res.data.users
 					this.exLog = res.data.exlog
-					console.log(res.data.exlog)
-					if(res.data.users.length>1 && this.exLog.length<0 ){
+					this.qr = res.data.qr
+					
+					console.log(this.userList.length)
+					console.log(this.exLog.length)
+					
+					if(res.data.users.length>4 && this.exLog.length<1 && res.data.sumb==''){
 						this.isQualify=false
 					}
 				})
@@ -116,9 +142,21 @@
 			sumbit(){
 				
 			},
-			share(){
-				console.log('aaa');
-				
+			hx(id){
+				Request(
+					'member.hexiao',
+					{
+						id:id
+					}
+				)
+				.then((res)=>{
+					if(res.data.code=='1'){
+						_app.showToast(res.data.message)
+					}
+				})
+				.catch((res)=>{
+					
+				})
 			}
 		}
 	}
