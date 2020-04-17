@@ -218,7 +218,7 @@
 			_location(){
 				const that = this
 				uni.getLocation({
-					type: 'gcj02 ',
+					type: 'gcj02',
 					success (res) {
 						that.longitude = res.longitude
 						that.latitude = res.latitude
@@ -235,10 +235,10 @@
 								console.error(error);
 							},
 							complete: function(res) {
-								console.log(res,'dsfasdfasdfas');
+								
 							}
 						})
-					}
+					},
 				})
 			},
 			sq(_this){
@@ -252,9 +252,7 @@
 								icon: 'none',
 								duration: 3000
 							})
-							console.log(232323)
 							that._location()
-							console.log(232323)
 						}else{
 							uni.showToast({
 								title: '授权失败',
