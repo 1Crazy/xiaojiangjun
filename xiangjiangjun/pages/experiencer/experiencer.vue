@@ -112,7 +112,7 @@
 		   return {
 		         title: '一起来体验',
 		         desc: '',
-		         path: '/page/experiencer/experiencer?id=12' // 路径，传递参数到指定页面。
+		         path: '/pages/experiencer/experiencer?id=12' // 路径，传递参数到指定页面。
 		    }
 		},
 		methods:{

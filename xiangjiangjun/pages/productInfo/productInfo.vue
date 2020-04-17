@@ -246,7 +246,7 @@
 					}
 				).then((res)=>{
 					console.log(res.data)
-					this.picker = res.data.options
+					this.picker = res.data.options ? res.data.options : ''
 					// 成功方法
 				})
 				.catch((res)=>{
